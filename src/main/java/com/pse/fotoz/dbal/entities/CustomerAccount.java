@@ -6,7 +6,6 @@
 package com.pse.fotoz.dbal.entities;
 
 import com.pse.fotoz.helpers.encryption.PasswordHash;
-import com.pse.fotoz.helpers.forms.DoesNotExist;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Set;
@@ -33,7 +32,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "customer_accounts")
 public class CustomerAccount implements HibernateEntity {
-
+    
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,8 +45,6 @@ public class CustomerAccount implements HibernateEntity {
     @Basic
     @Column(name = "login", unique = true)
     @Size(min=1, max=100, message = "{error_size_login}")
-    @DoesNotExist(entity=CustomerAccount.class, field="login", 
-            message="{error_exist_login}")
     private String login;
 
     @Basic
@@ -126,5 +123,5 @@ public class CustomerAccount implements HibernateEntity {
         }
         return returnBool;
     }
-
+    
 }

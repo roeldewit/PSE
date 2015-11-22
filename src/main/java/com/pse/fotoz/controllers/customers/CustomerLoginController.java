@@ -102,14 +102,14 @@ public class CustomerLoginController {
         String name = request.getParameter("login");
         String password = request.getParameter("password");
 
-        List<CustomerAccount> accounts = 
-                HibernateEntityHelper.all(CustomerAccount.class);
+        List<CustomerAccount> accounts
+                = HibernateEntityHelper.all(CustomerAccount.class);
 
         mav.setViewName("common/error/505.jsp");
-        
-        for(CustomerAccount account : accounts) {
-           if (account.validatePassword(password)&& 
-                   account.getLogin().equals(name)) {
+
+        for (CustomerAccount account : accounts) {
+            if (account.validatePassword(password)
+                    && account.getLogin().equals(name)) {
                 mav.setViewName("customers/login/loginSession.twig");
             }
         }
@@ -134,11 +134,9 @@ public class CustomerLoginController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/new")
     public ModelAndView handleNewCustomerForm(
-            @ModelAttribute(value = "newCustomerAcc") @Valid 
-                    CustomerAccount newCustomerAcc, 
+            @ModelAttribute(value = "newCustomerAcc") @Valid CustomerAccount newCustomerAcc,
             BindingResult resultCustomerAcc,
-            @ModelAttribute(value = "newCustomer") @Valid 
-                    Customer newCustomer, 
+            @ModelAttribute(value = "newCustomer") @Valid Customer newCustomer,
             BindingResult resultCustomer,
             HttpServletRequest request) {
 
@@ -156,10 +154,17 @@ public class CustomerLoginController {
             errors.add(error.getDefaultMessage());
         }
 
+        //Check of chosen login is unique
+        String login = request.getParameter("login");
+        if (!(HibernateEntityHelper.find(CustomerAccount.class, "login", login)
+                .isEmpty())) {
+            errors.add(LocaleUtil.getProperties(request).
+                    get("ERROR_CUSTOMER_NEWACCOUNT_LOGINALREADYEXISTS"));
+        }
+
         if (errors.isEmpty()) {
 
             try {
-                String login = request.getParameter("login");
                 String password = request.getParameter("passwordHash");
                 String name = request.getParameter("name");
                 String address = request.getParameter("address");
@@ -167,7 +172,7 @@ public class CustomerLoginController {
                 String phone = request.getParameter("phone");
                 String email = request.getParameter("email");
 
-                PersistenceFacade.addCustomer(login, password, name, address, 
+                PersistenceFacade.addCustomer(login, password, name, address,
                         city, email, phone);
                 mav.setViewName("customers/login/customer_new_success.twig");
             } catch (HibernateException ex) {

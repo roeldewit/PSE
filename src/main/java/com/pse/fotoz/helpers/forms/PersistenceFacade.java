@@ -6,10 +6,15 @@ import com.pse.fotoz.dbal.entities.Customer;
 import com.pse.fotoz.dbal.entities.CustomerAccount;
 import com.pse.fotoz.dbal.entities.Photographer;
 import com.pse.fotoz.dbal.entities.Picture;
+import com.pse.fotoz.dbal.entities.PictureSession;
 import com.pse.fotoz.dbal.entities.ProductType;
 import com.pse.fotoz.dbal.entities.Shop;
 import java.math.BigDecimal;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
+import static java.util.stream.Collectors.toSet;
+import java.util.stream.Stream;
 
 /**
  * Facade abstracting the handling of common user actions.
@@ -153,5 +158,37 @@ public class PersistenceFacade {
             pt.setFilename(filename);
 
             pt.persist();
-    }    
+    }
+    
+    /**
+     * Adds a picturesession to the permitted sessions of a customer. 
+     * If the picturesession already is in permitted sessions of customer 
+     * nothing happens.
+     * 
+     * @throws com.pse.fotoz.dbal.HibernateException
+     * @throws NoSuchElementException when picturesession 
+     * with corresponding code doesn't exist
+     * 
+     * @pre Customer is logged in, session with code exists.
+     * @param code
+     */
+    public static void addPermittedSession(String code, CustomerAccount account)
+            throws HibernateException, NoSuchElementException {
+
+        PictureSession session = HibernateEntityHelper.
+                find(PictureSession.class, "code", code).stream().
+                findAny().
+                orElseThrow(() -> new NoSuchElementException("Picture session "
+                                + "does not exist."));
+
+        Set<PictureSession> sessions = account.getPermittedSessions();
+        if(sessions.stream().noneMatch(s -> s.getCode().equals(code))){           
+            account.setPermittedSessions(Stream.concat(
+                    sessions.stream(),
+                    Stream.of(session)).collect((toSet())));
+            account.persist();
+        }
+        
+    }
+    
 }
