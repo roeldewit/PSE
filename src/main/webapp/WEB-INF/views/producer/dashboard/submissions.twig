@@ -53,11 +53,11 @@
                                         {{ picture.submissionDate | date("dd-MM-yyyy") }}
                                     </td>
                                     <td>
-                                        {{ picture.shop.photographer.name }}
+                                        {{ picture.session.shop.photographer.name }}
                                     </td>
                                     <td>
-                                        <a class="fancybox" href="/assets/shops/{{ picture.shop.login }}/{{ picture.fileName }}">
-                                            <img src="/assets/shops/{{ picture.shop.login }}/{{ picture.fileName }}"/>
+                                        <a class="fancybox" href="/assets/shops/{{ picture.session.shop.login }}/sessions/{{ picture.session.id }}/{{ picture.fileName }}">
+                                            <img src="/assets/shops/{{ picture.session.shop.login }}/sessions/{{ picture.session.id }}/{{ picture.fileName }}"/>
                                         </a>
                                     </td>
                                     <td>

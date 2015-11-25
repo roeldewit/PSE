@@ -49,17 +49,12 @@
 
 
 
-                    {% if username is empty %}
-                        <li><a href="/app/customers/login/new"><i class="fa fa-sign-in"></i> {{ labels.home_signup }}</a></li>
+                    
+                        <li><a href="/app/customers/register"><i class="fa fa-sign-in"></i> {{ labels.home_signup }}</a></li>
 
                         <li><a href="/app/customers/login"><i class="fa fa-user"></i> {{ labels.home_login }}</a></li>
  
-                    {% else %}
                         <li><a href="/logout"><i class="fa fa-sign-out"></i> {{ labels.home_logout }}</a></li>
-
-                        <li><a href="/app/customers/login/fotos"><i class="fa fa-sign-out"></i>{{ labels.home_my_pictures }}</a></li>
-
-                    {% endif %}
 
                 </ul>
 
@@ -84,13 +79,10 @@
 
             <div class="col-md-3">
 
-                {% if username is empty %}
+                
                     <p class="lead">{{ labels.home_photo_producer }}</p>
 
-                {% else %}
-                    <p class="lead">{{ labels.home_welcome_message }} {{username}} {{ labels.home_welcome_message2 }}</p>
-
-                {% endif %}
+               
 
                 <div class="list-group">
                     <a href="#" class="list-group-item">Fotos Afdrukken</a>

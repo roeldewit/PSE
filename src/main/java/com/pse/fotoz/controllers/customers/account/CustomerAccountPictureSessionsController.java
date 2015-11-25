@@ -65,7 +65,7 @@ public class CustomerAccountPictureSessionsController {
 
             mav.setViewName("customers/account/sessions_overview.twig");
         } else {
-            mav.setViewName("redirect:/login");
+            mav.setViewName("redirect:/app/login");
         }
 
         return mav;
@@ -112,7 +112,7 @@ public class CustomerAccountPictureSessionsController {
 
             mav.setViewName("customers/account/sessions_overview.twig");
         } else {
-            mav.setViewName("redirect:/login");
+            mav.setViewName("redirect:/app/login");
         }
 
         return mav;
@@ -137,7 +137,7 @@ public class CustomerAccountPictureSessionsController {
         
             return new ModelAndView("redirect:/app/customers/account/sessions/");
         } else {
-            return new ModelAndView("redirect:/login");
+            return new ModelAndView("redirect:/app/login");
         }
     }
 

@@ -6,6 +6,9 @@
         <div class="col-lg-12">
             <h1 class="page-header">
                 {{ labels.photographer_shop_index_item_sessions }}
+                <a href="/app/photographers/shop/{{shopName}}/sessions/new" class="btn btn-default btn-header">
+                    {{ labels.photographer_shop_sessions_button_new }}
+                </a>
             </h1>
         </div>
     </div>
@@ -19,19 +22,6 @@
             </p>
         </div>
     </div>
-
-    {% if error is not empty %}
-        <p class="row aler alert-danger">{{ error }}</p>
-    {% else %}
-
-        <div class="row">
-            <div class="col-lg-12">
-                <a href="/app/photographers/shop/{{shop.login}}/sessions/new" class="btn btn-default">
-                    {{ labels.photographer_shop_sessions_button_new }}
-                </a>
-            </div>
-        </div>
-    {% endif %}
 
     <div class="row">
         <div class="col-lg-12">
@@ -60,7 +50,7 @@
 
                 {% for session in sessions %}
                     <div>
-                        <a href="/app/photographers/shop/{{shop.login}}/sessions/{{session.id}}" class="sessions-link">
+                        <a href="/app/photographers/shop/{{shopName}}/sessions/{{session.id}}" class="sessions-link">
                             <table class="table sessions-table">
                                 <tr>   
                                     <td width="20%" style="border:none">

@@ -114,11 +114,11 @@ public class PhotographerMultiFileUploadController {
 
                         if (saveUpload(file, name, session)) {
                             File folder = new File(appPath + "\\" + shop.getLogin() + "\\sessions\\"  + session.getId());
-                            folder.mkdir(); //maak folder als niet bestaat
+                            folder.mkdirs(); //maak folder als niet bestaat
                             file.transferTo(new File(folder.getAbsolutePath() + "\\" + name));
                             returnMessage = "Upload van " + name + " geslaagd!";
                         }
-                    } catch (Exception e) {
+                    } catch (Exception e) {   
                         returnMessage = "Upload mislukt => " + e.getMessage();
                         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     }

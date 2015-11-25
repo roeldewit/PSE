@@ -16,3 +16,5 @@
 .pointer {cursor: pointer;}
 
 .btn-default {background-color: #333; color: #FFF;}
+
+.btn-header{float:right;}

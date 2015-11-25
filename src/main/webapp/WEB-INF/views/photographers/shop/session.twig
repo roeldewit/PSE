@@ -6,6 +6,9 @@
         <div class="col-lg-12">
             <h1 class="page-header">
                 {{ labels.photographer_shop_session_heading }} {{session.title}}
+                <a href="/app/photographers/shop/{{shopName}}/{{session.code}}/upload" class="btn btn-default btn-header">
+                    {{ labels.photographer_shop_session_upload }}
+                </a>
             </h1>
         </div>
     </div>
@@ -59,7 +62,7 @@
     {% for picture in session.pictures %}
         <div class="col-sm-4 col-lg-4 col-md-4">
             <div class="thumbnail">
-                <img src="/assets/shops/{{ shop.login }}/sessions/{{ session.id }}/{{ picture.fileName }}">
+                <img src="/assets/shops/{{ shopName }}/sessions/{{ session.id }}/{{ picture.fileName }}">
                 <div class="caption">
                     <h4 class="pull-right">
                         &euro; {{ picture.price }}
