@@ -1,11 +1,11 @@
 package com.pse.fotoz.controllers.customers.shops;
 
-import com.pse.fotoz.persistence.HibernateException;
 import com.pse.fotoz.domain.entities.Cart;
 import com.pse.fotoz.domain.entities.ProductOption;
 import com.pse.fotoz.helpers.CartHelper;
 import com.pse.fotoz.helpers.ModelAndViewBuilder;
 import com.pse.fotoz.helpers.UserHelper;
+import com.pse.fotoz.persistence.HibernateException;
 import static com.pse.fotoz.properties.LocaleUtil.getProperties;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;

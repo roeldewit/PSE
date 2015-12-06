@@ -7,12 +7,8 @@ package com.pse.fotoz.payments.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import org.springframework.util.LinkedMultiValueMap;
 

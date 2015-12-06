@@ -1,8 +1,8 @@
 package com.pse.fotoz.controllers.customers;
 
-import com.pse.fotoz.persistence.HibernateEntityHelper;
 import com.pse.fotoz.domain.entities.Shop;
 import com.pse.fotoz.helpers.ModelAndViewBuilder;
+import com.pse.fotoz.persistence.HibernateEntityHelper;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;

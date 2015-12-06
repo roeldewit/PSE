@@ -5,18 +5,17 @@
  */
 package com.pse.fotoz.controllers.photographers.shop;
 
-import com.pse.fotoz.persistence.HibernateException;
 import com.pse.fotoz.domain.entities.Picture;
 import com.pse.fotoz.domain.entities.PictureSession;
 import com.pse.fotoz.domain.entities.Shop;
+import com.pse.fotoz.helpers.ConfigurationHelper;
 import com.pse.fotoz.helpers.LoginHelper;
 import com.pse.fotoz.helpers.OwnershipHelper;
-import com.pse.fotoz.helpers.ConfigurationHelper;
+import com.pse.fotoz.persistence.HibernateException;
 import com.pse.fotoz.properties.LocaleUtil;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;

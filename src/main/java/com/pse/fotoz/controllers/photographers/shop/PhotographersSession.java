@@ -1,17 +1,16 @@
 package com.pse.fotoz.controllers.photographers.shop;
 
-import com.pse.fotoz.domain.entities.Shop;
-import com.pse.fotoz.domain.entities.PictureSession;
 import com.pse.fotoz.domain.entities.Picture;
-import com.pse.fotoz.persistence.HibernateEntityHelper;
-import com.pse.fotoz.persistence.HibernateException;
-import com.pse.fotoz.domain.filters.PictureFilters;
+import com.pse.fotoz.domain.entities.PictureSession;
+import com.pse.fotoz.domain.entities.Shop;
+import com.pse.fotoz.helpers.ModelAndViewBuilder;
 import com.pse.fotoz.helpers.OwnershipHelper;
 import com.pse.fotoz.helpers.PictureSessionCodeGenerator;
+import com.pse.fotoz.helpers.UserHelper;
 import com.pse.fotoz.helpers.forms.Parser;
 import com.pse.fotoz.helpers.forms.PersistenceFacade;
-import com.pse.fotoz.helpers.ModelAndViewBuilder;
-import com.pse.fotoz.helpers.UserHelper;
+import com.pse.fotoz.persistence.HibernateEntityHelper;
+import com.pse.fotoz.persistence.HibernateException;
 import com.pse.fotoz.properties.LocaleUtil;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -19,19 +18,19 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.util.stream.Collectors.toList;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**

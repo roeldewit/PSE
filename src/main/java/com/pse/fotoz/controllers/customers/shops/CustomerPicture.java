@@ -1,15 +1,14 @@
 package com.pse.fotoz.controllers.customers.shops;
 
-import com.pse.fotoz.persistence.HibernateEntityHelper;
-import com.pse.fotoz.domain.entities.CustomerAccount;
 import com.pse.fotoz.domain.entities.Picture;
 import com.pse.fotoz.domain.entities.ProductOption;
 import com.pse.fotoz.domain.entities.ProductOption.ColorOption;
 import com.pse.fotoz.domain.entities.ProductType;
 import com.pse.fotoz.domain.filters.PictureFilters;
-import com.pse.fotoz.helpers.forms.Parser;
 import com.pse.fotoz.helpers.ModelAndViewBuilder;
 import com.pse.fotoz.helpers.UserHelper;
+import com.pse.fotoz.helpers.forms.Parser;
+import com.pse.fotoz.persistence.HibernateEntityHelper;
 import com.pse.fotoz.properties.LocaleUtil;
 import java.util.List;
 import java.util.Optional;

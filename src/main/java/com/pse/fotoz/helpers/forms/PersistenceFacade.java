@@ -1,7 +1,5 @@
 package com.pse.fotoz.helpers.forms;
 
-import com.pse.fotoz.persistence.HibernateEntityHelper;
-import com.pse.fotoz.persistence.HibernateException;
 import com.pse.fotoz.domain.entities.Customer;
 import com.pse.fotoz.domain.entities.CustomerAccount;
 import com.pse.fotoz.domain.entities.Photographer;
@@ -9,6 +7,8 @@ import com.pse.fotoz.domain.entities.Picture;
 import com.pse.fotoz.domain.entities.PictureSession;
 import com.pse.fotoz.domain.entities.ProductType;
 import com.pse.fotoz.domain.entities.Shop;
+import com.pse.fotoz.persistence.HibernateEntityHelper;
+import com.pse.fotoz.persistence.HibernateException;
 import java.math.BigDecimal;
 import java.util.NoSuchElementException;
 import java.util.Optional;

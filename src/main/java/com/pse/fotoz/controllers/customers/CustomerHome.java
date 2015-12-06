@@ -5,10 +5,7 @@
  */
 package com.pse.fotoz.controllers.customers;
 
-import com.pse.fotoz.domain.entities.CustomerAccount;
 import com.pse.fotoz.helpers.ModelAndViewBuilder;
-import com.pse.fotoz.helpers.UserHelper;
-import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;

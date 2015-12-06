@@ -2,9 +2,9 @@
  */
 package com.pse.fotoz.auth;
 
-import com.pse.fotoz.persistence.HibernateEntityHelper;
 import com.pse.fotoz.domain.entities.CustomerAccount;
 import com.pse.fotoz.helpers.PasswordHasher;
+import com.pse.fotoz.persistence.HibernateEntityHelper;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;

@@ -5,10 +5,10 @@
  */
 package com.pse.fotoz.helpers;
 
-import com.pse.fotoz.persistence.HibernateEntityHelper;
 import com.pse.fotoz.domain.entities.CustomerAccount;
 import com.pse.fotoz.domain.entities.ProducerAccount;
 import com.pse.fotoz.domain.entities.Shop;
+import com.pse.fotoz.persistence.HibernateEntityHelper;
 import java.util.Optional;
 import org.springframework.security.core.context.SecurityContextHolder;
 

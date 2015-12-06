@@ -5,14 +5,11 @@
  */
 package com.pse.fotoz.payments;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pse.fotoz.helpers.ConfigurationHelper;
-import com.pse.fotoz.config.ConfigurationManager;
-import com.pse.fotoz.payments.domain.*;
+import com.pse.fotoz.payments.domain.PaymentRequest;
+import com.pse.fotoz.payments.domain.PaymentResponse;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,13 +17,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
-import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 /**
  *

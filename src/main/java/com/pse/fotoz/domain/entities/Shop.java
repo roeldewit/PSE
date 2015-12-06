@@ -5,11 +5,11 @@
  */
 package com.pse.fotoz.domain.entities;
 
+import com.pse.fotoz.helpers.PasswordHasher;
+import com.pse.fotoz.helpers.forms.DoesNotExist;
 import com.pse.fotoz.persistence.HibernateEntityHelper;
 import com.pse.fotoz.persistence.HibernateException;
 import com.pse.fotoz.persistence.HibernateSession;
-import com.pse.fotoz.helpers.PasswordHasher;
-import com.pse.fotoz.helpers.forms.DoesNotExist;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.List;
