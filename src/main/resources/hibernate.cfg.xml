@@ -10,19 +10,19 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.current_session_context_class">thread</property>
         
-        <mapping class="com.pse.fotoz.dbal.entities.Customer"/>
-        <mapping class="com.pse.fotoz.dbal.entities.Photographer"/>
-        <mapping class="com.pse.fotoz.dbal.entities.Shop"/>
-        <mapping class="com.pse.fotoz.dbal.entities.Picture"/>
-        <mapping class="com.pse.fotoz.dbal.entities.CustomerAccount"/>
-        <mapping class="com.pse.fotoz.dbal.entities.ProducerAccount"/>
-        <mapping class="com.pse.fotoz.dbal.entities.PictureSession"/>        
-        <mapping class="com.pse.fotoz.dbal.entities.Order"/>
-        <mapping class="com.pse.fotoz.dbal.entities.OrderEntry"/>
-        <mapping class="com.pse.fotoz.dbal.entities.ProductOption"/>
-        <mapping class="com.pse.fotoz.dbal.entities.ProductType"/>
-        <mapping class="com.pse.fotoz.dbal.entities.PictureSession"/>
-        <mapping class="com.pse.fotoz.dbal.entities.ProductType" />
+        <mapping class="com.pse.fotoz.domain.entities.Customer"/>
+        <mapping class="com.pse.fotoz.domain.entities.Photographer"/>
+        <mapping class="com.pse.fotoz.domain.entities.Shop"/>
+        <mapping class="com.pse.fotoz.domain.entities.Picture"/>
+        <mapping class="com.pse.fotoz.domain.entities.CustomerAccount"/>
+        <mapping class="com.pse.fotoz.domain.entities.ProducerAccount"/>
+        <mapping class="com.pse.fotoz.domain.entities.PictureSession"/>        
+        <mapping class="com.pse.fotoz.domain.entities.Order"/>
+        <mapping class="com.pse.fotoz.domain.entities.OrderEntry"/>
+        <mapping class="com.pse.fotoz.domain.entities.ProductOption"/>
+        <mapping class="com.pse.fotoz.domain.entities.ProductType"/>
+        <mapping class="com.pse.fotoz.domain.entities.PictureSession"/>
+        <mapping class="com.pse.fotoz.domain.entities.ProductType" />
         
     </session-factory>
 </hibernate-configuration>
