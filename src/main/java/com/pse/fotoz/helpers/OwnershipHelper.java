@@ -17,15 +17,6 @@ import com.pse.fotoz.domain.entities.Shop;
 public class OwnershipHelper {
     
     /**
-     * Checks ownership of the shop
-     * @param photographer 
-     * @param shop
-     * @return true if the photographer owns the shop
-     */
-    public static boolean doesPhotographerOwnShop(Photographer photographer, Shop shop){
-        return photographer.doesPhotographerOwnShop(shop);
-    }
-    /**
      * Checks ownership of the session
      * @param shop
      * @param session
@@ -52,17 +43,6 @@ public class OwnershipHelper {
      */
     public static boolean doesShopOwnPictureSessionAndPicture(Shop s, PictureSession ps, Picture pic){
         return (doesShopOwnPictureSession(s, ps) && doesPictureSessionOwnPicture(ps, pic));
-    }
-    
-    /**
-     * Checks if the photographer owns the session and thus the shop the session belongs to(probably not needed in hindsight)
-     * @param photographer
-     * @param shop
-     * @param session
-     * @return true if the photographer owns the shop and if that shop owns the session
-     */
-    public static boolean doesPhotographerOwnShopAndSession(Photographer photographer, Shop shop, PictureSession session){
-        return (doesPhotographerOwnShop(photographer, shop) && doesShopOwnPictureSession(shop, session));
     }
     
     /**
