@@ -151,25 +151,9 @@ public class Shop implements HibernateEntity {
                 orElse(null);
     }
 
-    public static Shop getShopByID(int id) {
-        Shop returnShop = null;
-        try {
-            Session session = HibernateSession.getInstance().getSession();
-            returnShop = (Shop) session.load(Shop.class, id);
-        } catch (HibernateException ex) {
-            Logger.getLogger(Shop.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return returnShop;
-    }
-
     public static Shop getShopByLogin(String login) {
-
-        return HibernateEntityHelper.all(Shop.class).
-                stream().
-                filter(s -> s.getLogin().equals(login)).
-                findAny().
-                orElse(null);
-
+        return HibernateEntityHelper.find(Shop.class, "login", login)
+                .stream().findAny().orElse(null);
     }
     
     /**
