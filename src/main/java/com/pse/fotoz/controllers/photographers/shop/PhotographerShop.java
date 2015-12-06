@@ -34,31 +34,4 @@ public class PhotographerShop {
 
         return mav;
     }
-
-
-    /*
-     @Issue 
-     not yet implemented
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView serviceLoginRequest() {
-        ModelAndView mav = new ModelAndView();
-
-        mav.setViewName("photographers/shop/index.twig");
-
-        mav.addObject("labels", LocaleUtil.getProperties("en"));
-        mav.addObject("page", new Object() {
-            public String lang = "en";
-        });
-        mav.addObject("error",
-                "The login functionality is not yet implemented.");
-
-        Shop shop = Shop.getShopByLogin(UserHelper.currentUsername().
-                orElseThrow(() -> new IllegalStateException("User should be "
-                        + "logged in.")));
-        
-        mav.addObject("shopId", shop.getId());
-        
-        return mav;
-    }
 }

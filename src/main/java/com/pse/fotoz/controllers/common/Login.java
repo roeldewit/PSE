@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller handling the login functionality for the producer.
+ * Controller handling the login functionality.
  *
  * @author Robert
  */
@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class Login {
 
     /**
-     * Loads the login screen for producers.
+     * Loads the login screen for all users.
      *
      * @param request
      * @param error
@@ -46,31 +46,6 @@ public class Login {
         mav.addObject("redirect", request.getParameter("redirect"));
         
         mav.setViewName("common/login/login.twig");
-
-        return mav;
-    }
-
-    /*
-     @Issue 
-     not yet implemented
-     */
-    /**
-     * Services a login request from the client. NYI
-     *
-     * @return
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView serviceLoginRequest() {
-        ModelAndView mav = new ModelAndView();
-
-        mav.setViewName("common/login/login.twig");
-
-        mav.addObject("labels", LocaleUtil.getProperties("en"));
-        mav.addObject("page", new Object() {
-            public String lang = "en";
-        });
-        mav.addObject("error",
-                "The login functionality is not yet implemented.");
 
         return mav;
     }
