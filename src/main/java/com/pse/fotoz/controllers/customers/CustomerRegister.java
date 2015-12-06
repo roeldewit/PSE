@@ -5,7 +5,7 @@
  */
 package com.pse.fotoz.controllers.customers;
 
-import com.pse.fotoz.controllers.producer.dashboard.ProducerShopsController;
+import com.pse.fotoz.controllers.producer.dashboard.ProducerShops;
 import com.pse.fotoz.dbal.HibernateEntityHelper;
 import com.pse.fotoz.dbal.HibernateException;
 import com.pse.fotoz.dbal.entities.Customer;
@@ -33,7 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/customers/register")
-public class CustomerRegisterController {
+public class CustomerRegister {
     
         /**
      * Displays a form to add new customer to the system to the customer.
@@ -113,7 +113,7 @@ public class CustomerRegisterController {
                         city, email, phone);
                 mav.setViewName("customers/login/customer_new_success.twig");
             } catch (HibernateException ex) {
-                Logger.getLogger(ProducerShopsController.class.getName()).
+                Logger.getLogger(ProducerShops.class.getName()).
                         log(Level.SEVERE, null, ex);
                 errors.add(LocaleUtil.getProperties(request).
                         get("ERROR_INTERNALDATABASEERROR"));

@@ -24,7 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/producer/dashboard/submissions")
-public class ProducerPictureSubmissionController {
+public class ProducerPictureSubmission {
 
     /**
      * Displays an overview of submitted pictures to the producer.

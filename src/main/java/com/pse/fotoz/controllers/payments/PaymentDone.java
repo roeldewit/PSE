@@ -23,7 +23,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class PaymentDoneController {
+public class PaymentDone {
 
     @RequestMapping(method = RequestMethod.GET, path = "/payment/done/{orderId}")
     public ModelAndView createPayment(HttpServletRequest request,
@@ -63,7 +63,7 @@ public class PaymentDoneController {
 
                 }
             } catch (RestClientException|HibernateException ex) {
-                Logger.getLogger(PaymentDoneController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PaymentDone.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }

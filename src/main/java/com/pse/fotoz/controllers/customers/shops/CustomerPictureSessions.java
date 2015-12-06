@@ -25,7 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/customers/shops/{shop}/sessions/")
-public class CustomerPictureSessionsController {
+public class CustomerPictureSessions {
     
     /**
      * Displays the pictures of a given session.

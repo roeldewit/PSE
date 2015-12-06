@@ -41,7 +41,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author René
  */
 @Controller
-public class PhotographerMultiFileUploadController {
+public class PhotographerMultiFileUpload {
 
     @RequestMapping(method = RequestMethod.GET, path = "/photographers/shop/{shopName}/{sessionCode}/upload")
     public ModelAndView doGet(HttpServletRequest request, HttpServletResponse response,
@@ -159,7 +159,7 @@ public class PhotographerMultiFileUploadController {
             pic1.persist();
             returnVal = true;
         } catch (HibernateException ex) {
-            Logger.getLogger(PhotographerMultiFileUploadController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PhotographerMultiFileUpload.class.getName()).log(Level.SEVERE, null, ex);
         }
         return returnVal;
     }

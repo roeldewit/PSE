@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/producer/dashboard")
-public class ProducerDashboardController {
+public class ProducerDashboard {
 
     /**
      * Displays the main dashboard for producers.

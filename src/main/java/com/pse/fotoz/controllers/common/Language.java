@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/lang")
-public class LanguageController{
+public class Language {
  
     /**
      * Sets the display language to the given language or dutch if no supported

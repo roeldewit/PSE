@@ -29,7 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 @Controller
 @RequestMapping("/customers/account/")
-public class CustomerAccountPictureSessionsController {
+public class CustomerAccountPictureSessions {
 
     /**
      * Displays all picture sessions a customer is permitted to view.
@@ -167,7 +167,7 @@ public class CustomerAccountPictureSessionsController {
             errors.add(LocaleUtil.getProperties(request)
                     .get("ERROR_PICTURE_SESSION_DOESNT_EXIST"));
         } catch (HibernateException ex) {
-            Logger.getLogger(CustomerAccountPictureSessionsController.class.getName())
+            Logger.getLogger(CustomerAccountPictureSessions.class.getName())
                     .log(Level.SEVERE, null, ex);
             errors.add(LocaleUtil.getProperties(request)
                     .get("ERROR_INTERNALDATABASEERROR"));

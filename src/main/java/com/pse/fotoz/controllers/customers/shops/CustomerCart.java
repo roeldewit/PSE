@@ -25,7 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/customers/cart")
-public class CustomerCartController {
+public class CustomerCart {
 
     /**
      * Displays the contents of their shopping cart to the user.

@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/customers/shops")
-public class CustomerShopsController {
+public class CustomerShops {
  
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView displayShops(HttpServletRequest request, 

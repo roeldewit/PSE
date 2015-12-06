@@ -28,7 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/producer/dashboard/shops")
-public class ProducerShopsController {
+public class ProducerShops {
 
     /**
      * Displays all active shops to the producer.
@@ -127,7 +127,7 @@ public class ProducerShopsController {
                         email, phone);                
                 mav.setViewName("producer/dashboard/shops_new_success.twig");
             } catch (HibernateException ex) {
-                Logger.getLogger(ProducerShopsController.class.getName()).
+                Logger.getLogger(ProducerShops.class.getName()).
                         log(Level.SEVERE, null, ex);
                 errors.add(LocaleUtil.getProperties(request).
                         get("ERROR_INTERNALDATABASEERROR"));

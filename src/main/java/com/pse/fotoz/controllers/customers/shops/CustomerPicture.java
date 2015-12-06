@@ -29,7 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/customers/pictures/")
-public class CustomerPictureController {
+public class CustomerPicture {
     
     /**
      * Displays a detailed page of a picture.

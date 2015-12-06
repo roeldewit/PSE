@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/customers/login")
-public class CustomerLoginController {
+public class CustomerLogin {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView loadLoginScreen(HttpServletRequest request) {

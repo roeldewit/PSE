@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/logout")
-public class LogoutController {
+public class Logout {
  
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView loadLoginScreen(HttpServletRequest request) {

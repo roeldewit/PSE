@@ -38,7 +38,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 @Controller
 @RequestMapping("/photographers/shop/{shopName}/sessions")
-public class PhotographersSessionController {
+public class PhotographersSession {
 
     /**
      * Displays all picture sessions in a shop to a photographer
@@ -186,7 +186,7 @@ public class PhotographersSessionController {
                 }
 
             } catch (HibernateException ex) {
-                Logger.getLogger(PhotographersSessionController.class.getName()).
+                Logger.getLogger(PhotographersSession.class.getName()).
                         log(Level.SEVERE, null, ex);
                 errors.add(LocaleUtil.getProperties(request).
                         get("ERROR_INTERNALDATABASEERROR"));
@@ -311,7 +311,7 @@ public class PhotographersSessionController {
         } catch (HibernateException ex) {
             errors.add(ex.toString());
         } catch (NumberFormatException | ConstraintViolationException ex) {
-            Logger.getLogger(PhotographersSessionController.class.getName()).
+            Logger.getLogger(PhotographersSession.class.getName()).
                     log(Level.SEVERE, null, ex);
             errors.add(LocaleUtil.getErrorProperties(request).
                     get("error_decimal_price"));

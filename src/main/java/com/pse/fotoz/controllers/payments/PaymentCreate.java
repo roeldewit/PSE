@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 import org.springframework.web.client.RestClientException;
 
 @Controller
-public class PaymentCreateController {
+public class PaymentCreate {
 
     @RequestMapping(method = RequestMethod.GET, path = "/payment/pay/{orderId}")
     public RedirectView createPayment(HttpServletRequest request,
@@ -67,7 +67,7 @@ public class PaymentCreateController {
                         return new RedirectView(pmResponse.get().getLinks().getPaymentUrl());
                     }
                 } catch (RestClientException | HibernateException ex) {
-                    Logger.getLogger(PaymentCreateController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PaymentCreate.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }

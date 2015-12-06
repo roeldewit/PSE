@@ -36,7 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/producer/dashboard/products")
-public class ProducerProductsController {
+public class ProducerProducts {
 
     /**
      * Displays all the Product Types to the producers.
@@ -144,12 +144,12 @@ public class ProducerProductsController {
                 //no errors found. change viewname for succesfull add
                 mav.setViewName("producer/dashboard/products_new_success.twig");
             } catch (IOException ex) {
-                Logger.getLogger(ProducerProductsController.class.getName()).
+                Logger.getLogger(ProducerProducts.class.getName()).
                         log(Level.SEVERE, null, ex);
                 errors.add(LocaleUtil.getProperties(request).
                         get("ERROR_IOERROR"));
             } catch (HibernateException ex) {
-                Logger.getLogger(ProducerShopsController.class.getName()).
+                Logger.getLogger(ProducerShops.class.getName()).
                         log(Level.SEVERE, null, ex);
                 errors.add(LocaleUtil.getProperties(request).
                         get("ERROR_INTERNALDATABASEERROR"));
