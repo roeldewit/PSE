@@ -1,4 +1,4 @@
-package com.pse.fotoz.helpers.forms;
+package com.pse.fotoz.validators;
 
 import java.lang.annotation.Documented;
 import static java.lang.annotation.ElementType.FIELD;

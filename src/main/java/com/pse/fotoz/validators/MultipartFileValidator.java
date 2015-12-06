@@ -1,4 +1,4 @@
-package com.pse.fotoz.helpers.forms;
+package com.pse.fotoz.validators;
 
 import com.pse.fotoz.helpers.ConfigurationHelper;
 import java.text.MessageFormat;

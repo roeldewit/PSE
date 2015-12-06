@@ -1,4 +1,4 @@
-package com.pse.fotoz.helpers.forms;
+package com.pse.fotoz.helpers;
 
 import java.util.Optional;
 

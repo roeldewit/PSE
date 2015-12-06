@@ -6,7 +6,7 @@
 package com.pse.fotoz.domain.entities;
 
 import com.pse.fotoz.helpers.PasswordHasher;
-import com.pse.fotoz.helpers.forms.DoesNotExist;
+import com.pse.fotoz.validators.DoesNotExist;
 import com.pse.fotoz.persistence.HibernateEntityHelper;
 import com.pse.fotoz.persistence.HibernateException;
 import com.pse.fotoz.persistence.HibernateSession;

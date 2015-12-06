@@ -1,4 +1,4 @@
-package com.pse.fotoz.helpers.forms;
+package com.pse.fotoz.helpers;
 
 import com.pse.fotoz.domain.entities.Customer;
 import com.pse.fotoz.domain.entities.CustomerAccount;

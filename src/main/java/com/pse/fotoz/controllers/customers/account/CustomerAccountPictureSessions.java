@@ -4,7 +4,7 @@ import com.pse.fotoz.domain.entities.CustomerAccount;
 import com.pse.fotoz.domain.entities.PictureSession;
 import com.pse.fotoz.helpers.ModelAndViewBuilder;
 import com.pse.fotoz.helpers.UserHelper;
-import com.pse.fotoz.helpers.forms.PersistenceFacade;
+import com.pse.fotoz.helpers.PersistenceFacade;
 import com.pse.fotoz.persistence.HibernateEntityHelper;
 import com.pse.fotoz.persistence.HibernateException;
 import com.pse.fotoz.properties.LocaleUtil;

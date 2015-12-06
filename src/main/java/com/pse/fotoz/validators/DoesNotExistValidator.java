@@ -1,4 +1,4 @@
-package com.pse.fotoz.helpers.forms;
+package com.pse.fotoz.validators;
 
 import com.pse.fotoz.persistence.HibernateEntityHelper;
 import javax.validation.ConstraintValidator;
