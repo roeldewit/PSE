@@ -9,8 +9,8 @@ import com.pse.fotoz.domain.entities.Picture;
 import com.pse.fotoz.domain.entities.PictureSession;
 import com.pse.fotoz.domain.entities.Shop;
 import com.pse.fotoz.helpers.ConfigurationHelper;
-import com.pse.fotoz.helpers.LoginHelper;
 import com.pse.fotoz.helpers.OwnershipHelper;
+import com.pse.fotoz.helpers.UserHelper;
 import com.pse.fotoz.persistence.HibernateException;
 import com.pse.fotoz.properties.LocaleUtil;
 import java.awt.image.BufferedImage;
@@ -165,7 +165,7 @@ public class PhotographerMultiFileUpload {
 
     private boolean checkCredentials(Shop s, PictureSession ps) {
         boolean returnVal = false;
-        Optional<Shop> loggedInShop = LoginHelper.currentShopAccount();
+        Optional<Shop> loggedInShop = UserHelper.currentShopAccount();
 
         if (loggedInShop.isPresent()) {
             //zijn we daadwerkelijk ingelogd onder de juiste shop?

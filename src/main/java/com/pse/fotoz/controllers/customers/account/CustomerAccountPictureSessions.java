@@ -54,7 +54,7 @@ public class CustomerAccountPictureSessions {
             public String redirect = request.getRequestURL().toString();
         });
 
-        Optional<CustomerAccount> customerOpt = UserHelper.currentUserAccount();
+        Optional<CustomerAccount> customerOpt = UserHelper.currentCustomerAccount();
         
         if (customerOpt.isPresent()) {
             CustomerAccount customer = customerOpt.get();
@@ -96,7 +96,7 @@ public class CustomerAccountPictureSessions {
             public String redirect = request.getRequestURL().toString();
         });
         
-        Optional<CustomerAccount> customerOpt = UserHelper.currentUserAccount();
+        Optional<CustomerAccount> customerOpt = UserHelper.currentCustomerAccount();
         
         if (customerOpt.isPresent()) {
             CustomerAccount customer = customerOpt.get();
@@ -138,7 +138,7 @@ public class CustomerAccountPictureSessions {
             @PathVariable String code,
             RedirectAttributes redirectAttributes) {
         
-        Optional<CustomerAccount> customerOpt = UserHelper.currentUserAccount();
+        Optional<CustomerAccount> customerOpt = UserHelper.currentCustomerAccount();
         
         if (customerOpt.isPresent()) {
             CustomerAccount customer = customerOpt.get();

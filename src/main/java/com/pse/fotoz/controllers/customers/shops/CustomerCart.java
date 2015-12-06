@@ -187,7 +187,7 @@ public class CustomerCart {
     public ResponseEntity<String> commitOrder(HttpServletRequest request) {
         Cart cart = CartHelper.getCurrentCart(request);
         
-        if (!UserHelper.currentUserAccount().isPresent()) {
+        if (!UserHelper.currentCustomerAccount().isPresent()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).
                     body("User must be logged in.");
         }

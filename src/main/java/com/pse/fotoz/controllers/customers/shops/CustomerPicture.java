@@ -53,7 +53,7 @@ public class CustomerPicture {
             public String redirect = request.getRequestURL().toString();
         });
         
-        final Integer userid = UserHelper.currentUserAccount()
+        final Integer userid = UserHelper.currentCustomerAccount()
                 .map(a -> a.getId())
                 .orElse(Integer.MIN_VALUE);
         

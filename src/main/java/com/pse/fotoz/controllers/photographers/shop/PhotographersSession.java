@@ -98,7 +98,7 @@ public class PhotographersSession {
      * @return
      */
     @RequestMapping(method = RequestMethod.GET, value = "/new")
-    public ModelAndView provideNewProductForm(
+    public ModelAndView showNewSessionForm(
             @PathVariable("shopName") String shopName,
             HttpServletRequest request, HttpServletResponse response) {
 

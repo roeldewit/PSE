@@ -60,7 +60,7 @@ public class CustomerPictureSessions {
         int sessionId = Parser.parseInt(sessionid).
                 orElse(Integer.MIN_VALUE);
         
-        final Integer userid = UserHelper.currentUserAccount().
+        final Integer userid = UserHelper.currentCustomerAccount().
                 map(a -> a.getId()).
                 orElse(Integer.MIN_VALUE);
         

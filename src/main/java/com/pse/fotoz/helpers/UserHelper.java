@@ -1,6 +1,7 @@
 package com.pse.fotoz.helpers;
 
 import com.pse.fotoz.domain.entities.CustomerAccount;
+import com.pse.fotoz.domain.entities.Shop;
 import com.pse.fotoz.persistence.HibernateEntityHelper;
 import java.util.Optional;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +19,7 @@ public class UserHelper {
         return result == null ? Optional.empty() : Optional.of(result);
     }
     
-    public static Optional<CustomerAccount> currentUserAccount() {
+    public static Optional<CustomerAccount> currentCustomerAccount() {
         if (!currentUsername().isPresent()) {
             return Optional.empty();
         }
@@ -26,5 +27,15 @@ public class UserHelper {
         return HibernateEntityHelper.find(CustomerAccount.class, "login", 
                 currentUsername().get()).stream().
                     findAny();
+    }
+    
+    public static Optional<Shop> currentShopAccount() {
+        if (!currentUsername().isPresent()) {
+            return Optional.empty();
+        }
+
+        return HibernateEntityHelper.find(Shop.class, "login",
+                currentUsername().get()).stream().
+                findAny();
     }
 }

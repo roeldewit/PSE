@@ -109,7 +109,7 @@ public class CartHelper {
      * @throws HibernateException On database error. 
      */
     public static void persistOrder(Cart cart) throws HibernateException {
-        cart.getOrder().setAccount(UserHelper.currentUserAccount().get());
+        cart.getOrder().setAccount(UserHelper.currentCustomerAccount().get());
         cart.getOrder().setStatus(Order.OrderStatus.PLACED);
         cart.getOrder().getEntries().forEach(e -> e.setId(0));
         cart.getOrder().getEntries().forEach(e -> e.setTotalPrice(
