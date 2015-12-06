@@ -6,8 +6,8 @@
 package com.pse.fotoz.payments;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.pse.fotoz.helpers.Configuration.ConfigurationHelper;
-import com.pse.fotoz.helpers.Configuration.ConfigurationManager;
+import com.pse.fotoz.helpers.ConfigurationHelper;
+import com.pse.fotoz.config.ConfigurationManager;
 import com.pse.fotoz.payments.domain.*;
 import java.util.ArrayList;
 import java.util.HashMap;

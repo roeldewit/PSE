@@ -1,9 +1,9 @@
 package com.pse.fotoz.controllers.payments;
 
-import com.pse.fotoz.dbal.HibernateEntityHelper;
-import com.pse.fotoz.dbal.HibernateException;
-import com.pse.fotoz.dbal.entities.Order;
-import com.pse.fotoz.helpers.mav.ModelAndViewBuilder;
+import com.pse.fotoz.persistence.HibernateEntityHelper;
+import com.pse.fotoz.persistence.HibernateException;
+import com.pse.fotoz.domain.entities.Order;
+import com.pse.fotoz.helpers.ModelAndViewBuilder;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,8 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.pse.fotoz.payments.PaymentFacade;
 import com.pse.fotoz.payments.domain.PaymentRequest;
 import com.pse.fotoz.payments.domain.PaymentResponse;
-import com.pse.fotoz.payments.domain.enums.PaymentMethod;
-import com.pse.fotoz.payments.domain.enums.PaymentStatus;
+import com.pse.fotoz.payments.domain.PaymentResponse.PaymentStatus;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.web.client.RestClientException;

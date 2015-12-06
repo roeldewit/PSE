@@ -5,10 +5,10 @@
  */
 package com.pse.fotoz.payments;
 
-import com.pse.fotoz.helpers.Configuration.ConfigurationHelper;
+import com.pse.fotoz.helpers.ConfigurationHelper;
 import com.pse.fotoz.payments.domain.PaymentRequest;
 import com.pse.fotoz.payments.domain.PaymentResponse;
-import com.pse.fotoz.payments.domain.enums.Locale;
+import com.pse.fotoz.payments.domain.PaymentRequest.Locale;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import org.junit.After;

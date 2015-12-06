@@ -1,11 +1,11 @@
 package com.pse.fotoz.controllers.customers.shops;
 
-import com.pse.fotoz.dbal.HibernateException;
-import com.pse.fotoz.dbal.entities.Cart;
-import com.pse.fotoz.dbal.entities.ProductOption;
-import com.pse.fotoz.helpers.forms.CartHelper;
-import com.pse.fotoz.helpers.mav.ModelAndViewBuilder;
-import com.pse.fotoz.helpers.users.Users;
+import com.pse.fotoz.persistence.HibernateException;
+import com.pse.fotoz.domain.entities.Cart;
+import com.pse.fotoz.domain.entities.ProductOption;
+import com.pse.fotoz.helpers.CartHelper;
+import com.pse.fotoz.helpers.ModelAndViewBuilder;
+import com.pse.fotoz.helpers.UserHelper;
 import static com.pse.fotoz.properties.LocaleUtil.getProperties;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
@@ -187,7 +187,7 @@ public class CustomerCart {
     public ResponseEntity<String> commitOrder(HttpServletRequest request) {
         Cart cart = CartHelper.getCurrentCart(request);
         
-        if (!Users.currentUserAccount().isPresent()) {
+        if (!UserHelper.currentUserAccount().isPresent()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).
                     body("User must be logged in.");
         }

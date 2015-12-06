@@ -1,12 +1,12 @@
 package com.pse.fotoz.controllers.producer.dashboard;
 
-import com.pse.fotoz.dbal.HibernateEntityHelper;
-import com.pse.fotoz.dbal.HibernateException;
-import com.pse.fotoz.dbal.entities.ProductType;
-import com.pse.fotoz.helpers.Configuration.ConfigurationHelper;
+import com.pse.fotoz.persistence.HibernateEntityHelper;
+import com.pse.fotoz.persistence.HibernateException;
+import com.pse.fotoz.domain.entities.ProductType;
+import com.pse.fotoz.helpers.ConfigurationHelper;
 import com.pse.fotoz.helpers.forms.MultipartFileValidator;
 import com.pse.fotoz.helpers.forms.PersistenceFacade;
-import com.pse.fotoz.helpers.mav.ModelAndViewBuilder;
+import com.pse.fotoz.helpers.ModelAndViewBuilder;
 import com.pse.fotoz.properties.LocaleUtil;
 import java.io.File;
 import java.io.IOException;

@@ -1,15 +1,17 @@
 package com.pse.fotoz.controllers.photographers.shop;
 
-import com.pse.fotoz.dbal.HibernateEntityHelper;
-import com.pse.fotoz.dbal.HibernateException;
-import com.pse.fotoz.dbal.entities.*;
-import com.pse.fotoz.dbal.entities.filters.PictureFilters;
-import com.pse.fotoz.helpers.Authentication.OwnershipHelper;
-import com.pse.fotoz.helpers.encryption.PictureSessionCodeGen;
+import com.pse.fotoz.domain.entities.Shop;
+import com.pse.fotoz.domain.entities.PictureSession;
+import com.pse.fotoz.domain.entities.Picture;
+import com.pse.fotoz.persistence.HibernateEntityHelper;
+import com.pse.fotoz.persistence.HibernateException;
+import com.pse.fotoz.domain.filters.PictureFilters;
+import com.pse.fotoz.helpers.OwnershipHelper;
+import com.pse.fotoz.helpers.PictureSessionCodeGenerator;
 import com.pse.fotoz.helpers.forms.Parser;
 import com.pse.fotoz.helpers.forms.PersistenceFacade;
-import com.pse.fotoz.helpers.mav.ModelAndViewBuilder;
-import com.pse.fotoz.helpers.users.Users;
+import com.pse.fotoz.helpers.ModelAndViewBuilder;
+import com.pse.fotoz.helpers.UserHelper;
 import com.pse.fotoz.properties.LocaleUtil;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -74,7 +76,7 @@ public class PhotographersSession {
             Shop shop = Shop.getShopByLogin(shopName);
 
             if (OwnershipHelper.doesUserOwnShop(shop,
-                    Users.currentUsername().orElse(null))) {
+                    UserHelper.currentUsername().orElse(null))) {
                 List<PictureSession> sessions = shop.getSessions();
                 mav.addObject("sessions", sessions);
             } else {
@@ -120,7 +122,7 @@ public class PhotographersSession {
             
             Shop shop = Shop.getShopByLogin(shopName);
             if (!(OwnershipHelper.doesUserOwnShop(shop,
-                    Users.currentUsername().orElse(null)))) {
+                    UserHelper.currentUsername().orElse(null)))) {
                 mav = new ModelAndView("redirect:/app/login");
             }
         } catch (NullPointerException ex) {
@@ -172,9 +174,9 @@ public class PhotographersSession {
 
                 //check ownership
                 if (OwnershipHelper.doesUserOwnShop(shop,
-                        Users.currentUsername().orElse(null))) {
+                        UserHelper.currentUsername().orElse(null))) {
                     //get new session code
-                    String code = PictureSessionCodeGen.sessionCode(
+                    String code = PictureSessionCodeGenerator.sessionCode(
                             shop.getId(),
                             shop.getSessions().size());
 
@@ -250,7 +252,7 @@ public class PhotographersSession {
 
             //check ownership
             if (OwnershipHelper.doesUserOwnShop(shop,
-                    Users.currentUsername().orElse(null)) 
+                    UserHelper.currentUsername().orElse(null)) 
                     && OwnershipHelper.doesShopOwnPictureSession(shop, session)){
                 List<Picture> visiblePictures = session.
                     getPictures().stream().sorted().

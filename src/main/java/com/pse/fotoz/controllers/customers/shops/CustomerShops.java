@@ -1,9 +1,9 @@
 package com.pse.fotoz.controllers.customers.shops;
 
-import com.pse.fotoz.dbal.HibernateEntityHelper;
-import com.pse.fotoz.dbal.entities.Shop;
-import com.pse.fotoz.dbal.entities.filters.ShopFilters;
-import com.pse.fotoz.helpers.mav.ModelAndViewBuilder;
+import com.pse.fotoz.persistence.HibernateEntityHelper;
+import com.pse.fotoz.domain.entities.Shop;
+import com.pse.fotoz.domain.filters.ShopFilters;
+import com.pse.fotoz.helpers.ModelAndViewBuilder;
 import java.util.List;
 import java.util.Optional;
 import static java.util.stream.Collectors.toList;

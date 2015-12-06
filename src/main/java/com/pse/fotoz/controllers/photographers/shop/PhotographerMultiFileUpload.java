@@ -5,13 +5,13 @@
  */
 package com.pse.fotoz.controllers.photographers.shop;
 
-import com.pse.fotoz.dbal.HibernateException;
-import com.pse.fotoz.dbal.entities.Picture;
-import com.pse.fotoz.dbal.entities.PictureSession;
-import com.pse.fotoz.dbal.entities.Shop;
-import com.pse.fotoz.helpers.Authentication.LoginHelper;
-import com.pse.fotoz.helpers.Authentication.OwnershipHelper;
-import com.pse.fotoz.helpers.Configuration.ConfigurationHelper;
+import com.pse.fotoz.persistence.HibernateException;
+import com.pse.fotoz.domain.entities.Picture;
+import com.pse.fotoz.domain.entities.PictureSession;
+import com.pse.fotoz.domain.entities.Shop;
+import com.pse.fotoz.helpers.LoginHelper;
+import com.pse.fotoz.helpers.OwnershipHelper;
+import com.pse.fotoz.helpers.ConfigurationHelper;
 import com.pse.fotoz.properties.LocaleUtil;
 import java.awt.image.BufferedImage;
 import java.io.File;

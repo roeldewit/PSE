@@ -1,14 +1,14 @@
 package com.pse.fotoz.helpers.forms;
 
-import com.pse.fotoz.dbal.HibernateEntityHelper;
-import com.pse.fotoz.dbal.HibernateException;
-import com.pse.fotoz.dbal.entities.Customer;
-import com.pse.fotoz.dbal.entities.CustomerAccount;
-import com.pse.fotoz.dbal.entities.Photographer;
-import com.pse.fotoz.dbal.entities.Picture;
-import com.pse.fotoz.dbal.entities.PictureSession;
-import com.pse.fotoz.dbal.entities.ProductType;
-import com.pse.fotoz.dbal.entities.Shop;
+import com.pse.fotoz.persistence.HibernateEntityHelper;
+import com.pse.fotoz.persistence.HibernateException;
+import com.pse.fotoz.domain.entities.Customer;
+import com.pse.fotoz.domain.entities.CustomerAccount;
+import com.pse.fotoz.domain.entities.Photographer;
+import com.pse.fotoz.domain.entities.Picture;
+import com.pse.fotoz.domain.entities.PictureSession;
+import com.pse.fotoz.domain.entities.ProductType;
+import com.pse.fotoz.domain.entities.Shop;
 import java.math.BigDecimal;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -208,7 +208,7 @@ public class PersistenceFacade {
      * @pre Customer is logged in, session with code exists.
      * @param account
      * @param code
-     * @throws com.pse.fotoz.dbal.HibernateException
+     * @throws com.pse.fotoz.persistence.HibernateException
      * @throws NoSuchElementException when picturesession 
      * with corresponding code doesn't exist
      * 

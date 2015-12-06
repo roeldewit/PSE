@@ -5,9 +5,9 @@
  */
 package com.pse.fotoz.controllers.customers;
 
-import com.pse.fotoz.dbal.entities.CustomerAccount;
-import com.pse.fotoz.helpers.mav.ModelAndViewBuilder;
-import com.pse.fotoz.helpers.users.Users;
+import com.pse.fotoz.domain.entities.CustomerAccount;
+import com.pse.fotoz.helpers.ModelAndViewBuilder;
+import com.pse.fotoz.helpers.UserHelper;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

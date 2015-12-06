@@ -5,9 +5,9 @@
  */
 package com.pse.fotoz.unit.dbal.entities;
 
-import com.pse.fotoz.dbal.HibernateException;
-import com.pse.fotoz.dbal.entities.Photographer;
-import com.pse.fotoz.dbal.entities.Shop;
+import com.pse.fotoz.persistence.HibernateException;
+import com.pse.fotoz.domain.entities.Photographer;
+import com.pse.fotoz.domain.entities.Shop;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertFalse;

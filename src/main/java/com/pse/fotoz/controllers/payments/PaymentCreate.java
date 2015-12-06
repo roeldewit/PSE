@@ -1,9 +1,9 @@
 package com.pse.fotoz.controllers.payments;
 
-import com.pse.fotoz.dbal.HibernateEntityHelper;
-import com.pse.fotoz.dbal.HibernateException;
-import com.pse.fotoz.dbal.HibernateSession;
-import com.pse.fotoz.dbal.entities.Order;
+import com.pse.fotoz.persistence.HibernateEntityHelper;
+import com.pse.fotoz.persistence.HibernateException;
+import com.pse.fotoz.persistence.HibernateSession;
+import com.pse.fotoz.domain.entities.Order;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.RedirectView;
 import com.pse.fotoz.payments.PaymentFacade;
 import com.pse.fotoz.payments.domain.PaymentRequest;
+import com.pse.fotoz.payments.domain.PaymentRequest.Locale;
 import com.pse.fotoz.payments.domain.PaymentResponse;
-import com.pse.fotoz.payments.domain.enums.Locale;
 import com.pse.fotoz.properties.CustomLocaleResolver;
 import com.pse.fotoz.properties.LocaleUtil;
 import java.util.Map;

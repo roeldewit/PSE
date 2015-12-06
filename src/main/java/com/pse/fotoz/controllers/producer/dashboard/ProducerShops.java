@@ -1,11 +1,11 @@
 package com.pse.fotoz.controllers.producer.dashboard;
 
-import com.pse.fotoz.dbal.HibernateEntityHelper;
-import com.pse.fotoz.dbal.HibernateException;
-import com.pse.fotoz.dbal.entities.Photographer;
-import com.pse.fotoz.dbal.entities.Shop;
+import com.pse.fotoz.persistence.HibernateEntityHelper;
+import com.pse.fotoz.persistence.HibernateException;
+import com.pse.fotoz.domain.entities.Photographer;
+import com.pse.fotoz.domain.entities.Shop;
 import com.pse.fotoz.helpers.forms.PersistenceFacade;
-import com.pse.fotoz.helpers.mav.ModelAndViewBuilder;
+import com.pse.fotoz.helpers.ModelAndViewBuilder;
 import com.pse.fotoz.properties.LocaleUtil;
 import java.util.ArrayList;
 import java.util.List;

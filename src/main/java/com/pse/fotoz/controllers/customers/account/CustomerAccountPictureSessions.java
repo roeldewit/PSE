@@ -1,12 +1,12 @@
 package com.pse.fotoz.controllers.customers.account;
 
-import com.pse.fotoz.dbal.HibernateEntityHelper;
-import com.pse.fotoz.dbal.HibernateException;
-import com.pse.fotoz.dbal.entities.CustomerAccount;
-import com.pse.fotoz.dbal.entities.PictureSession;
+import com.pse.fotoz.persistence.HibernateEntityHelper;
+import com.pse.fotoz.persistence.HibernateException;
+import com.pse.fotoz.domain.entities.CustomerAccount;
+import com.pse.fotoz.domain.entities.PictureSession;
 import com.pse.fotoz.helpers.forms.PersistenceFacade;
-import com.pse.fotoz.helpers.mav.ModelAndViewBuilder;
-import com.pse.fotoz.helpers.users.Users;
+import com.pse.fotoz.helpers.ModelAndViewBuilder;
+import com.pse.fotoz.helpers.UserHelper;
 import com.pse.fotoz.properties.LocaleUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +53,8 @@ public class CustomerAccountPictureSessions {
             public String redirect = request.getRequestURL().toString();
         });
 
-        if (Users.currentUserAccount().isPresent()) {
-            CustomerAccount user = Users.currentUserAccount().get();
+        if (UserHelper.currentUserAccount().isPresent()) {
+            CustomerAccount user = UserHelper.currentUserAccount().get();
             List<PictureSession> sessions = HibernateEntityHelper.
                     all(PictureSession.class).stream().
                     filter(s -> s.getPermittedAccounts().stream().
@@ -93,8 +93,8 @@ public class CustomerAccountPictureSessions {
             public String redirect = request.getRequestURL().toString();
         });
         
-        if (Users.currentUserAccount().isPresent()) {
-            CustomerAccount customer = Users.currentUserAccount().get();
+        if (UserHelper.currentUserAccount().isPresent()) {
+            CustomerAccount customer = UserHelper.currentUserAccount().get();
             
             List<String> errors = addPermittedSession(
                 request, request.getParameter("code"), customer);
@@ -133,8 +133,8 @@ public class CustomerAccountPictureSessions {
             @PathVariable String code,
             RedirectAttributes redirectAttributes) {
         
-        if (Users.currentUserAccount().isPresent()) {
-            CustomerAccount user = Users.currentUserAccount().get();
+        if (UserHelper.currentUserAccount().isPresent()) {
+            CustomerAccount user = UserHelper.currentUserAccount().get();
             redirectAttributes.addFlashAttribute(
                 "errors", addPermittedSession(request, code, user));
         

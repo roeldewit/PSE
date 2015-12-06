@@ -1,6 +1,6 @@
 package com.pse.fotoz.helpers.forms;
 
-import com.pse.fotoz.helpers.Configuration.ConfigurationHelper;
+import com.pse.fotoz.helpers.ConfigurationHelper;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;

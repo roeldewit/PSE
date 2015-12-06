@@ -1,13 +1,13 @@
 package com.pse.fotoz.controllers.customers.shops;
 
-import com.pse.fotoz.dbal.HibernateEntityHelper;
-import com.pse.fotoz.dbal.entities.Picture;
-import com.pse.fotoz.dbal.entities.PictureSession;
-import com.pse.fotoz.dbal.entities.Shop;
-import com.pse.fotoz.dbal.entities.filters.PictureFilters;
+import com.pse.fotoz.persistence.HibernateEntityHelper;
+import com.pse.fotoz.domain.entities.Picture;
+import com.pse.fotoz.domain.entities.PictureSession;
+import com.pse.fotoz.domain.entities.Shop;
+import com.pse.fotoz.domain.filters.PictureFilters;
 import com.pse.fotoz.helpers.forms.Parser;
-import com.pse.fotoz.helpers.mav.ModelAndViewBuilder;
-import com.pse.fotoz.helpers.users.Users;
+import com.pse.fotoz.helpers.ModelAndViewBuilder;
+import com.pse.fotoz.helpers.UserHelper;
 import java.util.List;
 import java.util.Optional;
 import static java.util.stream.Collectors.toList;
@@ -60,7 +60,7 @@ public class CustomerPictureSessions {
         int sessionId = Parser.parseInt(sessionid).
                 orElse(Integer.MIN_VALUE);
         
-        final Integer userid = Users.currentUserAccount().
+        final Integer userid = UserHelper.currentUserAccount().
                 map(a -> a.getId()).
                 orElse(Integer.MIN_VALUE);
         

@@ -1,6 +1,6 @@
 package com.pse.fotoz.controllers.producer.dashboard;
 
-import com.pse.fotoz.helpers.mav.ModelAndViewBuilder;
+import com.pse.fotoz.helpers.ModelAndViewBuilder;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

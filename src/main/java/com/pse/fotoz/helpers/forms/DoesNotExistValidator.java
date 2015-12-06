@@ -1,6 +1,6 @@
 package com.pse.fotoz.helpers.forms;
 
-import com.pse.fotoz.dbal.HibernateEntityHelper;
+import com.pse.fotoz.persistence.HibernateEntityHelper;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
