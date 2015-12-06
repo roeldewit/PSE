@@ -6,6 +6,7 @@
 package com.pse.fotoz.controllers.customers;
 
 import com.pse.fotoz.helpers.ModelAndViewBuilder;
+import com.pse.fotoz.helpers.UserHelper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
@@ -31,8 +32,7 @@ public class CustomerHome {
                 withCookies(request, response).
                 build();
         
-         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-         String name = auth.getName();
+         String name = UserHelper.currentUsername().get();
         
          if(!name.equals("anonymousUser"))
          {

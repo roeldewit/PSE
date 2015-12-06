@@ -11,6 +11,7 @@ import com.pse.fotoz.properties.LocaleUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.util.stream.Collectors.toList;
@@ -53,12 +54,14 @@ public class CustomerAccountPictureSessions {
             public String redirect = request.getRequestURL().toString();
         });
 
-        if (UserHelper.currentUserAccount().isPresent()) {
-            CustomerAccount user = UserHelper.currentUserAccount().get();
+        Optional<CustomerAccount> customerOpt = UserHelper.currentUserAccount();
+        
+        if (customerOpt.isPresent()) {
+            CustomerAccount customer = customerOpt.get();
             List<PictureSession> sessions = HibernateEntityHelper.
                     all(PictureSession.class).stream().
                     filter(s -> s.getPermittedAccounts().stream().
-                            anyMatch(a -> a.getId() == user.getId())).
+                            anyMatch(a -> a.getId() == customer.getId())).
                     collect(toList());
 
             mav.addObject("sessions", sessions);
@@ -93,8 +96,10 @@ public class CustomerAccountPictureSessions {
             public String redirect = request.getRequestURL().toString();
         });
         
-        if (UserHelper.currentUserAccount().isPresent()) {
-            CustomerAccount customer = UserHelper.currentUserAccount().get();
+        Optional<CustomerAccount> customerOpt = UserHelper.currentUserAccount();
+        
+        if (customerOpt.isPresent()) {
+            CustomerAccount customer = customerOpt.get();
             
             List<String> errors = addPermittedSession(
                 request, request.getParameter("code"), customer);
@@ -133,10 +138,12 @@ public class CustomerAccountPictureSessions {
             @PathVariable String code,
             RedirectAttributes redirectAttributes) {
         
-        if (UserHelper.currentUserAccount().isPresent()) {
-            CustomerAccount user = UserHelper.currentUserAccount().get();
+        Optional<CustomerAccount> customerOpt = UserHelper.currentUserAccount();
+        
+        if (customerOpt.isPresent()) {
+            CustomerAccount customer = customerOpt.get();
             redirectAttributes.addFlashAttribute(
-                "errors", addPermittedSession(request, code, user));
+                "errors", addPermittedSession(request, code, customer));
         
             return new ModelAndView("redirect:/app/customers/account/sessions/");
         } else {
