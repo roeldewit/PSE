@@ -10,6 +10,7 @@
         http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
     <http auto-config="true" use-expressions="true">
+        <access-denied-handler error-page="/app/login/403"/>
         <intercept-url pattern="/app/producer/dashboard/**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/app/photographers/shop/**" access="hasRole('ROLE_PHOTOGRAPHER')" />
         <intercept-url pattern="/app/customers/login/**" access="hasRole('ROLE_CUSTOMER')" />
@@ -24,8 +25,10 @@
             authentication-success-handler-ref="myAuthenticationSuccessHandler" 
         />
         
+        
         <logout logout-url="/logout" logout-success-url="/app/logout"/>
         <csrf disabled="true"/>
+        
     </http>
     	
     <beans:bean id="myAuthenticationSuccessHandler"
@@ -51,5 +54,7 @@
         id="authenticationProviderCustomers" 
         class="com.pse.fotoz.helpers.Authentication.LoginProviderCustomers">
     </beans:bean>  
+    
+
 
 </beans:beans>
