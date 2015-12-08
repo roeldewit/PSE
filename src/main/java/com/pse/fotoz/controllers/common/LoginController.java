@@ -67,48 +67,18 @@ public class LoginController {
 
         if (request.isUserInRole("ROLE_ADMIN")) {
             mav.addObject("msg", user.getName());
-            mav.setViewName("common/login/403AD.twig");
+            mav.setViewName("common/error/403AD.twig");
         } else if (request.isUserInRole("ROLE_PHOTOGRAPHER")) {
             mav.addObject("msg", user.getName());
-            mav.setViewName("common/login/403PH.twig");
+            mav.setViewName("common/error/403PH.twig");
         } else if (request.isUserInRole("ROLE_CUSTOMER")) {
             mav.addObject("msg", user.getName());
-            mav.setViewName("common/login/403US.twig");
+            mav.setViewName("common/error/403US.twig");
         }
 
-//        if (user != null) {
-//            mav.addObject("msg", "Hi " + user.getName()
-//                    + ", you do not have permission to access this page!");
-//        } else {
-//            mav.addObject("msg",
-//                    "You do not have permission to access this page!");
-//        }
         return mav;
 
     }
 
-    /*
-     @Issue 
-     not yet implemented
-     */
-    /**
-     * Services a login request from the client. NYI
-     *
-     * @return
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView serviceLoginRequest() {
-        ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("common/login/login.twig");
-
-        mav.addObject("labels", LocaleUtil.getProperties("en"));
-        mav.addObject("page", new Object() {
-            public String lang = "en";
-        });
-        mav.addObject("error",
-                "The login functionality is not yet implemented.");
-
-        return mav;
-    }
 }
