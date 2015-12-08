@@ -40,7 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author René
  */
 @Controller
-public class PhotographerMultiFileUpload {
+public class PhotographerFileUpload {
 
     @RequestMapping(method = RequestMethod.GET, path = "/photographers/shop/{shopName}/{sessionCode}/upload")
     public ModelAndView doGet(HttpServletRequest request, HttpServletResponse response,
@@ -48,7 +48,7 @@ public class PhotographerMultiFileUpload {
 
         ModelAndView mav = new ModelAndView();
         Map<String, String> labels;
-        mav.setViewName("/photographers/account/uploadMulti.twig");
+        mav.setViewName("/photographers/account/upload.twig");
 
         try {
             labels = LocaleUtil.getProperties(
@@ -158,7 +158,7 @@ public class PhotographerMultiFileUpload {
             pic1.persist();
             returnVal = true;
         } catch (HibernateException ex) {
-            Logger.getLogger(PhotographerMultiFileUpload.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PhotographerFileUpload.class.getName()).log(Level.SEVERE, null, ex);
         }
         return returnVal;
     }

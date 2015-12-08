@@ -65,7 +65,7 @@ public class PaymentDone {
 
         }
 
-        mav.setViewName("customers/payment/paymentDone.twig");
+        mav.setViewName("customers/payment/payment_done.twig");
 
         return mav;
 
