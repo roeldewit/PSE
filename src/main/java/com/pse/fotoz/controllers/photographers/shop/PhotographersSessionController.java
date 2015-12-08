@@ -288,10 +288,13 @@ public class PhotographersSessionController {
             HttpServletRequest request, RedirectAttributes redirectAttributes) {
         
         List<String> errors = new ArrayList<>();
+        
+        double price;
 
         try {
-            double price = Double.parseDouble(request.getParameter("price"));
+            price = Double.parseDouble(request.getParameter("price"));
             int pictureId = Integer.parseInt(request.getParameter("picture_id"));
+            String pictureName = request.getParameter("picture_name");
             
             Shop shop = Shop.getShopByLogin(shopName);
             
@@ -306,6 +309,18 @@ public class PhotographersSessionController {
                     OwnershipHelper.
                     doesShopOwnPictureSessionAndPicture(shop, session, picture)) {
                 PersistenceFacade.changePicturePrice(pictureId, BigDecimal.valueOf(price));
+                
+                if(!pictureName.equals(""))
+                {
+                    
+                    PersistenceFacade.changePictureName(pictureId, pictureName);
+                }
+                else
+                {
+                    pictureName = "noname";
+                    PersistenceFacade.changePictureName(pictureId, pictureName);
+                }
+                
             }
             
         } catch (HibernateException ex) {
