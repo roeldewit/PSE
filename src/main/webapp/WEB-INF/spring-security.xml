@@ -32,7 +32,7 @@
     </http>
     	
     <beans:bean id="myAuthenticationSuccessHandler"
-        class="com.pse.fotoz.helpers.Authentication.RedirectAuthenticationSuccesHandler" />
+        class="com.pse.fotoz.auth.RedirectAuthenticationSuccesHandler" />
         
     <authentication-manager alias="authenticationManager">
         <authentication-provider ref="authenticationProviderCustomers" />
@@ -42,17 +42,17 @@
         
     <beans:bean 
         id="authenticationProviderProducer" 
-        class="com.pse.fotoz.helpers.Authentication.LoginProviderProducer">
+        class="com.pse.fotoz.auth.LoginProviderProducer">
     </beans:bean> 
     
     <beans:bean 
         id="authenticationProviderPhotographers" 
-        class="com.pse.fotoz.helpers.Authentication.LoginProviderPhotographers">
+        class="com.pse.fotoz.auth.LoginProviderPhotographers">
     </beans:bean>
     
     <beans:bean 
         id="authenticationProviderCustomers" 
-        class="com.pse.fotoz.helpers.Authentication.LoginProviderCustomers">
+        class="com.pse.fotoz.auth.LoginProviderCustomers">
     </beans:bean>  
     
 
