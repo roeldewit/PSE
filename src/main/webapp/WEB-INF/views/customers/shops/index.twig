@@ -6,11 +6,11 @@
 
 {% block more_css %}
     <link href="/assets/common/css/default.css" rel="stylesheet"/>
-
+    
     <link href="/assets/common/css/bootstrap/sb-admin/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
 
     <link href="/assets/customers/css/shop-homepage.css" rel="stylesheet"/>
-    
+
     <link href="/assets/customers/css/default.css" rel="stylesheet"/>
 {% endblock %}
 
@@ -42,6 +42,12 @@
                         <a href="/app/">
                             <i class="fa fa-home"></i> 
                             Home
+                        </a>
+                    </li>
+                    <li >
+                        <a href="/app/customers/shops">
+                            <i class="fa fa-camera"></i> 
+                            {{ labels.home_photographer_shop }}
                         </a>
                     </li>
                     <li>
@@ -141,18 +147,6 @@
             </div>
 
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="/app/producer/dashboard">Producer Login</a>
-                    </li>
-
-                    <li>
-                        <a href="/app/photographers/shop/">Photographer Login</a>
-                    </li>
-                </ul>
-            </div>
 
 
             <!-- /.navbar-collapse -->
