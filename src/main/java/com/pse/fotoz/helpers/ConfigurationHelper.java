@@ -71,4 +71,24 @@ public class ConfigurationHelper {
         return ConfigurationManager.config.
                 getString("mollie.redirecturl");
     }
+
+    //----------ftp-------------
+    public static String getFTPServerAdress() {
+        return ConfigurationManager.config.
+                getString("ftp.server");
+    }
+    public static int getFTPServerPort() {
+        return ConfigurationManager.config.
+                getInt("ftp.serverport");
+    }
+    
+    public static String getFTPUserName() {
+        return ConfigurationManager.configPasswords.
+                getString("ftp.username");
+    }
+
+    public static String getFTPPassword() {
+        return ConfigurationManager.configPasswords.
+                getString("ftp.password");
+    }
 }
