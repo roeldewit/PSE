@@ -7,6 +7,7 @@ package com.pse.fotoz.helpers;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
@@ -20,8 +21,8 @@ import org.apache.commons.net.ftp.FTPClient;
  */
 public class FTPHelper {
 
-    public static void SendFile(String localFile, String remoteFilePath, String remoteFileName) {
-
+    public static boolean SendFile(InputStream inputStream, String remoteFilePath, String remoteFileName) {
+        boolean success = false;
         FTPClient ftpClient = new FTPClient();
         try {
 
@@ -31,24 +32,20 @@ public class FTPHelper {
 
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 
-            File firstLocalFile = new File(localFile);
-
-            InputStream inputStream = new FileInputStream(firstLocalFile);
-            System.out.println("Start uploading " + localFile);
             //apache maakt zelf geen directories aan...
             ftpCreateDirectoryTree(ftpClient, remoteFilePath);
             if (ftpClient.changeWorkingDirectory(remoteFilePath)) {
-                boolean done = ftpClient.storeFile(remoteFileName, inputStream);
-                if (done) {
+                success = ftpClient.storeFile(remoteFileName, inputStream);
+                if (success) {
                     Logger.getLogger(FTPHelper.class.getName()).log(Level.SEVERE, null,
-                            localFile + " uploaded succesfully!");
+                            remoteFileName + " uploaded succesfully!");
                 }
             }
             inputStream.close();
 
         } catch (IOException ex) {
             Logger.getLogger(FTPHelper.class.getName()).log(Level.SEVERE, null,
-                    localFile + ex.toString());
+                    ex.toString());
         } finally {
             try {
                 if (ftpClient.isConnected()) {
@@ -57,9 +54,16 @@ public class FTPHelper {
                 }
             } catch (IOException ex) {
                 Logger.getLogger(FTPHelper.class.getName()).log(Level.SEVERE, null,
-                        localFile + ex.toString());
+                        ex.toString());
             }
         }
+        return success;
+    }
+
+    public static boolean SendFile(String localFile, String remoteFilePath, String remoteFileName) throws FileNotFoundException {
+
+        InputStream inputStream = new FileInputStream(localFile);
+        return SendFile(inputStream, remoteFilePath, remoteFileName);
     }
 
     private static void ftpCreateDirectoryTree(FTPClient client, String dirTree) throws IOException {

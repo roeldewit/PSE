@@ -5,6 +5,9 @@
  */
 package com.pse.fotoz.helpers;
 
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -37,16 +40,20 @@ public class FTPHelperTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of SendFile method, of class FTPHelper.
-     */
-    @Test
-    public void testSendFile() {
-        System.out.println("SendFile");
-        String localFilePath = "c:\\test.txt";
-        FTPHelper.SendFile(localFilePath, "\\test\\123\\", "test.txt");
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+//    /**
+//     * Test of SendFile method, of class FTPHelper.
+//     */
+//    @Test
+//    public void testSendFile() {
+//        System.out.println("SendFile");
+//        String localFilePath = "c:\\test.txt";
+//        try {
+//            FTPHelper.SendFile(localFilePath, "\\test\\123\\", "test.txt");
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(FTPHelperTest.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
     
 }
