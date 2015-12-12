@@ -15,12 +15,13 @@ import com.pse.fotoz.properties.LocaleUtil;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.util.stream.Collectors.toList;
+import java.util.stream.Stream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -72,7 +73,7 @@ public class PhotographersSession {
         //redirects to public homepage in case of wrong user/shop combination
         try {
             
-            Shop shop = Shop.getShopByLogin(shopName);
+            Shop shop = Shop.getShopByLogin(shopName).orElse(null);
 
             if (OwnershipHelper.doesUserOwnShop(shop,
                     UserHelper.currentUsername().orElse(null))) {
@@ -119,7 +120,7 @@ public class PhotographersSession {
         //check ownership and redirect in case of wrong user/shop combination
         try {
             
-            Shop shop = Shop.getShopByLogin(shopName);
+            Shop shop = Shop.getShopByLogin(shopName).orElse(null);
             if (!(OwnershipHelper.doesUserOwnShop(shop,
                     UserHelper.currentUsername().orElse(null)))) {
                 mav = new ModelAndView("redirect:/app/login");
@@ -169,7 +170,7 @@ public class PhotographersSession {
 
                 //get shop
                 
-                Shop shop = Shop.getShopByLogin(shopName);
+                Shop shop = Shop.getShopByLogin(shopName).orElse(null);
 
                 //check ownership
                 if (OwnershipHelper.doesUserOwnShop(shop,
@@ -246,7 +247,7 @@ public class PhotographersSession {
             PictureSession session = HibernateEntityHelper.byId(
                     PictureSession.class, id).orElse(null);
             
-            Shop shop = Shop.getShopByLogin(shopName);
+            Shop shop = Shop.getShopByLogin(shopName).orElse(null);
             
 
             //check ownership
@@ -278,64 +279,69 @@ public class PhotographersSession {
      * @param shopName
      * @param sessionId
      * @param request
-     * @param redirectAttributes attributes to be added to redirected MAV
      * @return 
      */
     @RequestMapping(value = "/{sessionId}", method = RequestMethod.POST)
     @ResponseBody
-    public ModelAndView UpdatePriceForm(
+    public ModelAndView updatePriceForm(
             @PathVariable("shopName") String shopName, 
             @PathVariable("sessionId") String sessionId,
-            HttpServletRequest request, RedirectAttributes redirectAttributes) {
+            HttpServletRequest request) {
+        
+        ModelAndView mav = ModelAndViewBuilder.empty().
+                withProperties(request).
+                build();
+
+        mav.addObject("page", new Object() {
+            public String lang = request.getSession().
+                    getAttribute("lang").toString();
+            public String uri = "/photographers/shop/sessions";
+            public String redirect = request.getRequestURL().toString();
+        });
         
         List<String> errors = new ArrayList<>();
-        
-        double price;
 
         try {
-            price = Double.parseDouble(request.getParameter("price"));
-            int pictureId = Integer.parseInt(request.getParameter("picture_id"));
-            String pictureName = request.getParameter("picture_name");
             
-            Shop shop = Shop.getShopByLogin(shopName);
+            Optional<Integer> sessionIdi = Parser.
+                    parseInt(sessionId);
+            Optional<Double> price = Parser.
+                    parseDouble(request.getParameter("price"));
+            Optional<Integer> pictureId = Parser.
+                    parseInt(request.getParameter("picture_id"));
+            Optional<String> pictureName = Optional.ofNullable(
+                    request.getParameter("picture_name"));
             
-            PictureSession session = HibernateEntityHelper.byId(
-                    PictureSession.class, 
-                    Parser.parseInt(sessionId).orElse(null)).orElse(null);
+            Optional<Shop> shop = Shop.getShopByLogin(shopName);
+            Optional<PictureSession> session = sessionIdi.flatMap(i ->
+                    HibernateEntityHelper.byId(PictureSession.class, i));            
+            Optional<Picture> picture = pictureId.flatMap(i -> 
+                    HibernateEntityHelper.byId(Picture.class, i));
             
-            Picture picture = HibernateEntityHelper
-                    .byId(Picture.class, pictureId).orElse(null);
-            
-            if(shop!=null && session!=null && picture!=null && 
-                    OwnershipHelper.
-                    doesShopOwnPictureSessionAndPicture(shop, session, picture)) {
-                PersistenceFacade.changePicturePrice(pictureId, BigDecimal.valueOf(price));
-                
-                if(!pictureName.equals(""))
-                {
-                    
-                    PersistenceFacade.changePictureName(pictureId, pictureName);
-                }
-                else
-                {
-                    pictureName = "noname";
-                    PersistenceFacade.changePictureName(pictureId, pictureName);
-                }
-                
+            if(Stream.of(sessionIdi, price, pictureId, pictureId, shop, session, 
+                    picture).allMatch(Optional::isPresent) && 
+                    shop.get().getSessions().contains(session.get()) &&
+                    session.get().getPictures().contains(picture.get())) {
+                PersistenceFacade.changePicturePrice(pictureId.get(), 
+                        BigDecimal.valueOf(price.get()));                
+                PersistenceFacade.changePictureName(pictureId.get(), 
+                        pictureName.get());                
+            } else {
+                errors.add(LocaleUtil.getErrorProperties(request).
+                    get("error_decimal_price"));
             }
             
         } catch (HibernateException ex) {
-            errors.add(ex.toString());
-        } catch (NumberFormatException | ConstraintViolationException ex) {
-            Logger.getLogger(PhotographersSession.class.getName()).
-                    log(Level.SEVERE, null, ex);
+            
             errors.add(LocaleUtil.getErrorProperties(request).
-                    get("error_decimal_price"));
+                    get("error_internaldatabaseerror"));
+            
         }
-
-        redirectAttributes.addFlashAttribute("errors", errors);
-        return new ModelAndView("redirect:/app/photographers/shop/"
-                + shopName + "/sessions/" + sessionId);
+        
+        mav.addObject("errors", errors);
+        
+        mav.setViewName("photographers/shop/session.twig");
+                
+        return mav;
     }
-
 }

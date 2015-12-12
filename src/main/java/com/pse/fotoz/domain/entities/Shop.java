@@ -13,6 +13,7 @@ import com.pse.fotoz.persistence.HibernateSession;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -151,9 +152,9 @@ public class Shop implements HibernateEntity {
                 orElse(null);
     }
 
-    public static Shop getShopByLogin(String login) {
+    public static Optional<Shop> getShopByLogin(String login) {
         return HibernateEntityHelper.find(Shop.class, "login", login)
-                .stream().findAny().orElse(null);
+                .stream().findAny();
     }
     
     /**

@@ -69,7 +69,7 @@ public class PhotographerFileUpload {
         });
 
         //check voor bestaande shop/sessie en eigendom  + correcte login
-        Shop shop = Shop.getShopByLogin(shopName);
+        Shop shop = Shop.getShopByLogin(shopName).orElse(null);
         PictureSession session = PictureSession.getSessionByCode(sessionCode);
         if (shop == null || session == null) {
             mav.addObject("error", labels.get("photographers_upload_error_wrongsessionorshop"));
@@ -96,7 +96,7 @@ public class PhotographerFileUpload {
 
         //check voor bestaande shop/sessie en eigendom + correcte login
         //TODO: uservriendelijke errors(deze errors zouden normaliter niet voor moeten komen dus niet cruciaal hier)
-        Shop shop = Shop.getShopByLogin(shopName);
+        Shop shop = Shop.getShopByLogin(shopName).orElse(null);
         PictureSession session = PictureSession.getSessionByCode(sessionCode);
         if (shop == null || session == null) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//niet bestaande shop/sessie
