@@ -137,6 +137,16 @@ public class Shop implements HibernateEntity {
     }
     
     /**
+     * Gives the total amount of pictures this shop has uploaded.
+     * @return Total amount of pictures.
+     */
+    public int getPictureCount() {
+        return sessions.stream().
+                map(s -> s.getPictures().size()).
+                reduce(0, (i1, i2) -> i1 + i2);
+    }
+    
+    /**
      * Finds a picture to display as representative of this shop.
      * This is a non-hidden picture that belongs to a public session.
      * @return p such that p in sessions and p not hidden and p.session public.
