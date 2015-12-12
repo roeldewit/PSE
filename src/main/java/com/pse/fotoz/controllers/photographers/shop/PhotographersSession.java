@@ -217,18 +217,16 @@ public class PhotographersSession {
      * @param shopName login name of shop owning the picture session
      * @param sessionId id of picture session to be shown
      * @param request
-     * @param response
      * @return
      */
     @RequestMapping(value = "/{sessionId}", method = RequestMethod.GET)
     public ModelAndView showPictureSession(
             @PathVariable("shopName") String shopName,
             @PathVariable("sessionId") String sessionId,
-            HttpServletRequest request, HttpServletResponse response) {
+            HttpServletRequest request) {
 
         ModelAndView mav = ModelAndViewBuilder.empty().
                 withProperties(request).
-                withCookies(request,response).
                 build();
 
         mav.addObject("shopName", shopName);
@@ -238,40 +236,32 @@ public class PhotographersSession {
             public String uri = "/photographers/shop/sessions";
             public String redirect = request.getRequestURL().toString();
         });
-        mav.setViewName("photographers/shop/session.twig");
-        
 
-        try {
-            Integer id = Parser.parseInt(sessionId).orElse(null);
+        Optional<Integer> id = Parser.parseInt(sessionId);
+        Optional<PictureSession> session = id.flatMap(i -> 
+                HibernateEntityHelper.byId(PictureSession.class, i));
+        Optional<Shop> shop = Shop.getShopByLogin(shopName);            
+        Optional<String> user = UserHelper.currentUsername();
 
-            PictureSession session = HibernateEntityHelper.byId(
-                    PictureSession.class, id).orElse(null);
+        //check ownership
+        if (Stream.of(id, session, shop, user).allMatch(Optional::isPresent)
+                && shop.get().doesUserOwnShop(user.get())
+                && shop.get().doesShopOwnPictureSession(session.get())) {
+            List<Picture> visiblePictures = session.get().
+                getPictures().stream().sorted().
+                collect(toList());
+
+            mav.addObject("session", session.get());
+            mav.addObject("pictures", visiblePictures);
             
-            Shop shop = Shop.getShopByLogin(shopName).orElse(null);
+            mav.setViewName("photographers/shop/session.twig");
             
-
-            //check ownership
-            if (OwnershipHelper.doesUserOwnShop(shop,
-                    UserHelper.currentUsername().orElse(null)) 
-                    && OwnershipHelper.doesShopOwnPictureSession(shop, session)){
-                List<Picture> visiblePictures = session.
-                    getPictures().stream().sorted().
-                    collect(toList());
-                
-                mav.addObject("session", session);
-                mav.addObject("pictures", visiblePictures);
-            } else {
-                mav = new ModelAndView("redirect:/app/login");
-            }
-
-        } catch (NullPointerException ex) {
-            //non existing shop or user
-            mav = new ModelAndView("redirect:/app/");
+            return mav;
+        } else {
+            return new ModelAndView("redirect:/app/login");
         }
 
-        return mav;
     }
-    
     
     /**
      * Changes the price of a certain picture
@@ -288,25 +278,15 @@ public class PhotographersSession {
             @PathVariable("sessionId") String sessionId,
             HttpServletRequest request) {
         
-        ModelAndView mav = ModelAndViewBuilder.empty().
-                withProperties(request).
-                build();
-
-        mav.addObject("page", new Object() {
-            public String lang = request.getSession().
-                    getAttribute("lang").toString();
-            public String uri = "/photographers/shop/sessions";
-            public String redirect = request.getRequestURL().toString();
-        });
-        
         List<String> errors = new ArrayList<>();
 
         try {
             
             Optional<Integer> sessionIdi = Parser.
                     parseInt(sessionId);
-            Optional<Double> price = Parser.
-                    parseDouble(request.getParameter("price"));
+            Optional<Double> price = Optional.ofNullable(
+                    request.getParameter("price")).
+                    flatMap(s -> Parser.parseDouble(s));
             Optional<Integer> pictureId = Parser.
                     parseInt(request.getParameter("picture_id"));
             Optional<String> pictureName = Optional.ofNullable(
@@ -318,10 +298,9 @@ public class PhotographersSession {
             Optional<Picture> picture = pictureId.flatMap(i -> 
                     HibernateEntityHelper.byId(Picture.class, i));
             
-            if(Stream.of(sessionIdi, price, pictureId, pictureId, shop, session, 
-                    picture).allMatch(Optional::isPresent) && 
-                    shop.get().getSessions().contains(session.get()) &&
-                    session.get().getPictures().contains(picture.get())) {
+            if(Stream.of(sessionIdi, price, pictureId, pictureName, shop, 
+                    session, picture).allMatch(Optional::isPresent) &&
+                    shop.get().doesShopOwnPictureSession(session.get())) {
                 PersistenceFacade.changePicturePrice(pictureId.get(), 
                         BigDecimal.valueOf(price.get()));                
                 PersistenceFacade.changePictureName(pictureId.get(), 
@@ -337,6 +316,8 @@ public class PhotographersSession {
                     get("error_internaldatabaseerror"));
             
         }
+        
+        ModelAndView mav = showPictureSession(shopName, sessionId, request);
         
         mav.addObject("errors", errors);
         
