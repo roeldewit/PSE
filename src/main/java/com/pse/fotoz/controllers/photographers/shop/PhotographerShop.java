@@ -1,9 +1,7 @@
 package com.pse.fotoz.controllers.photographers.shop;
 
-import com.pse.fotoz.domain.entities.Shop;
 import com.pse.fotoz.helpers.ModelAndViewBuilder;
 import com.pse.fotoz.helpers.UserHelper;
-import com.pse.fotoz.properties.LocaleUtil;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

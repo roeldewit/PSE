@@ -72,23 +72,25 @@
                             {{ picture.title }}
                         </a>
                     </h4>
-                    <p>
-                        {{ picture.description }}
-                    </p>
+  
+                  
 
-                    <p>
                     <form class="form-signin" method="post" role="form">
-                        change price:
+                        {{ labels.photographer_shop_sessions_change_price }}
 
-
-                        <input type="hidden"  value ="{{picture.id}}" id="picture_id" name="picture_id">
-                        <input type="number" step="0.01" id="price" name="price" class="form-control" required autofocus>
+                        <input type="hidden"  value ="{{picture.id}}" id="picture_id" name="picture_id"/>
+                        <input type="number" min="0.00" step="0.01" id="price" name="price" value="{{ picture.price }}" class="form-control" required autofocus/>
+                        
+                        {{ labels.photographer_shop_sessions_change_name }}
+                        
+                      
+                        <input type="text" id="picture_name" name="picture_name" value="{{ picture.title }}" class="form-control"/>
+                        
                         <button class="btn btn-lg btn-default btn-block" type="submit">
-                            Change
+                            {{ labels.photographer_shop_sessions_change_price_submit }}
                         </button>
                     </form>
-
-                    </p>
+                    
                 </div>
             </div>
         </div>

@@ -44,9 +44,35 @@ public class Login {
             public String redirect = request.getRequestURL().toString();
         });
         mav.addObject("redirect", request.getParameter("redirect"));
-        
+
         mav.setViewName("common/login/login.twig");
 
         return mav;
     }
+
+    /**
+     * Displays a 404 error page to the user.
+     * @param request
+     * @return 
+     */
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public ModelAndView accesssDenied(HttpServletRequest request) {
+
+        ModelAndView mav = ModelAndViewBuilder.empty().
+                withProperties(request).
+                build();
+
+        mav.addObject("page", new Object() {
+            public String lang = request.getSession().
+                    getAttribute("lang").toString();
+            public String redirect = request.getRequestURL().toString();
+        });
+        
+        mav.setViewName("common/error/403.twig");
+
+        return mav;
+
+    }
+
+
 }

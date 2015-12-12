@@ -9,7 +9,7 @@
     <link href="/assets/common/css/bootstrap/sb-admin/sb-admin.css" rel="stylesheet"/>
     <link href="/assets/common/css/bootstrap/sb-admin/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/assets/producer/css/dashboard.css" rel="stylesheet"/>
-    
+
     <link rel="stylesheet" href="/assets/common/fancybox/jquery.fancybox.css" type="text/css" media="screen" />  
 {% endblock %}
 
@@ -18,8 +18,8 @@
     <script type="text/javascript" src="/assets/common/fancybox/jquery.fancybox.pack.js"></script>
     <script type="text/javascript">
 	$(document).ready(function() {
-		$(".fancybox").fancybox();
-	});
+            $(".fancybox").fancybox();
+        });
     </script>
 {% endblock %}
 
@@ -32,7 +32,7 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="/app/producer/dashboard">{{ labels.producer_dashboard_index_page_title }}</a>
             </div>
-            
+
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
@@ -48,6 +48,9 @@
                     <li {% if page.uri equals "/producer/dashboard/products" %}  class="active" {% endif %} >
                         <a href="/app/producer/dashboard/products"><i class="fa fa-coffee"></i> {{ labels.producer_dashboard_index_item_products }}</a>
                     </li>
+                    <li {% if page.uri equals "/producer/dashboard/orders" %}  class="active" {% endif %} >
+                        <a href="/app/producer/dashboard/orders"><i class="fa fa-file-text-o"></i> {{ labels.producer_dashboard_index_item_orders }}</a>
+                    </li>
                     <li>    
                         <a href="/logout"><i class="fa fa-sign-out"></i> {{ labels.producer_dashboard_index_item_logout }}</a>
                     </li>
@@ -59,27 +62,27 @@
         <div id="page-wrapper">
 
             <div class="container-fluid">
-                
+
                 {% block heading %}
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">
-                            {{ labels.producer_dashboard_index_item_dashboard }}
-                        </h1>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">
+                                {{ labels.producer_dashboard_index_item_dashboard }}
+                            </h1>
+                        </div>
                     </div>
-                </div>
                 {% endblock %}
-                
+
                 {% block content %}
-                <div class="row">
-                    <div class="col-lg-12">
-                        <p>
-                            {{ labels.producer_dashboard_index_body_message }}
-                        </p>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p>
+                                {{ labels.producer_dashboard_index_body_message }}
+                            </p>
+                        </div>
                     </div>
-                </div>
                 {% endblock %}
-                
+
             </div>
             <!-- /.container-fluid -->
 
@@ -88,8 +91,8 @@
 
     </div>
     <!-- /#wrapper -->
-    
+
     <div class="spread language-bar-container">
-    {% include "common/snippets/language_bar.twig" %}
+        {% include "common/snippets/language_bar.twig" %}
     </div>
 {% endblock %}

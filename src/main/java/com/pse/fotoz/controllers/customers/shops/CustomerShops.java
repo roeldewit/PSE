@@ -60,7 +60,7 @@ public class CustomerShops {
                 public String redirect = request.getRequestURL().toString();
             });
         
-        mav.setViewName("customers/shops/shop_detail.twig");
+        mav.setViewName("customers/shops/sessions/index.twig");
         
         Optional<Shop> shop = HibernateEntityHelper.find(Shop.class, 
                 "login", shopid).stream()
