@@ -2,7 +2,6 @@ package com.pse.fotoz.controllers.common;
 
 import com.pse.fotoz.helpers.ModelAndViewBuilder;
 import com.pse.fotoz.properties.LocaleUtil;
-import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
