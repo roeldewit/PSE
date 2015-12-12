@@ -19,7 +19,7 @@
                         {% endif %}
                     </span> 
                     <span class="currency-convertable">
-                        {{ picture.price | numberformat("#.##") }}
+                        {{ picture.price | numberformat("#.00") }}
                     </span>
                 </p>
                 <p>
@@ -58,7 +58,7 @@
                                     {% endif %}
                                 </span> 
                                 <span class="currency-convertable">
-                                    {{ type.price | numberformat("#.##") }}
+                                    {{ type.price | numberformat("#.00") }}
                                 </span>
                             </p>
                         </div>

@@ -62,7 +62,7 @@
                                                 {% endif %}
                                             </span>
                                             <span class="currency-convertable">
-                                                {{ entry.picture.price | numberformat("#.##") }}
+                                                {{ entry.picture.price | numberformat("#.00") }}
                                             </span>
                                         </p>
                                     </td>
@@ -87,7 +87,7 @@
                                                 {% endif %}
                                             </span>
                                             <span class="currency-convertable">
-                                                {{ entry.type.price | numberformat("#.##") }}
+                                                {{ entry.type.price | numberformat("#.00") }}
                                             </span>
                                         </p>
                                     </td>
@@ -117,7 +117,7 @@
                                             {% endif %}
                                         </span>
                                         <span class="currency-convertable"> 
-                                            {{ entry.totalPrice | numberformat("#.##") }}
+                                            {{ entry.totalPrice | numberformat("#.00") }}
                                         </span>
                                     </td>
                                     <td>
@@ -143,7 +143,7 @@
                                         {% endif %}
                                     </span>
                                     <span class="currency-convertable">
-                                        {{ cart.priceSum | numberformat("#.##") }}
+                                        {{ cart.priceSum | numberformat("#.00") }}
                                     </span>
                                 </td>
                                 <td>
