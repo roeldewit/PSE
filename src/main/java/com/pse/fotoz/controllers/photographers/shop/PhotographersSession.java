@@ -254,7 +254,7 @@ public class PhotographersSession {
             mav.addObject("session", session.get());
             mav.addObject("pictures", visiblePictures);
             
-            mav.setViewName("photographers/shop/session.twig");
+            mav.setViewName("photographers/shop/session_detail.twig");
             
             return mav;
         } else {
@@ -321,7 +321,7 @@ public class PhotographersSession {
         
         mav.addObject("errors", errors);
         
-        mav.setViewName("photographers/shop/session.twig");
+        mav.setViewName("photographers/shop/session_detail.twig");
                 
         return mav;
     }

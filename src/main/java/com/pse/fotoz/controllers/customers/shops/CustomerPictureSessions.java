@@ -33,7 +33,7 @@ public class CustomerPictureSessions {
      * @param sessionid The identity of the session.
      * @param request The associated request.
      * @param response The associated response.
-     * @return View of "customers/shops/session.twig".
+     * @return View of "customers/shops/session_detail.twig".
      */
     @RequestMapping(value = "/{session}", method = RequestMethod.GET)
     public ModelAndView displayPictureSessions(@PathVariable("shop") 
@@ -51,7 +51,7 @@ public class CustomerPictureSessions {
             public String redirect = request.getRequestURL().toString();
         });
         
-        mav.setViewName("customers/shops/session.twig");
+        mav.setViewName("customers/shops/session_detail.twig");
         
         Optional<Shop> shop = HibernateEntityHelper.find(Shop.class, 
                 "login", shopname).stream()
