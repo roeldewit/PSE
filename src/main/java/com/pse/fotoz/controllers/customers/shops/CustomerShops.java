@@ -55,15 +55,15 @@ public class CustomerShops {
                 build();
 
         mav.addObject("page", new Object() {
-            public String lang = request.getSession().
-                    getAttribute("lang").toString();
-            public String uri = "/customers/shops/";
-            public String redirect = request.getRequestURL().toString();
-        });
-
-        mav.setViewName("customers/shops/shop_detail.twig");
-
-        Optional<Shop> shop = HibernateEntityHelper.find(Shop.class,
+                public String lang = request.getSession().
+                        getAttribute("lang").toString();
+                public String uri = "/customers/shops/";
+                public String redirect = request.getRequestURL().toString();
+            });
+        
+        mav.setViewName("customers/shops/sessions/index.twig");
+        
+        Optional<Shop> shop = HibernateEntityHelper.find(Shop.class, 
                 "login", shopid).stream()
                 .findAny();
 

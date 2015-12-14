@@ -74,14 +74,14 @@
                                         {{ order.account.login }}
                                     </td>
                                     <td>
-                                        {{ order.molliePaymentStatus }}
+                                        {{ order.status }}
                                     </td>
                                     <td>
 
                                         {{  order.molliePaymentMethod }}
                                     </td>
                                     <td>
-                                        {{ order.priceSum | numberformat("#.##") }}
+                                        {{ order.priceSum | numberformat("#.00") }}
 
                                     </td>
                                     <td>
