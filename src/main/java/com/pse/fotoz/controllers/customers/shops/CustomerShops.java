@@ -3,6 +3,7 @@ package com.pse.fotoz.controllers.customers.shops;
 import com.pse.fotoz.domain.entities.Shop;
 import com.pse.fotoz.domain.filters.ShopFilters;
 import com.pse.fotoz.helpers.ModelAndViewBuilder;
+import com.pse.fotoz.helpers.UserHelper;
 import com.pse.fotoz.persistence.HibernateEntityHelper;
 import java.util.List;
 import java.util.Optional;
@@ -18,41 +19,41 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/customers/shops")
 public class CustomerShops {
- 
+
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView displayShops(HttpServletRequest request, 
+    public ModelAndView displayShops(HttpServletRequest request,
             HttpServletResponse response) {
-        ModelAndView mav = ModelAndViewBuilder.empty().                
+        ModelAndView mav = ModelAndViewBuilder.empty().
                 withProperties(request).
                 withCookies(request, response).
-                build();        
-        
+                build();
+
         List<Shop> shops = HibernateEntityHelper.all(Shop.class).stream().
                 filter(ShopFilters.isVisible()).
                 collect(toList());
-        
+
         mav.addObject("shops", shops);
-        
+
         mav.addObject("page", new Object() {
             public String lang = request.getSession().
                     getAttribute("lang").toString();
             public String uri = "/customers/shops";
             public String redirect = request.getRequestURL().toString();
-        });            
+        });
 
         mav.setViewName("customers/shops/index.twig");
 
         return mav;
     }
-    
+
     @RequestMapping(value = "/{shop}", method = RequestMethod.GET)
-    public ModelAndView displayShopDetail(@PathVariable("shop") String shopid, 
+    public ModelAndView displayShopDetail(@PathVariable("shop") String shopid,
             HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = ModelAndViewBuilder.empty().
-                    withProperties(request).
-                    withCookies(request, response).
-                    build();
-        
+                withProperties(request).
+                withCookies(request, response).
+                build();
+
         mav.addObject("page", new Object() {
                 public String lang = request.getSession().
                         getAttribute("lang").toString();
@@ -65,7 +66,7 @@ public class CustomerShops {
         Optional<Shop> shop = HibernateEntityHelper.find(Shop.class, 
                 "login", shopid).stream()
                 .findAny();
-        
+
         if (!shop.isPresent()) {
             return new ModelAndView("redirect:/app/customers/shops/");
         } else {

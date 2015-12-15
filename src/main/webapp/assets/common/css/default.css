@@ -3,3 +3,19 @@
 
 .language-bar {background-color: #4B4B4B;}
 .language-bar img {display: block; float: right; padding: 5px;}
+
+
+body {
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background: url('../img/bg.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.col-lg-3 
+{
+    float: none;
+    display: inline-block;
+}
