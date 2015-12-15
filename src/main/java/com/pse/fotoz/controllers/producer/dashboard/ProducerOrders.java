@@ -1,8 +1,9 @@
 package com.pse.fotoz.controllers.producer.dashboard;
 
 import com.pse.fotoz.domain.entities.Order;
-import static com.pse.fotoz.domain.entities.Order.OrderStatus.PAID;
 import com.pse.fotoz.helpers.ModelAndViewBuilder;
+import com.pse.fotoz.payments.domain.PaymentResponse;
+import static com.pse.fotoz.payments.domain.PaymentResponse.PaymentStatus.PAID;
 import com.pse.fotoz.persistence.HibernateEntityHelper;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
@@ -56,7 +57,7 @@ public class ProducerOrders {
         });
         
         List<Order> orders = HibernateEntityHelper.all(Order.class).stream().
-                filter(o -> o.getStatus() == PAID).
+                filter(o -> o.getMolliePaymentStatus() == PAID).
                 collect(toList());
      
         mav.addObject("orders", orders);
@@ -79,7 +80,7 @@ public class ProducerOrders {
         });
         
         List<Order> orders = HibernateEntityHelper.all(Order.class).stream().
-                filter(o -> o.getStatus() != PAID).
+                filter(o -> o.getMolliePaymentStatus() != PAID).
                 collect(toList());
 
         mav.addObject("orders", orders);

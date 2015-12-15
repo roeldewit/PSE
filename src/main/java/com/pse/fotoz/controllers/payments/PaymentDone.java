@@ -48,7 +48,6 @@ public class PaymentDone {
                     order.setMolliePaymentPaidDateTime(pmResponse.get().getPaidDateTime());
                     order.setMolliePaymentID(pmResponse.get().getId());
                     order.setMolliePaymentMethod(pmResponse.get().getMethod());
-                    order.setStatus(Order.OrderStatus.PAID);
                     order.setMolliePaymentStatus(pmResponse.get().getStatus());
 
                     order.persist();
