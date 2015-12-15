@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block more_css %}
-    <link href="/assets/common/css/default.css" rel="stylesheet"/>
+
     <link href="/assets/common/css/bootstrap/sb-admin/sb-admin.css" rel="stylesheet"/>
     <link href="/assets/common/css/bootstrap/sb-admin/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/assets/photographers/css/dashboard.css" rel="stylesheet"/>
-
+    <link href="/assets/common/css/default.css" rel="stylesheet"/>
     <link rel="stylesheet" href="/assets/common/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
 
 {% endblock %}
@@ -18,9 +18,9 @@
     <script type="text/javascript" src="/assets/producer/js/default.js"></script>
     <script type="text/javascript" src="/assets/common/fancybox/jquery.fancybox.pack.js"></script>
     <script type="text/javascript">
-	$(document).ready(function() {
-		$(".fancybox").fancybox();
-	});
+        $(document).ready(function () {
+            $(".fancybox").fancybox();
+        });
     </script>
 {% endblock %}
 
@@ -33,7 +33,7 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="/app/photographers/shop">{{shopName}} </a>
             </div>
-            
+
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
@@ -55,27 +55,27 @@
         <div id="page-wrapper">
 
             <div class="container-fluid">
-                
+
                 {% block heading %}
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">
-                            {{ labels.photographer_shop_index_item_dashboard }}
-                        </h1>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">
+                                {{ labels.photographer_shop_index_item_dashboard }}
+                            </h1>
+                        </div>
                     </div>
-                </div>
                 {% endblock %}
-                
+
                 {% block content %}
-                <div class="row">
-                    <div class="col-lg-12">
-                        <p>
-                            {{ labels.photographer_shop_index_body_message }}
-                        </p>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p>
+                                {{ labels.photographer_shop_index_body_message }}
+                            </p>
+                        </div>
                     </div>
-                </div>
                 {% endblock %}
-                
+
             </div>
             <!-- /.container-fluid -->
 
@@ -84,8 +84,8 @@
 
     </div>
     <!-- /#wrapper -->
-    
+
     <div class="spread language-bar-container">
-    {% include "common/snippets/language_bar.twig" %}
+        {% include "common/snippets/language_bar.twig" %}
     </div>
 {% endblock %}
