@@ -40,7 +40,7 @@ public class Order implements HibernateEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private OrderStatus status;
+    private ShippingStatus status;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     @Cascade({CascadeType.SAVE_UPDATE})
@@ -79,11 +79,11 @@ public class Order implements HibernateEntity {
         this.account = account;
     }
 
-    public OrderStatus getStatus() {
+    public ShippingStatus getShippingStatus() {
         return status;
     }
 
-    public void setStatus(OrderStatus status) {
+    public void setShippingStatus(ShippingStatus status) {
         this.status = status;
     }
 
@@ -135,8 +135,8 @@ public class Order implements HibernateEntity {
         this.molliePaymentPaidDateTime = molliePaymentPaidDateTime;
     }
 
-    public static enum OrderStatus {
-        PLACED, PAID, PROCESSED
+    public static enum ShippingStatus {
+        SHIPPED, NOT_SHIPPED
     }
 
     /**
