@@ -10,7 +10,7 @@
     <link href="/assets/common/css/bootstrap/sb-admin/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
 
     <link href="/assets/customers/css/shop-homepage.css" rel="stylesheet"/>
-    
+
     <link href="/assets/customers/css/default.css" rel="stylesheet"/>
 {% endblock %}
 
@@ -44,12 +44,22 @@
                             Home
                         </a>
                     </li>
-                    <li>
-                        <a href="/app/customers/cart">
-                            <i class="fa fa-shopping-cart"></i> 
-                            {{ labels.customer_cart_cart }}
+
+                    <li {% if page.uri equals "/customers/account/sessions" %}  class="active" {% endif %}>
+                        <a href="/app/customers/account/sessions"><i class="fa fa-picture-o"></i> {{ labels.home_customer_sessions }}
                         </a>
                     </li>
+                    <li {% if page.uri equals "/customers/shops" %}  class="active" {% endif %}>
+                        <a href="/app/customers/shops">
+                            <i class="fa fa-camera"></i> 
+                            {{ labels.home_photographer_shop }}
+                        </a>
+                    </li>
+                    <li {% if page.uri equals "/customers/cart" %}  class="active" {% endif %}>
+                        <a href="/app/customers/cart"><i class="fa fa-shopping-cart"></i> {{ labels.customer_cart_cart }}
+                        </a>
+                    </li>
+
                     <li>
                         <a>
                             <i class="fa fa-eur"></i>
@@ -141,18 +151,6 @@
             </div>
 
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="/app/producer/dashboard">Producer Login</a>
-                    </li>
-
-                    <li>
-                        <a href="/app/photographers/shop/">Photographer Login</a>
-                    </li>
-                </ul>
-            </div>
 
 
             <!-- /.navbar-collapse -->

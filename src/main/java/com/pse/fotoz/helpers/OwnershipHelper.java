@@ -5,7 +5,6 @@
  */
 package com.pse.fotoz.helpers;
 
-import com.pse.fotoz.domain.entities.Photographer;
 import com.pse.fotoz.domain.entities.Picture;
 import com.pse.fotoz.domain.entities.PictureSession;
 import com.pse.fotoz.domain.entities.Shop;

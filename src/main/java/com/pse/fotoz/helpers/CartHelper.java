@@ -110,7 +110,7 @@ public class CartHelper {
      */
     public static void persistOrder(Cart cart) throws HibernateException {
         cart.getOrder().setAccount(UserHelper.currentCustomerAccount().get());
-        cart.getOrder().setStatus(Order.OrderStatus.PLACED);
+        cart.getOrder().setShippingStatus(Order.ShippingStatus.NOT_SHIPPED);
         cart.getOrder().getEntries().forEach(e -> e.setId(0));
         cart.getOrder().getEntries().forEach(e -> e.setTotalPrice(
                 e.getAmount() * ( e.getType().getPrice().doubleValue() + 

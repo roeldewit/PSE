@@ -57,7 +57,6 @@ public class PaymentCreate {
                         order.setMolliePaymentCreatedDate(pmResponse.get().getCreatedDatetime());
                         order.setMolliePaymentID(pmResponse.get().getId());
                         //order.setMolliePaymentMethod(pmResponse.get().getMethod());
-                        order.setStatus(Order.OrderStatus.PLACED);
                         order.setMolliePaymentStatus(pmResponse.get().getStatus());
 
                         order.persist();//HibernateException: Illegal attempt to associate a collection with two open sessions

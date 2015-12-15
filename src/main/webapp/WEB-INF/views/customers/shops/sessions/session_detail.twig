@@ -1,4 +1,4 @@
-{% extends "customers/shops/shop_detail.twig" %}
+{% extends "customers/shops/sessions/index.twig" %}
 
 {% block inner_content %}
     <h1>
@@ -22,7 +22,7 @@
                         {% endif %}
                     </span> 
                     <span class="currency-convertable">
-                        {{ picture.price | numberformat("#.##") }}
+                        {{ picture.price | numberformat("#.00") }}
                     </span>
                     </h4>
                     <h4>

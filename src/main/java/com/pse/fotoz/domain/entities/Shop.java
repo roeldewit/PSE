@@ -6,13 +6,12 @@
 package com.pse.fotoz.domain.entities;
 
 import com.pse.fotoz.helpers.PasswordHasher;
-import com.pse.fotoz.validators.DoesNotExist;
 import com.pse.fotoz.persistence.HibernateEntityHelper;
-import com.pse.fotoz.persistence.HibernateException;
-import com.pse.fotoz.persistence.HibernateSession;
+import com.pse.fotoz.validators.DoesNotExist;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +28,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import org.hibernate.Session;
 
 /**
  *
@@ -137,6 +135,16 @@ public class Shop implements HibernateEntity {
     }
     
     /**
+     * Gives the total amount of pictures this shop has uploaded.
+     * @return Total amount of pictures.
+     */
+    public int getPictureCount() {
+        return sessions.stream().
+                map(s -> s.getPictures().size()).
+                reduce(0, (i1, i2) -> i1 + i2);
+    }
+    
+    /**
      * Finds a picture to display as representative of this shop.
      * This is a non-hidden picture that belongs to a public session.
      * @return p such that p in sessions and p not hidden and p.session public.
@@ -151,9 +159,9 @@ public class Shop implements HibernateEntity {
                 orElse(null);
     }
 
-    public static Shop getShopByLogin(String login) {
+    public static Optional<Shop> getShopByLogin(String login) {
         return HibernateEntityHelper.find(Shop.class, "login", login)
-                .stream().findAny().orElse(null);
+                .stream().findAny();
     }
     
     /**
