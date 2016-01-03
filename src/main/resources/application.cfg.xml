@@ -18,4 +18,25 @@
         <paymentposturl>https://api.mollie.nl/v1/payments</paymentposturl>
         <redirecturl>http://127.0.0.1/app/paymentdone</redirecturl>
     </mollie>
+    <email>
+        <outgoing>
+            <server>
+                <protocol>
+                    
+                </protocol>
+                <host>
+                    
+                </host>
+                <port>
+                    
+                </port>
+                <username>
+                    
+                </username>
+                <password>
+                    
+                </password>
+            </server>
+        </outgoing>
+    </email>
 </config>
