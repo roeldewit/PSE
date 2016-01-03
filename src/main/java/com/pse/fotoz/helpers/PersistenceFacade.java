@@ -246,4 +246,7 @@ public class PersistenceFacade {
         
     }
     
+    public static void setStock(ProductType type, int stock) {
+        
+    }    
 }
