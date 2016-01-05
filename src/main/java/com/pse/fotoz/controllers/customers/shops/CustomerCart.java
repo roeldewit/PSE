@@ -47,6 +47,7 @@ public class CustomerCart {
                 forEach(e -> e.getOptions().setLabels(getProperties(request)));
         
         mav.addObject("cart", cart);
+        mav.addObject("entryPreviews", CartHelper.getOrderEntriesWithPreview(cart));
         
         mav.addObject("page", new Object() {
             public String lang = request.getSession().
