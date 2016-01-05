@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,11 +44,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class PhotographerFileUpload {
 
-    @RequestMapping(method = RequestMethod.GET, 
-            path = "/photographers/shop/{shopName}/{sessionCode}/upload")
-    public ModelAndView doGet(HttpServletRequest request, 
-            HttpServletResponse response, @PathVariable String shopName, 
-            @PathVariable String sessionCode) {
+    @RequestMapping(method = RequestMethod.GET, path = "/photographers/shop/{shopName}/{sessionCode}/upload")
+    public ModelAndView doGet(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable String shopName, @PathVariable String sessionCode) {
 
         ModelAndView mav = new ModelAndView();
         Map<String, String> labels;
@@ -63,9 +60,8 @@ public class PhotographerFileUpload {
             labels = LocaleUtil.getProperties(
                     request.getSession().getAttribute("lang").toString());
         }
-        //hiddenfields voor dropzone.js -> dropzone_init.js
-        mav.addObject("shopName", shopName);
-        mav.addObject("sessionCode", sessionCode);
+        mav.addObject("shopName", shopName);//hiddenfield voor dropzone.js -> dropzone_init.js
+        mav.addObject("sessionCode", sessionCode);//hiddenfield voor dropzone.js -> dropzone_init.js
 
         mav.addObject("labels", labels);
         mav.addObject("page", new Object() {
@@ -78,97 +74,79 @@ public class PhotographerFileUpload {
         Shop shop = Shop.getShopByLogin(shopName).orElse(null);
         PictureSession session = PictureSession.getSessionByCode(sessionCode);
         if (shop == null || session == null) {
-            //niet bestaande shop/sessie
-            mav.addObject("error", labels.
-                    get("photographers_upload_error_wrongsessionorshop"));
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            mav.addObject("error", labels.get("photographers_upload_error_wrongsessionorshop"));
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//niet bestaande shop/sessie
         } else if (!checkCredentials(shop, session)) {
-            //verkeerde credentials
-            mav.addObject("error", labels.
-                    get("photographers_upload_error_wrongcredentials"));
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            mav.addObject("error", labels.get("photographers_upload_error_wrongcredentials"));
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);//verkeerde credentials
         }
 
         return mav;
     }
 
-    @RequestMapping(method = RequestMethod.POST, 
-            path = "/photographers/shop/{shopName}/{sessionCode}/upload")
+    @RequestMapping(method = RequestMethod.POST, path = "/photographers/shop/{shopName}/{sessionCode}/upload")
     public @ResponseBody
     String upload(MultipartHttpServletRequest request,
-            HttpServletResponse response, @PathVariable String shopName, 
-            @PathVariable String sessionCode) {
+            HttpServletResponse response, @PathVariable String shopName, @PathVariable String sessionCode) {
 
         ServletContext context = request.getServletContext();
-        //dit bepaald de folder waar opgeslagen wordt
-        String appPath = context.getRealPath(
-                ConfigurationHelper.getShopAssetLocation());
+        String appPath = context.getRealPath(ConfigurationHelper.getShopAssetLocation());//dit bepaald de folder waar opgeslagen wordt
         String returnMessage = "";
 
+        Iterator<String> itr = request.getFileNames();
+        MultipartFile file = null;
 
         //check voor bestaande shop/sessie en eigendom + correcte login
-        //TODO: uservriendelijke errors(deze errors zouden normaliter niet 
-        //voor moeten komen dus niet cruciaal hier)
+        //TODO: uservriendelijke errors(deze errors zouden normaliter niet voor moeten komen dus niet cruciaal hier)
         Shop shop = Shop.getShopByLogin(shopName).orElse(null);
         PictureSession session = PictureSession.getSessionByCode(sessionCode);
-        
         if (shop == null || session == null) {
-            //niet bestaande shop/sessie
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//niet bestaande shop/sessie
         } else if (!checkCredentials(shop, session)) {
-            //verkeerde credentials
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);//verkeerde credentials
         } else {
-            for (Entry<String, MultipartFile> e : 
-                    request.getFileMap().entrySet() ) {
-                MultipartFile file = e.getValue();
-                String name = e.getKey();
+
+            while (itr.hasNext()) {
+                file = request.getFile(itr.next());
                 Logger.getLogger(file.getOriginalFilename() + " uploaded! ");
+
                 if (!file.isEmpty()) {
                     try {
+                        String name = file.getOriginalFilename();
+
                         //hi-res naar ftp
-                        String HighresPath = ("\\hi-res\\" + shop.getLogin() + 
-                                "\\sessions\\" + session.getId());
-                        if (FTPHelper.SendFile(file.getInputStream(), 
-                                HighresPath, name)) {
+                        String HighresPath = ("\\hi-res\\" + shop.getLogin() + "\\sessions\\" + session.getId());
+                        if (FTPHelper.SendFile(file.getInputStream(), HighresPath, name)) {
                             //opslaan in db
-                            BufferedImage imageOriginal = ImageIO.
-                                    read(file.getInputStream());
-                            if (saveUploadToDB(file, name, session, 
-                                    imageOriginal)) {
+                            BufferedImage imageOriginal = ImageIO.read(file.getInputStream());
+                            if (saveUploadToDB(file, name, session, imageOriginal)) {
                                 //dan als ftp+db=ok de lowres opslaan
-                                File folder = new File(appPath + "\\" + 
-                                        shop.getLogin() + "\\sessions\\" + 
-                                        session.getId());
-                                //maak folder als niet bestaat
-                                folder.mkdirs();
-                                BufferedImage lowResImage = Scalr.
-                                        resize(imageOriginal, 800);
-                                ImageIO.write(lowResImage, "jpg", 
-                                        new File(folder.getAbsolutePath() + 
-                                                "\\" +  name));
+                                File folder = new File(appPath + "\\" + shop.getLogin() + "\\sessions\\" + session.getId());
+                                folder.mkdirs(); //maak folder als niet bestaat
+                                BufferedImage lowResImage = Scalr.resize(imageOriginal, 800);
+                                ImageIO.write(lowResImage, "jpg", new File(folder.getAbsolutePath() + "\\" +  name));
                             }
 
                             returnMessage = "Upload van " + name + " geslaagd!";
                         }
-                    } catch (Exception ex) {
-                        returnMessage = "Upload mislukt => " + ex.getMessage();
+                    } catch (Exception e) {
+                        returnMessage = "Upload mislukt => " + e.getMessage();
                         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     }
                 } else {
                     returnMessage = "Upload van mislukt, bestand was leeg.";
                     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 }
+
             }
         }
         return returnMessage;
     }
 
-    private boolean saveUploadToDB(MultipartFile file, String title, 
-            PictureSession session, BufferedImage image) throws IOException {
+    private boolean saveUploadToDB(MultipartFile file, String title, PictureSession session, BufferedImage image) throws IOException {
+        boolean returnVal = false;
         try {
-            //dubbele entry binnen de sessie weghalen: dubbele bestanden worden 
-            //dus effectief steeds geupdate
+            //dubbele entry binnen de sessie weghalen: dubbele bestanden worden dus effectief steeds geupdate
             if (Picture.doesFileNameExist(title, session)) {
                 Picture p = Picture.getByFileNameAndSession(title, session);
                 p.delete();
@@ -180,30 +158,31 @@ public class PhotographerFileUpload {
             pic1.setHeight(image.getHeight());
             pic1.setFileName(file.getOriginalFilename());
 
+            //pic1.setDescription(description);
+            //pic1.setPrice(new BigDecimal(0.01));
             pic1.setHidden(false);
             pic1.setApproved(Picture.Approved.PENDING);
             pic1.setSubmissionDate(new Date());
             pic1.setTitle(title);
             pic1.persist();
-            return true;
+            returnVal = true;
         } catch (HibernateException ex) {
-            Logger.getLogger(PhotographerFileUpload.class.getName()).
-                    log(Level.SEVERE, null, ex);
-            return false;
+            Logger.getLogger(PhotographerFileUpload.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return returnVal;
     }
 
     private boolean checkCredentials(Shop s, PictureSession ps) {
+        boolean returnVal = false;
         Optional<Shop> loggedInShop = UserHelper.currentShopAccount();
 
         if (loggedInShop.isPresent()) {
             //zijn we daadwerkelijk ingelogd onder de juiste shop?
             if (loggedInShop.get().getId() == s.getId()) {
-                return OwnershipHelper.doesShopOwnPictureSession(s, ps);
+                returnVal = OwnershipHelper.doesShopOwnPictureSession(s, ps);
             }
         }
-        
-        return false;
+        return returnVal;
     }
 
 }
