@@ -8,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 /**
  *
@@ -25,12 +24,16 @@ public class RedirectAuthenticationSuccesHandler extends SavedRequestAwareAuthen
         if (request.getParameter("redirect") != null) {
             redirectStrategy.sendRedirect(request, response,
                     request.getParameter("redirect"));
-        } else if (authentication.getAuthorities().iterator().next().getAuthority().equals("ROLE_ADMIN")) {
+        } else if (authentication.getAuthorities().iterator().next().
+                getAuthority().equals("ROLE_ADMIN")) {
             
-           redirectStrategy.sendRedirect(request, response, "/app/producer/dashboard");
+           redirectStrategy.sendRedirect(request, response, 
+                   "/app/producer/dashboard");
             
-        } else if (authentication.getAuthorities().iterator().next().getAuthority().equals("ROLE_PHOTOGRAPHER")) {
-            redirectStrategy.sendRedirect(request, response, "/app/photographers/shop/");
+        } else if (authentication.getAuthorities().iterator().next().
+                getAuthority().equals("ROLE_PHOTOGRAPHER")) {
+            redirectStrategy.sendRedirect(request, response, 
+                    "/app/photographers/shop/");
         }
         else {
             redirectStrategy.sendRedirect(request, response, "/app/");
