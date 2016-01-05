@@ -30,13 +30,16 @@ public class FTPHelper {
      * @param remoteFileName remote filename, will overwrite if exists!
      * @return true if transfer successful
      */
-    public static boolean SendFile(InputStream inputStream, String remoteFilePath, String remoteFileName) {
+    public static boolean SendFile(InputStream inputStream, 
+            String remoteFilePath, String remoteFileName) {
         boolean success = false;
         FTPClient ftpClient = new FTPClient();
         try {
 
-            ftpClient.connect(ConfigurationHelper.getFTPServerAdress(), ConfigurationHelper.getFTPServerPort());
-            ftpClient.login(ConfigurationHelper.getFTPUserName(), ConfigurationHelper.getFTPPassword());
+            ftpClient.connect(ConfigurationHelper.getFTPServerAdress(), 
+                    ConfigurationHelper.getFTPServerPort());
+            ftpClient.login(ConfigurationHelper.getFTPUserName(), 
+                    ConfigurationHelper.getFTPPassword());
             ftpClient.enterLocalPassiveMode();
 
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
@@ -46,8 +49,9 @@ public class FTPHelper {
             if (ftpClient.changeWorkingDirectory(remoteFilePath)) {
                 success = ftpClient.storeFile(remoteFileName, inputStream);
                 if (success) {
-                    Logger.getLogger(FTPHelper.class.getName()).log(Level.SEVERE, null,
-                            remoteFileName + " uploaded succesfully!");
+                    Logger.getLogger(FTPHelper.class.getName()).
+                            log(Level.SEVERE, null, remoteFileName + 
+                                    " uploaded succesfully!");
                 }
             }
             inputStream.close();
@@ -62,8 +66,8 @@ public class FTPHelper {
                     ftpClient.disconnect();
                 }
             } catch (IOException ex) {
-                Logger.getLogger(FTPHelper.class.getName()).log(Level.SEVERE, null,
-                        ex.toString());
+                Logger.getLogger(FTPHelper.class.getName()).log(Level.SEVERE, 
+                        null, ex.toString());
             }
         }
         return success;
@@ -79,17 +83,20 @@ public class FTPHelper {
      * @return true if transfer successful
      * @throws FileNotFoundException if local file not exists
      */
-    public static boolean SendFile(String localFile, String remoteFilePath, String remoteFileName) throws FileNotFoundException {
+    public static boolean SendFile(String localFile, String remoteFilePath, 
+            String remoteFileName) throws FileNotFoundException {
 
         InputStream inputStream = new FileInputStream(localFile);
         return SendFile(inputStream, remoteFilePath, remoteFileName);
     }
 
-    private static void ftpCreateDirectoryTree(FTPClient client, String dirTree) throws IOException {
+    private static void ftpCreateDirectoryTree(FTPClient client, 
+            String dirTree) throws IOException {
 
         boolean dirExists = true;
 
-        //tokenize the string and attempt to change into each directory level.  If you cannot, then start creating.
+        //tokenize the string and attempt to change into each directory level.  
+        //If you cannot, then start creating.
         String[] directories = dirTree.split("\\\\");
         for (String dir : directories) {
             if (!dir.isEmpty()) {
@@ -98,10 +105,14 @@ public class FTPHelper {
                 }
                 if (!dirExists) {
                     if (!client.makeDirectory(dir)) {
-                        throw new IOException("Unable to create remote directory '" + dir + "'.  error='" + client.getReplyString() + "'");
+                        throw new IOException("Unable to create "
+                                + "remote directory '" + dir + "'.  error='" + 
+                                client.getReplyString() + "'");
                     }
                     if (!client.changeWorkingDirectory(dir)) {
-                        throw new IOException("Unable to change into newly created remote directory '" + dir + "'.  error='" + client.getReplyString() + "'");
+                        throw new IOException("Unable to change into newly "
+                                + "created remote directory '" + dir + 
+                                "'.  error='" + client.getReplyString() + "'");
                     }
                 }
             }
