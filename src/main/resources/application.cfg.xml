@@ -18,4 +18,8 @@
         <paymentposturl>https://api.mollie.nl/v1/payments</paymentposturl>
         <redirecturl>http://127.0.0.1/app/paymentdone</redirecturl>
     </mollie>
+    <ftp>
+        <server>127.0.0.1</server>
+        <serverport>21</serverport>
+    </ftp>
 </config>
