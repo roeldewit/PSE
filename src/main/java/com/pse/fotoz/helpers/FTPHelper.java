@@ -21,6 +21,15 @@ import org.apache.commons.net.ftp.FTPClient;
  */
 public class FTPHelper {
 
+    /**
+     * Sends a filestream to the ftp server specified in application.cfg.xml
+     *
+     * @param inputStream the stream to send
+     * @param remoteFilePath remote path on ftp server, full path will be
+     * created if not exists
+     * @param remoteFileName remote filename, will overwrite if exists!
+     * @return true if transfer successful
+     */
     public static boolean SendFile(InputStream inputStream, String remoteFilePath, String remoteFileName) {
         boolean success = false;
         FTPClient ftpClient = new FTPClient();
@@ -60,6 +69,16 @@ public class FTPHelper {
         return success;
     }
 
+    /**
+     * Sends a local file to the ftp server specified in application.cfg.xml
+     *
+     * @param localFile full path of local file
+     * @param remoteFilePath remote path on ftp server, full path will be
+     * created if not exists
+     * @param remoteFileName remote filename, will overwrite if exists!
+     * @return true if transfer successful
+     * @throws FileNotFoundException if local file not exists
+     */
     public static boolean SendFile(String localFile, String remoteFilePath, String remoteFileName) throws FileNotFoundException {
 
         InputStream inputStream = new FileInputStream(localFile);

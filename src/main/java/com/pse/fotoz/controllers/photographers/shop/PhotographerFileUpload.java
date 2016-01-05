@@ -114,7 +114,6 @@ public class PhotographerFileUpload {
                     try {
                         String name = file.getOriginalFilename();
 
-                        //
                         //hi-res naar ftp
                         String HighresPath = ("\\hi-res\\" + shop.getLogin() + "\\sessions\\" + session.getId());
                         if (FTPHelper.SendFile(file.getInputStream(), HighresPath, name)) {
