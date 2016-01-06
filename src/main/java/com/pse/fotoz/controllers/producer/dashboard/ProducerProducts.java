@@ -3,6 +3,7 @@ package com.pse.fotoz.controllers.producer.dashboard;
 import com.pse.fotoz.domain.entities.ProductType;
 import com.pse.fotoz.helpers.ConfigurationHelper;
 import com.pse.fotoz.helpers.ModelAndViewBuilder;
+import com.pse.fotoz.helpers.Parser;
 import com.pse.fotoz.helpers.PersistenceFacade;
 import com.pse.fotoz.persistence.HibernateEntityHelper;
 import com.pse.fotoz.persistence.HibernateException;
@@ -138,8 +139,15 @@ public class ProducerProducts {
                 BigDecimal price = new BigDecimal(
                         request.getParameter("price"));
                 int stock = Integer.parseInt(request.getParameter("stock"));
+                int width = Integer.parseInt(request.getParameter("width"));
+                int height = Integer.parseInt(request.getParameter("height"));
+                int xStart = Integer.parseInt(request.getParameter("overlayXStart"));
+                int xStop = Integer.parseInt(request.getParameter("overlayXStop"));
+                int yStart = Integer.parseInt(request.getParameter("overlayYStart"));
+                int yStop = Integer.parseInt(request.getParameter("overlayYStop"));
                 PersistenceFacade.addProductType(
-                        name, description, price, stock, filename);
+                        name, description, price, stock, filename, width, 
+                        height, xStart, xStop, yStart, yStop);
                 
                 //no errors found. change viewname for succesfull add
                 mav.setViewName("producer/dashboard/products_new_success.twig");
