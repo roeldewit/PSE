@@ -1,5 +1,15 @@
 {% extends "customers/shops/index.twig" %}
-
+{% block even_more_css %}
+    <link href="/assets/customers/css/imgareaselect/imgareaselect-default.css" rel="stylesheet"/>
+{% endblock %}
+{% block even_more_js %}
+    <script src="/assets/customers/js/jquery.imgareaselect.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.picture-detail').imgAreaSelect({handles: true});
+        });
+    </script>
+{% endblock %}   
 {% block content %}
     <div class="container">
         <div class="row">
@@ -27,10 +37,10 @@
                 </p>
             </div>
         </div>
-                
+
         <form id="add_to_cart">
             <input type="hidden" name="picture_id" value="{{ picture.id }}"/>
-            
+
             <div class="row">
                 <div class="col-md-12">
                     <h2>

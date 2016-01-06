@@ -12,12 +12,14 @@
 
     <link href="/assets/customers/css/default.css" rel="stylesheet"/>
     <link href="/assets/common/css/default.css" rel="stylesheet"/>
+   {% block even_more_css %}{% endblock %}
 {% endblock %}
 
 {% block more_js %}
     <script src="/assets/common/js/js.cookie.js"></script>
     <script src="/assets/common/js/jquery.format-1.3.min.js"></script>
     <script src="/assets/customers/js/default.js"></script>
+    {% block even_more_js %}{% endblock %}
 {% endblock %}
 
 {% block body %}
