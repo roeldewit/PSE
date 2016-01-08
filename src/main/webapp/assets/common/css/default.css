@@ -14,8 +14,3 @@ body {
     -o-background-size: cover;
 }
 
-.col-lg-3 
-{
-    float: none;
-    display: inline-block;
-}
