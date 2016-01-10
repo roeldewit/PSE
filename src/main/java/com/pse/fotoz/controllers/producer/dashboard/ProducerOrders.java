@@ -6,9 +6,11 @@ import com.pse.fotoz.payments.domain.PaymentResponse;
 import static com.pse.fotoz.payments.domain.PaymentResponse.PaymentStatus.PAID;
 import com.pse.fotoz.persistence.HibernateEntityHelper;
 import java.util.List;
+import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -89,4 +91,38 @@ public class ProducerOrders {
         return mav;
     }
     
+    /**
+     * Displays the details of an order to the user.
+     * @param id The identity of the order
+     * @param request The request.
+     * @return View using producer/dashboard/order_detail.twig.
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public ModelAndView displayOrderDetal(
+            @PathVariable(value = "id") int id, 
+            HttpServletRequest request) {
+        ModelAndView mav = ModelAndViewBuilder.empty().
+                    withProperties(request).
+                    build();
+        
+        mav.addObject("page", new Object() {
+            public String lang = request.getSession().
+                    getAttribute("lang").toString();
+            public String uri = "/producer/dashboard/orders";
+            public String redirect = request.getRequestURL().toString();
+        });
+        
+        Optional<Order> order = HibernateEntityHelper.byId(Order.class, id);
+        
+        if (order.isPresent()) {
+            mav.addObject("order", order.get());
+            mav.setViewName("producer/dashboard/order_detail.twig");
+            
+            return mav;
+        } else {
+            return new ModelAndView("redirect:/app/producer/dashboard/orders");
+        }
+        
+
+    }
 }

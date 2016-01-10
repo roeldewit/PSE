@@ -68,25 +68,34 @@
                             {% for order in orders %}
                                 <tr>                                    
                                     <td>
-                                        {{ order.id }}
+                                        <a href="/app/producer/dashboard/orders/{{ order.id }}">
+                                            {{ order.id }}
+                                        </a>
                                     </td>
                                     <td>
-                                        {{ order.account.login }}
+                                        <a href="/app/producer/dashboard/orders/{{ order.id }}">
+                                            {{ order.account.login }}
+                                        </a>
                                     </td>
                                     <td>
-                                        {{ order.molliePaymentStatus }}
+                                        <a href="/app/producer/dashboard/orders/{{ order.id }}">
+                                            {{ order.molliePaymentStatus }}
+                                        </a>
                                     </td>
                                     <td>
-
-                                        {{  order.molliePaymentMethod }}
+                                        <a href="/app/producer/dashboard/orders/{{ order.id }}">
+                                            {{ order.molliePaymentMethod }}
+                                        </a>
                                     </td>
                                     <td>
-                                        {{ order.priceSum | numberformat("#.00") }}
-
+                                        <a href="/app/producer/dashboard/orders/{{ order.id }}">
+                                            {{ order.priceSum | numberformat("#.00") }}
+                                        </a>
                                     </td>
                                     <td>
-                                        {{ order.molliePaymentCreatedDate }}
-
+                                        <a href="/app/producer/dashboard/orders/{{ order.id }}">
+                                            {{ order.molliePaymentCreatedDate }}
+                                        </a>
                                     </td>
                                 </tr>
                             {% endfor %}
