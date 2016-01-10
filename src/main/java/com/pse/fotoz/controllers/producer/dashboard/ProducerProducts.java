@@ -188,13 +188,14 @@ public class ProducerProducts {
 
             json = new JSONObject(data);
             int id = json.getInt("product_type_id");
-            int stock = json.getInt("stock");
+            int stock = json.getInt("amount");
             
             Optional<ProductType> type = HibernateEntityHelper.
                     byId(ProductType.class, id);
             
             if (type.isPresent()) {
                 PersistenceFacade.setStock(type.get(), stock);
+                System.out.println(stock);
                 return ResponseEntity.ok().body("ok"); 
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).

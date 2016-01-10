@@ -44,7 +44,6 @@ public class ProductType implements HibernateEntity{
          
     @Basic
     @Column(name = "stock")
-    @Min(value=0, message="{error_min_stock}")
     private int stock;
     
     @Basic

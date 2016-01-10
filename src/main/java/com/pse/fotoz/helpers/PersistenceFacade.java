@@ -246,7 +246,9 @@ public class PersistenceFacade {
         
     }
     
-    public static void setStock(ProductType type, int stock) {
-        
+    public static void setStock(ProductType type, int stock) 
+            throws HibernateException {
+        type.setStock(stock);
+        type.persist();
     }    
 }
