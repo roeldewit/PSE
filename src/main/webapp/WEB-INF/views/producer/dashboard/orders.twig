@@ -27,6 +27,9 @@
             <a href="/app/producer/dashboard/orders/unpaid" class="btn btn-default">
                 {{ labels.producer_dashboard_orders_unpaid_button }} 
             </a>
+            <a href="/app/producer/dashboard/orders/not-shipped-but-paid" class="btn btn-default">
+                {{ labels.producer_dashboard_orders_not_shipped_but_paid_button }} 
+            </a>
         </div>
     </div>
 
@@ -49,6 +52,9 @@
                                 </th>
                                 <th>
                                     {{ labels.producer_dashboard_orders_status }}     
+                                </th>
+                                <th>
+                                    {{ labels.producer_dashboard_orders_shipping_status }}     
                                 </th>
                                 <th>
                                     {{ labels.producer_dashboard_orders_method }}                    
@@ -84,6 +90,11 @@
                                     </td>
                                     <td>
                                         <a href="/app/producer/dashboard/orders/{{ order.id }}">
+                                            {{ order.shippingStatus }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/app/producer/dashboard/orders/{{ order.id }}">
                                             {{ order.molliePaymentMethod }}
                                         </a>
                                     </td>
@@ -99,9 +110,13 @@
                                     </td>
                                 </tr>
                             {% endfor %}
-
                         </tbody>
                     </table>
+                    {% if displayCsvExport %}
+                        <a href="/app/producer/dashboard/orders/not-shipped-but-paid/csv" class="btn btn-default">
+                            Csv export
+                        </a>
+                    {% endif %}
                 </div>
             {% endif %}
         </div>

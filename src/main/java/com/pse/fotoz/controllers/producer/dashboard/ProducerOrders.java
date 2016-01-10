@@ -1,6 +1,7 @@
 package com.pse.fotoz.controllers.producer.dashboard;
 
 import com.pse.fotoz.domain.entities.Order;
+import static com.pse.fotoz.domain.entities.Order.ShippingStatus.NOT_SHIPPED;
 import com.pse.fotoz.helpers.ModelAndViewBuilder;
 import com.pse.fotoz.payments.domain.PaymentResponse;
 import static com.pse.fotoz.payments.domain.PaymentResponse.PaymentStatus.PAID;
@@ -9,6 +10,8 @@ import java.util.List;
 import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -91,6 +94,32 @@ public class ProducerOrders {
         return mav;
     }
     
+    @RequestMapping(method = RequestMethod.GET, value = "/not-shipped-but-paid")
+    public ModelAndView displayOrdersNotShippedButPaid(HttpServletRequest 
+            request) {
+        ModelAndView mav = ModelAndViewBuilder.empty().
+                    withProperties(request).
+                    build();
+        
+        mav.addObject("page", new Object() {
+            public String lang = request.getSession().
+                    getAttribute("lang").toString();
+            public String uri = "/producer/dashboard/orders";
+            public String redirect = request.getRequestURL().toString();
+        });
+        
+        List<Order> orders = HibernateEntityHelper.all(Order.class).stream().
+                filter(o -> o.getShippingStatus() == NOT_SHIPPED).
+                filter(o -> o.getMolliePaymentStatus() == PAID).
+                collect(toList());
+
+        mav.addObject("orders", orders);
+        mav.addObject("displayCsvExport", true);
+        mav.setViewName("producer/dashboard/orders.twig");
+
+        return mav;
+    }
+    
     /**
      * Displays the details of an order to the user.
      * @param id The identity of the order
@@ -98,7 +127,7 @@ public class ProducerOrders {
      * @return View using producer/dashboard/order_detail.twig.
      */
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public ModelAndView displayOrderDetal(
+    public ModelAndView displayOrderDetail(
             @PathVariable(value = "id") int id, 
             HttpServletRequest request) {
         ModelAndView mav = ModelAndViewBuilder.empty().
@@ -122,7 +151,24 @@ public class ProducerOrders {
         } else {
             return new ModelAndView("redirect:/app/producer/dashboard/orders");
         }
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, 
+            value = "/not-shipped-but-paid/csv")
+    public ModelAndView produceOrdersNotShippedCsvReport(HttpServletResponse 
+            response) {
+        ModelAndView mav = 
+                new ModelAndView("producer/dashboard/orders_csv.twig");
         
-
+        List<Order> orders = HibernateEntityHelper.all(Order.class).stream().
+                filter(o -> o.getShippingStatus() == NOT_SHIPPED).
+                collect(toList());
+        
+        mav.addObject("orders", orders);
+        
+        response.setHeader("Content-disposition", 
+                "attachment; filename=export.csv");
+        
+        return mav;
     }
 }

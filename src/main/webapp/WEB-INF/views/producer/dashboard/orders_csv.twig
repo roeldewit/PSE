@@ -1,0 +1,6 @@
+"Ordernummer", "Verzendstatus", "Bestaalstatus", "Orderregelid", "Afbeeldingstitel", "Afbeeldingssessietitel", "Afbeeldingssessiewinkel","Afbeeldingsfilenaam", "Afbeeldingsoptie-afstand-x", "Afbeeldingsoptie-afstand-y", "Afbeeldingsoptie-breedte", "Afbeeldingsoptie-hoogte", "Afbeeldingsoptie-kleur", "Afbeeldingsoptie-type", "Afbeeldingsoptie-aantal", "Orderregelprijs", "Klantnaam", "Klantadres", "Klantwoonplaats", "Klantemail", "Klanttelefoonnummer"
+{% for order in orders %}
+    {% for entry in order.entries %}
+"{{ order.id }}", "{{ order.shippingStatus }}", "{{ order.molliePaymentStatus }}", "{{ entry.id }}", "{{ entry.picture.title }}", "{{ entry.picture.session.title }}", "{{ entry.picture.session.shop.photographer.name }}", "{{ entry.picture.fileName }}", "{{ entry.options.offsetX }}", "{{ entry.options.offsetY }}", "{{ entry.options.width }}", "{{ entry.options.height }}", "{{ entry.options.color }}", "{{ entry.type.name }}", "{{ entry.amount }}", "{{ entry.totalPrice }}", "{{ order.account.customer.name }}", "{{ order.account.customer.address }}", "{{ order.account.customer.city }}", "{{ order.account.customer.email }}", "{{ order.account.customer.phone }}"
+    {% endfor %}
+{% endfor %}
