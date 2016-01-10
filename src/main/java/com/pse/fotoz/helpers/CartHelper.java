@@ -173,8 +173,6 @@ public class CartHelper {
     }
 
     private static final class OrderEntryPreview {
-
-        //ALLES DOUBLE MAKEN??
         
         private final int divWidth = 400;
         private final int divHeight = 300;
@@ -193,12 +191,13 @@ public class CartHelper {
         private double clipRight;
         private double clipBottom;
         private double clipLeft;
+        private String color;
 
         OrderEntryPreview(OrderEntry entry) {
             this.entry = entry;
             calculateProductProperties();
             calculatePictureProperties();
-            System.out.println(entry.getOptions().getColor().toString());
+            setColor();
         }
 
         public void calculateProductProperties() {
@@ -293,6 +292,10 @@ public class CartHelper {
                     + (pictureWidth - clipRight - clipLeft)
                     / 2;
         }
+        
+        public void setColor(){
+            color = entry.getOptions().getColor().name();
+        }
 
         public OrderEntry getEntry() {
             return entry;
@@ -358,7 +361,8 @@ public class CartHelper {
             return clipLeft;
         }
 
-  
-
+        public String getColor() {
+            return color;
+        }
     }
 }

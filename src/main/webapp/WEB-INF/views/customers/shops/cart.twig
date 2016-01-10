@@ -40,7 +40,11 @@
                                                                  style="position: absolute; top:{{entryPreview.productTop}}px;left:{{entryPreview.productLeft}}px; width:{{entryPreview.productWidth}}px;height:{{entryPreview.productHeight}}px;"/>
                                                             <img class="cart-picture" src="/assets/shops/{{ entryPreview.entry.picture.session.shop.login }}/sessions/{{ entryPreview.entry.picture.session.id }}/{{ entryPreview.entry.picture.fileName }}" 
                                                                  style="position: absolute; top:{{entryPreview.pictureTop}}px;left:{{entryPreview.pictureLeft}}px;width:{{entryPreview.pictureWidth}}px;height:{{entryPreview.pictureHeight}}px;clip: rect({{entryPreview.clipTop}}px,{{entryPreview.clipRight}}px,{{entryPreview.clipBottom}}px,{{entryPreview.clipLeft}}px);
+                                                                {% if entryPreview.color equals "SEPIA" %}
+                                                                 -webkit-filter: sepia(1);
+                                                                {% elseif entryPreview.color equals "GRAYSCALE" %}
                                                                  -webkit-filter: grayscale(1);
+                                                                {% endif %}
                                                                  "/>
                                                         </div>
                                                     </td>
