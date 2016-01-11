@@ -6,7 +6,17 @@
     <script src="/assets/customers/js/jquery.imgareaselect.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.picture-detail').imgAreaSelect({handles: true});
+            $('.picture-detail').imgAreaSelect({
+                handles: true, onSelectEnd: function (img, selection) {
+                    $('input[name="x1"]').val(selection.x1);
+                    $('input[name="y1"]').val(selection.y1);
+                    $('input[name="x2"]').val(selection.x2);
+                    $('input[name="y2"]').val(selection.y2);
+                }
+            });
+            $('.picture-detail').click(function () {
+                alert("ja");
+            });
         });
     </script>
 {% endblock %}   
@@ -17,9 +27,10 @@
                 <h2>
                     {{ picture.title }}
                 </h2>
-
+                <br/>
+                <h2>{{ labels.customer_shop_crop_title}}</h2>
+                <p>{{ labels.customer_shop_crop_expl}}</p>
                 <img class="picture-detail" src="/assets/shops/{{ picture.session.shop.login }}/sessions/{{ picture.session.id }}/{{ picture.fileName }}">
-
                 <p>
                     <span class="currency-sign-convertable">
                         {% if cookie.currency equals "GBP" %}
@@ -105,6 +116,10 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="x1" value="-1" />
+            <input type="hidden" name="y1" value="-1" />
+            <input type="hidden" name="x2" value="-1" />
+            <input type="hidden" name="y2" value="-1" />
         </form>
     </div>
 {% endblock %}
