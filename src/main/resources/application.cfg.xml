@@ -22,4 +22,25 @@
         <server>127.0.0.1</server>
         <serverport>21</serverport>
     </ftp>
+    <email>
+        <outgoing>
+            <server>
+                <protocol>
+                    
+                </protocol>
+                <host>
+                    
+                </host>
+                <port>
+                    
+                </port>
+                <username>
+                    
+                </username>
+                <password>
+                    
+                </password>
+            </server>
+        </outgoing>
+    </email>
 </config>
