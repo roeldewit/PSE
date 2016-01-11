@@ -110,6 +110,7 @@ public class CustomerCart {
                  options.setOffsetXStop(x2);
                  options.setOffsetYStart(y1);
                  options.setOffsetYStop(y2);
+                 //width en height in productoptions...waarvoor zijn die?
             }
             Cart cart = CartHelper.getCurrentCart(request);
 
