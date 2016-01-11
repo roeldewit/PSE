@@ -195,7 +195,7 @@ public class ProducerProducts {
             
             if (type.isPresent()) {
                 PersistenceFacade.setStock(type.get(), stock);
-                System.out.println(stock);
+                
                 return ResponseEntity.ok().body("ok"); 
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).
