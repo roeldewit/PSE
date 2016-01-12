@@ -172,11 +172,18 @@ public class PersistenceFacade {
      * @param price price excl. VAT of Product Type
      * @param stock currect stock of Product Type
      * @param filename filename of uploaded picture showing Product Type
+     * @param width width of picture
+     * @param height height of picture
+     * @param overlayXStart X coordinate of start of picture overlay
+     * @param overlayXStop X coordinate of stop of picture overlay
+     * @param overlayYStart Y coordinate of start of picture overlay
+     * @param overlayYStop Y coordinate of stop of picture overlay
      * @throws HibernateException If a persistence error occured regardless of a
      * correct input.
      */
     public static void addProductType(String name, String description,
-            BigDecimal price, int stock, String filename)
+            BigDecimal price, int stock, String filename, int width, int height,
+            int overlayXStart, int overlayXStop, int overlayYStart, int overlayYStop)
             throws HibernateException {
 
             ProductType pt = new ProductType();
@@ -185,6 +192,12 @@ public class PersistenceFacade {
             pt.setPrice(price);
             pt.setStock(stock);
             pt.setFilename(filename);
+            pt.setWidth(width);
+            pt.setHeight(height);
+            pt.setOverlayXStart(overlayXStart);
+            pt.setOverlayXStop(overlayXStop);
+            pt.setOverlayYStart(overlayYStart);
+            pt.setOverlayYStop(overlayYStop);
 
             pt.persist();
     }    

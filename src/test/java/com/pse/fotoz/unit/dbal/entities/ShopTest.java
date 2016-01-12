@@ -2,6 +2,7 @@ package com.pse.fotoz.unit.dbal.entities;
 
 import com.pse.fotoz.domain.entities.Photographer;
 import com.pse.fotoz.domain.entities.Shop;
+import com.pse.fotoz.helpers.PersistenceFacade;
 import com.pse.fotoz.persistence.HibernateException;
 import org.junit.After;
 import org.junit.AfterClass;
