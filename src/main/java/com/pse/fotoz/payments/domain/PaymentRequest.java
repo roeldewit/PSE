@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.pse.fotoz.payments.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.pse.fotoz.payments.domain.enums.Locale;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import org.springframework.util.LinkedMultiValueMap;
 
@@ -113,5 +104,32 @@ public class PaymentRequest {
         //if(this.getMetadata().isPresent()) {returnMap.add("metadata", m.writeValueAsString(this.getMetadata())); }
         if(this.getLocale().isPresent()) {returnMap.add("locale", this.getLocale().get().getValue()); }
         return returnMap;
+    }
+    
+    /**
+     * Locales supported by Mollie
+     *
+     * @author René
+     */
+    public enum Locale {
+
+        GERMANY("de"),
+        ENGLAND("en"),
+        SPAIN("es"),
+        FRANCE("fr"),
+        BELGIUM("be"),
+        BELGIUM_FRENCH("be-fr"),
+        NETHERLANDS("nl");
+
+        private String value;
+
+        private Locale(String value) {
+            this.value = value;
+        }
+
+        @JsonValue
+        public String getValue() {
+            return this.value;
+        }
     }
 }

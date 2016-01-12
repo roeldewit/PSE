@@ -1,0 +1,40 @@
+{% extends "customers/shops/sessions/index.twig" %}
+
+{% block inner_content %}
+    <h1>
+        {{ session.title }}
+    </h1>
+    
+    <p>
+        {{ session.description }}
+    </p>
+    {% for picture in pictures %}
+        <div class="col-sm-4 col-lg-4 col-md-4">
+            <div class="thumbnail">
+                <img src="/assets/shops/{{ shop.login }}/sessions/{{ session.id }}/{{ picture.fileName }}">
+                <div class="caption">
+                    <h4 class="pull-right">
+                        <span class="currency-sign-convertable">
+                        {% if cookie.currency equals "GBP" %}
+                            &pound;
+                        {% else %}
+                            &euro; 
+                        {% endif %}
+                    </span> 
+                    <span class="currency-convertable">
+                        {{ picture.price | numberformat("#.00") }}
+                    </span>
+                    </h4>
+                    <h4>
+                        <a href="/app/customers/pictures/{{ picture.id }}">
+                            {{ picture.title }}
+                        </a>
+                    </h4>
+                    <p>
+                        {{ picture.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends "photographers/shop/sessions.twig" %}
+
+
+{% block heading %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                {{ labels.photographer_shop_session_heading }} {{session.title}}
+                <a href="/app/photographers/shop/{{shopName}}/{{session.code}}/upload" class="btn btn-default btn-header">
+                    {{ labels.photographer_shop_session_upload }}
+                </a>
+            </h1>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">         
+            <table class="table">
+                <tr>
+                    <th>{{ labels.photographer_shop_sessions_table_title }}</th>                                   
+                    <td>{{ session.title }}</td>
+                </tr>
+                <tr>
+                    <th>{{ labels.photographer_shop_sessions_table_description }}</th>
+                    <td>{{ session.description }}</td>
+                </tr>
+                <tr>
+                    <th>{{ labels.photographer_shop_sessions_table_ispublic }}</th>
+                    <td>
+                        {% if session.isPublic %}
+                            {{ labels.photographer_shop_sessions_table_ispublic_yes }}
+                        {% else %}
+                            {{ labels.photographer_shop_sessions_table_ispublic_no }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ labels.photographer_shop_sessions_table_code }}</th>
+                    <td>{{ session.code }}</td>
+                </tr>
+                <tr>
+                    <th>{{ labels.photographer_shop_sessions_table_url }}</th>
+                    <td> http://localhost:8080/app/customers/account/sessions/add/{{session.code}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    {% for error in errors %}
+
+        <div class="row alert alert-danger">
+            <div class="col-lg-12">
+                {{ error }}
+            </div>
+        </div>
+
+    {% endfor %}
+
+  
+        {% for picture in pictures %}
+
+            <div class="col-sm-3 col-lg-3 col-md-3 " >
+                <div class="thumbnail">
+                    <img src="/assets/shops/{{ shopName }}/sessions/{{ session.id }}/{{ picture.fileName }}">
+                    <div class="caption">
+                        <h4 class="pull-right">
+                            &euro; {{ picture.price }}
+                        </h4>
+                        <h4>
+                            <a href="#">
+                                {{ picture.title }}
+                            </a>
+                        </h4>
+
+
+                        <form class="form-signin" method="post" role="form">
+                            <p>{{ labels.photographer_shop_sessions_change_price }}</p>
+
+                            <input type="hidden"  value ="{{picture.id}}" id="picture_id" name="picture_id"/>
+
+                            <p><input type="number"  class="form-control" min="0.00" step="0.01" id="price" name="price" value="{{ picture.price }}"  required autofocus/></p>
+
+                            <p>{{ labels.photographer_shop_sessions_change_name }}</p>
+
+
+                            <p><input type="text"  id="picture_name" name="picture_name" value="{{ picture.title }}" class="form-control"/></p>
+
+                            <p> <button class="btn btn-md btn-default  " type="submit">
+                                    {{ labels.photographer_shop_sessions_change_price_submit }}
+                                </button></p>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+ 
+{% endblock %}
