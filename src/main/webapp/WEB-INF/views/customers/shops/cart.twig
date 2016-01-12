@@ -5,106 +5,107 @@
 {% endmacro %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
                     {{ labels.customer_cart_cart }}
                 </h2>
-            {% if entryPreviews is empty %}
-                <p>
-                    {{ labels.customer_cart_table_nocontent }}
+                {% if entryPreviews is empty %}
+                    <p>
+                        {{ labels.customer_cart_table_nocontent }}
                     </p>
-            {% else %}
+                {% else %}
                     <div class="table-responsive">            
-                        <table class="table table-hover table-striped cart-table">
+                        <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
                                     <th class="text-center">
-                                    {{ labels.customers_cart_preview }}
-                                        </th>
-                                        <th>
-                                    {{ labels.customers_cart_amount }}
-                                            </th>
-                                            <th>
-                                    {{ labels.customers_cart_price }}
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                            {% for entryPreview in entryPreviews %}
-                                                <tr>                                    
-                                                    <td>
-                                                        <div class="cart-image-wrapper">
-                                                            <img class="cart-picture" src="/assets/products/img/{{entryPreview.entry.type.filename}}" 
-                                                                 style="position: absolute; top:{{entryPreview.productTop}}px;left:{{entryPreview.productLeft}}px; width:{{entryPreview.productWidth}}px;height:{{entryPreview.productHeight}}px;"/>
-                                                            <img class="cart-picture" src="/assets/shops/{{ entryPreview.entry.picture.session.shop.login }}/sessions/{{ entryPreview.entry.picture.session.id }}/{{ entryPreview.entry.picture.fileName }}" 
-                                                                 style="position: absolute; top:{{entryPreview.pictureTop}}px;left:{{entryPreview.pictureLeft}}px;width:{{entryPreview.pictureWidth}}px;height:{{entryPreview.pictureHeight}}px;clip: rect({{entryPreview.clipTop}}px,{{entryPreview.clipRight}}px,{{entryPreview.clipBottom}}px,{{entryPreview.clipLeft}}px);
-                                                                 -webkit-filter: grayscale(1);
-                                                                 "/>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <input type="hidden" name="entry_id" value="{{ entryPreview.entry.id }}"/>
-                                                        <input type="number" class="form-control cart-product-amount" id="amount" name="amount" min="1" value="{{ entryPreview.entry.amount }}"/>
-                                                    </td>
-                                                    <td>
-                                                        <span class="currency-sign-convertable">
-                                            {% if cookie.currency equals "GBP" %}
-                                                                &pound;
-                                            {% else %}
-                                                                &euro; 
-                                            {% endif %}
-                                                            </span>
-                                                            <span class="currency-convertable"> 
-                                            {{ entryPreview.entry.totalPrice | numberformat("#.00") }}
-                                                                </span>
-                                                            </td>
-                                                            <td>
-                                                                <input type="hidden" name="entry_id" value="{{ entryPreview.entry.id }}"/>
-                                                                <i class="fa fa-ban cart-remove-item pointer"></i>
-                                                            </td>
-                                                        </tr>
-                            {% endfor %}
-                                                        <tr>
-                                                            <td colspan="5">
-                                                            </td>
-                                                            <td>                                    
-                                                                <b>
-                                                                    Totaal:
-                                                                </b>
-                                                            </td>
-                                                            <td>
-                                                                <span class="currency-sign-convertable">
-                                        {% if cookie.currency equals "GBP" %}
-                                                                        &pound;
-                                        {% else %}
-                                                                        &euro; 
-                                        {% endif %}
-                                                                    </span>
-                                                                    <span class="currency-convertable">
-                                        {{ cart.priceSum | numberformat("#.00") }}
-                                                                        </span>
-                                                                    </td>
-                                                                    <td>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="6">                                    
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="cart-button commit-order">
-                                        {{ labels.customer_cart_commit_order }}
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>                                    
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-            {% endif %}
-                                                    </div>
-                                                </div>
+                                        <!--{{ labels.customers_cart_preview }}-->
+                                    </th>
+                                    <th>
+                                        {{ labels.customers_cart_amount }}
+                                    </th>
+                                    <th>
+                                        {{ labels.customers_cart_price }}
+                                    </th>
+                                    <th style="width:10px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for entryPreview in entryPreviews %}
+                                    <tr>                                    
+                                        <td>
+                                            <div class="cart-image-wrapper">
+                                                <img class="cart-picture" src="/assets/products/img/{{entryPreview.entry.type.filename}}" 
+                                                     style="position: absolute; top:{{entryPreview.productTop}}px;left:{{entryPreview.productLeft}}px; width:{{entryPreview.productWidth}}px;height:{{entryPreview.productHeight}}px;"/>
+                                                <img class="cart-picture" src="/assets/shops/{{ entryPreview.entry.picture.session.shop.login }}/sessions/{{ entryPreview.entry.picture.session.id }}/{{ entryPreview.entry.picture.fileName }}" 
+                                                     style="position: absolute; top:{{entryPreview.pictureTop}}px;left:{{entryPreview.pictureLeft}}px;width:{{entryPreview.pictureWidth}}px;height:{{entryPreview.pictureHeight}}px;clip: rect({{entryPreview.clipTop}}px,{{entryPreview.clipRight}}px,{{entryPreview.clipBottom}}px,{{entryPreview.clipLeft}}px);
+                                                     {% if entryPreview.color equals "SEPIA" %}
+                                                         -webkit-filter: sepia(1);
+                                                     {% elseif entryPreview.color equals "GRAYSCALE" %}
+                                                         -webkit-filter: grayscale(1);
+                                                     {% endif %}
+                                                     "/>
                                             </div>
+                                        </td>
+                                        <td style="vertical-align:middle;">
+                                            <input type="hidden" name="entry_id" value="{{ entryPreview.entry.id }}"/>
+                                            <input type="number" class="form-control cart-product-amount" id="amount" name="amount" min="1" value="{{ entryPreview.entry.amount }}"/>
+                                        </td>
+                                        <td class="cart-productprev-text" style="vertical-align:middle;">
+                                            <span class="currency-sign-convertable">
+                                                {% if cookie.currency equals "GBP" %}
+                                                    &pound;
+                                                {% else %}
+                                                    &euro; 
+                                                {% endif %}
+                                            </span>
+                                            <span class="currency-convertable"> 
+                                                {{ entryPreview.entry.totalPrice | numberformat("#.00") }}
+                                            </span>
+                                        </td>
+                                        <td class="cart-productprev-text" style="vertical-align:middle;">
+                                            <input type="hidden" name="entry_id" value="{{ entryPreview.entry.id }}"/>
+                                            <i class="fa fa-ban cart-remove-item pointer"></i>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>                                    
+                                        <b>
+                                            Totaal:
+                                        </b>
+                                    </td>
+                                    <td colspan="2">
+                                        <span class="currency-sign-convertable">
+                                            {% if cookie.currency equals "GBP" %}
+                                                &pound;
+                                            {% else %}
+                                                &euro; 
+                                            {% endif %}
+                                        </span>
+                                        <span class="currency-convertable">
+                                            {{ cart.priceSum | numberformat("#.00") }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">                                    
+                                    </td>
+                                    <td colspan="2">
+                                        <div class="cart-button commit-order">
+                                            {{ labels.customer_cart_commit_order }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
