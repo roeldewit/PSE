@@ -209,7 +209,7 @@ public class ProducerProducts {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body("corrupt form data");                
             }
-        } catch (IOException | JSONException ex) {
+        } catch (IOException | JSONException | HibernateException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body("corrupt form data");
         }
