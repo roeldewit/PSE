@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.pse.fotoz.helpers;
 
 import com.pse.fotoz.config.ConfigurationManager;
@@ -70,5 +65,25 @@ public class ConfigurationHelper {
     public static String getMollieRedirectUrl() {
         return ConfigurationManager.config.
                 getString("mollie.redirecturl");
+    }
+
+    //----------ftp-------------
+    public static String getFTPServerAdress() {
+        return ConfigurationManager.config.
+                getString("ftp.server");
+    }
+    public static int getFTPServerPort() {
+        return ConfigurationManager.config.
+                getInt("ftp.serverport");
+    }
+    
+    public static String getFTPUserName() {
+        return ConfigurationManager.configPasswords.
+                getString("ftp.username");
+    }
+
+    public static String getFTPPassword() {
+        return ConfigurationManager.configPasswords.
+                getString("ftp.password");
     }
 }

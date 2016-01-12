@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.pse.fotoz.controllers.photographers.shop;
 
 import com.pse.fotoz.domain.entities.Picture;
 import com.pse.fotoz.domain.entities.PictureSession;
 import com.pse.fotoz.domain.entities.Shop;
 import com.pse.fotoz.helpers.ConfigurationHelper;
+import com.pse.fotoz.helpers.FTPHelper;
 import com.pse.fotoz.helpers.OwnershipHelper;
 import com.pse.fotoz.helpers.UserHelper;
 import com.pse.fotoz.persistence.HibernateException;
@@ -26,6 +22,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.imgscalr.Scalr;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -112,13 +109,22 @@ public class PhotographerFileUpload {
                     try {
                         String name = file.getOriginalFilename();
 
-                        if (saveUpload(file, name, session)) {
-                            File folder = new File(appPath + "\\" + shop.getLogin() + "\\sessions\\"  + session.getId());
-                            folder.mkdirs(); //maak folder als niet bestaat
-                            file.transferTo(new File(folder.getAbsolutePath() + "\\" + name));
+                        //hi-res naar ftp
+                        String HighresPath = ("\\hi-res\\" + shop.getLogin() + "\\sessions\\" + session.getId());
+                        if (FTPHelper.SendFile(file.getInputStream(), HighresPath, name)) {
+                            //opslaan in db
+                            BufferedImage imageOriginal = ImageIO.read(file.getInputStream());
+                            if (saveUploadToDB(file, name, session, imageOriginal)) {
+                                //dan als ftp+db=ok de lowres opslaan
+                                File folder = new File(appPath + "\\" + shop.getLogin() + "\\sessions\\" + session.getId());
+                                folder.mkdirs(); //maak folder als niet bestaat
+                                BufferedImage lowResImage = Scalr.resize(imageOriginal, 800);
+                                ImageIO.write(lowResImage, "jpg", new File(folder.getAbsolutePath() + "\\" +  name));
+                            }
+
                             returnMessage = "Upload van " + name + " geslaagd!";
                         }
-                    } catch (Exception e) {   
+                    } catch (Exception e) {
                         returnMessage = "Upload mislukt => " + e.getMessage();
                         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     }
@@ -132,16 +138,14 @@ public class PhotographerFileUpload {
         return returnMessage;
     }
 
-    private boolean saveUpload(MultipartFile file, String title, PictureSession session) throws IOException {
+    private boolean saveUploadToDB(MultipartFile file, String title, PictureSession session, BufferedImage image) throws IOException {
         boolean returnVal = false;
         try {
             //dubbele entry binnen de sessie weghalen: dubbele bestanden worden dus effectief steeds geupdate
-            if(Picture.doesFileNameExist(title, session)){
+            if (Picture.doesFileNameExist(title, session)) {
                 Picture p = Picture.getByFileNameAndSession(title, session);
                 p.delete();
             }
-            //dit weghalen indien dimensies niet nodig zijn
-            BufferedImage image = ImageIO.read(file.getInputStream());
 
             Picture pic1 = new Picture();
             pic1.setSession(session);

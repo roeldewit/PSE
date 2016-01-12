@@ -1,0 +1,51 @@
+{% extends "common/bootstrap.twig" %}
+
+{% block title %}
+    403
+{% endblock %}
+
+{% block more_css %}
+    <link href="/assets/common/css/default.css" rel="stylesheet"/>
+    <link href="/assets/producer/css/login.css" rel="stylesheet"/>
+    <link href="/assets/common/css/bootstrap/sb-admin/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">  
+                
+                    <div class="thumbnail">
+
+                        <h1>
+                            {{ labels.access_denied_message_error }}
+                        </h1>
+
+
+                        <h2>
+                            {{ labels.access_denied_message_hi }} 
+                            {{ msg }}
+                            {{ labels.access_denied_message_permission }} 
+                        </h2>
+
+
+                        <h2>
+                            {{ labels.access_denied_message_forward }}
+                            <a href="/app/producer/dashboard"> 
+                                {{ labels.home_producerlogin }}
+                            </a>
+                        </h2>
+
+                    </div>
+                
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+{% include "common/snippets/language_bar.twig" %}
+
+{% endblock %}
