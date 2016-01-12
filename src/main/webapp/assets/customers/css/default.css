@@ -14,9 +14,9 @@ img.cart-picture {max-width: 600px;}
 .cart-image-wrapper {position: relative; width: 400px; height: 300px; overflow: hidden; margin:auto;}
 .cart-image-wrapper img {max-width: 400px;}
 
-.cart-product-amount {margin: 0 20px; width: 60px;}
+.cart-product-amount {width: 80px; height: 60%; font-size:150%;}
 
-img.cart-right-arrow {width: 130px; margin-top: 30px;}
+.cart-productprev-text{font-size:150%;}
 
 .pointer {cursor: pointer;}
 
