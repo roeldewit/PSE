@@ -3,6 +3,7 @@ package com.pse.fotoz.controllers.producer.dashboard;
 import com.pse.fotoz.domain.entities.ProductType;
 import com.pse.fotoz.helpers.ConfigurationHelper;
 import com.pse.fotoz.helpers.ModelAndViewBuilder;
+import com.pse.fotoz.helpers.Parser;
 import com.pse.fotoz.helpers.PersistenceFacade;
 import com.pse.fotoz.persistence.HibernateEntityHelper;
 import com.pse.fotoz.persistence.HibernateException;
@@ -13,11 +14,16 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -138,8 +144,15 @@ public class ProducerProducts {
                 BigDecimal price = new BigDecimal(
                         request.getParameter("price"));
                 int stock = Integer.parseInt(request.getParameter("stock"));
+                int width = Integer.parseInt(request.getParameter("width"));
+                int height = Integer.parseInt(request.getParameter("height"));
+                int xStart = Integer.parseInt(request.getParameter("overlayXStart"));
+                int xStop = Integer.parseInt(request.getParameter("overlayXStop"));
+                int yStart = Integer.parseInt(request.getParameter("overlayYStart"));
+                int yStop = Integer.parseInt(request.getParameter("overlayYStop"));
                 PersistenceFacade.addProductType(
-                        name, description, price, stock, filename);
+                        name, description, price, stock, filename, width, 
+                        height, xStart, xStop, yStart, yStop);
                 
                 //no errors found. change viewname for succesfull add
                 mav.setViewName("producer/dashboard/products_new_success.twig");
@@ -167,4 +180,38 @@ public class ProducerProducts {
         return mav;
     }
 
+    /**
+     * Ajax endpoint handling the request for editing the value of a product
+     * type's stock.
+     * @param request The associated request.
+     * @return 200 on OK, 503 on any error.
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/ajax/edit-stock")
+    public ResponseEntity<String> editStock(HttpServletRequest request) {
+        JSONObject json;
+            
+        try {
+            String data = request.getReader().lines().
+                    reduce("", (s1, s2) -> s1 + s2);
+
+            json = new JSONObject(data);
+            int id = json.getInt("product_type_id");
+            int stock = json.getInt("amount");
+            
+            Optional<ProductType> type = HibernateEntityHelper.
+                    byId(ProductType.class, id);
+            
+            if (type.isPresent()) {
+                PersistenceFacade.setStock(type.get(), stock);
+                
+                return ResponseEntity.ok().body("ok"); 
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body("corrupt form data");                
+            }
+        } catch (IOException | JSONException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body("corrupt form data");
+        }
+    }
 }
