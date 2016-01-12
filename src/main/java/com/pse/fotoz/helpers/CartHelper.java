@@ -116,6 +116,9 @@ public class CartHelper {
                 e.getAmount() * ( e.getType().getPrice().doubleValue() + 
                 e.getPicture().getPrice().doubleValue() )));
         
+        cart.getOrder().getEntries().forEach(e -> 
+                e.getType().setStock(e.getType().getStock() - e.getAmount()));
+        
         cart.getOrder().persist();
     }
     

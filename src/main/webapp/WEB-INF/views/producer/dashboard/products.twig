@@ -67,7 +67,8 @@
                                     {{ product.price }}
                                 </td>
                                 <td>
-                                    {{ product.stock }}
+                                    <input type="hidden" name="product_type_id" value="{{ product.id }}"/>
+                                    <input type="number" class="form-control stock-amount" id="stock-amount" name="amount" min="1" value="{{ product.stock }}"/>
                                 </td>
                                 <td>
                                     <a href="/app/producer/dashboard/products">
