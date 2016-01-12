@@ -120,9 +120,12 @@ public class CartHelper {
         cart.getOrder().setShippingStatus(Order.ShippingStatus.NOT_SHIPPED);
         cart.getOrder().getEntries().forEach(e -> e.setId(0));
         cart.getOrder().getEntries().forEach(e -> e.setTotalPrice(
-                e.getAmount() * (e.getType().getPrice().doubleValue()
-                + e.getPicture().getPrice().doubleValue())));
-
+                e.getAmount() * ( e.getType().getPrice().doubleValue() + 
+                e.getPicture().getPrice().doubleValue() )));
+        
+        cart.getOrder().getEntries().forEach(e -> 
+                e.getType().setStock(e.getType().getStock() - e.getAmount()));
+        
         cart.getOrder().persist();
     }
 
