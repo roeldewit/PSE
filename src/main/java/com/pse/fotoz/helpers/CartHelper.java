@@ -10,6 +10,7 @@ import com.pse.fotoz.persistence.HibernateEntityHelper;
 import com.pse.fotoz.persistence.HibernateException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -166,10 +167,39 @@ public class CartHelper {
         return cart;
     }
 
+    /**
+     * Creates a list of order entries with css properties to show entry as
+     * picture preview
+     * 
+     * @param cart cart of which to create list of order entries with css 
+     * properties.
+     * 
+     * @return 
+     */
     public static List<OrderEntryPreview> getOrderEntriesWithPreview(Cart cart) {
         List<OrderEntryPreview> entries = new ArrayList<>();
 
         cart.getOrder().getEntries().stream().
+                forEach(e -> entries.add(new OrderEntryPreview(e)));
+
+        return entries;
+    }
+    
+    /**
+     * Creates a list of order entries with css properties to show entry as
+     * picture preview
+     * 
+     * @param orderEntries list of entries of which to create a list of 
+     * order entries with css properties.
+     * 
+     * @return 
+     */
+    public static List<OrderEntryPreview> getOrderEntriesWithPreview(
+            Set<OrderEntry> orderEntries) {
+        
+        List<OrderEntryPreview> entries = new ArrayList<>();
+
+        orderEntries.stream().
                 forEach(e -> entries.add(new OrderEntryPreview(e)));
 
         return entries;

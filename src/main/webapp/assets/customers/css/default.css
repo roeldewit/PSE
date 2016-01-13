@@ -32,3 +32,9 @@ img.cart-picture {max-width: 600px;}
     float: none;
     display: inline-block;
 }
+
+.orders-div{background-color: #ffffff}
+.orders-table{margin:0;}
+.orders-table:hover{background-color: #f5f5f5;}
+.orders-link{text-decoration:inherit;color:inherit;}
+.orders-link:hover{text-decoration:inherit;color:inherit;}

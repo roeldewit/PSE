@@ -1,0 +1,65 @@
+{% extends "customers/shops/index.twig" %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                {% if orders is empty %}
+                    <p>
+                        {{ labels.customer_account_orders_nocontent }}
+                    </p>
+                {% else %}
+                    <div class="orders-div"> 
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th width="15%">
+                                        {{ labels.customer_account_orders_order_id }}                                    
+                                    </th>
+                                    <th width="25%">
+                                        {{ labels.customer_account_orders_status }}                                    
+                                    </th>
+                                    <th width="25%">
+                                        {{ labels.customer_account_orders_method }}
+                                    </th>
+                                    <th width="15%">
+                                        {{ labels.customer_account_orders_total_amount }}                       
+                                    </th>
+                                    <th width="25%">
+                                        {{ labels.customer_account_orders_create_date }}                       
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        {% for order in orders %}
+                            <a href="orders/{{order.id}}" class="orders-link">
+                                <table class="table orders-table">
+                                    <tr>   
+                                        <td width="15%" style="border:none">
+                                            {{ order.id }}
+                                        </td>
+                                        <td width="25%" style="border:none">
+                                            {{ order.molliePaymentStatus }}
+                                        </td>
+                                        <td width="25%" style="border:none">
+
+                                            {{  order.molliePaymentMethod }}
+                                        </td>
+                                        <td width="15%" style="border:none">
+                                            <span class="currency-convertable">
+                                                {{ order.priceSum | numberformat("#.00") }}
+                                            </span>
+                                        </td>
+                                        <td width="25%" style="border:none">
+                                            {{ order.molliePaymentCreatedDate }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </a>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
