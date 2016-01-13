@@ -13,11 +13,14 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th width="15%">
+                                    <th width="10%">
                                         {{ labels.customer_account_orders_order_id }}                                    
                                     </th>
-                                    <th width="25%">
-                                        {{ labels.customer_account_orders_status }}                                    
+                                    <th width="15%">
+                                        {{ labels.customer_account_orders_status }}
+                                    </th>
+                                    <th width="15%">
+                                        {{ labels.customer_account_orders_paystatus }}                                    
                                     </th>
                                     <th width="25%">
                                         {{ labels.customer_account_orders_method }}
@@ -25,7 +28,7 @@
                                     <th width="15%">
                                         {{ labels.customer_account_orders_total_amount }}                       
                                     </th>
-                                    <th width="25%">
+                                    <th width="20%">
                                         {{ labels.customer_account_orders_create_date }}                       
                                     </th>
                                 </tr>
@@ -35,10 +38,17 @@
                             <a href="orders/{{order.id}}" class="orders-link">
                                 <table class="table orders-table">
                                     <tr>   
-                                        <td width="15%" style="border:none">
+                                        <td width="10%" style="border:none">
                                             {{ order.id }}
                                         </td>
-                                        <td width="25%" style="border:none">
+                                        <td width="15%" style="border:none">
+                                            {% if order.status equals "SHIPPED" %}
+                                                {{labels.customer_account_orders_verzonden}}
+                                            {% else %}
+                                                {{labels.customer_account_orders_nietverzonden}}
+                                            {% endif %}
+                                        </td>
+                                        <td width="15%" style="border:none">
                                             {{ order.molliePaymentStatus }}
                                         </td>
                                         <td width="25%" style="border:none">
@@ -50,7 +60,7 @@
                                                 {{ order.priceSum | numberformat("#.00") }}
                                             </span>
                                         </td>
-                                        <td width="25%" style="border:none">
+                                        <td width="20%" style="border:none">
                                             {{ order.molliePaymentCreatedDate }}
                                         </td>
                                     </tr>

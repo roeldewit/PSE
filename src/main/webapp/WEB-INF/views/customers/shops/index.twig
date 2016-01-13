@@ -48,7 +48,15 @@
                     </li>
 
                     <li {% if page.uri equals "/customers/account/sessions" %}  class="active" {% endif %}>
-                        <a href="/app/customers/account/sessions"><i class="fa fa-picture-o"></i> {{ labels.home_customer_sessions }}
+                        <a href="/app/customers/account/sessions">
+                            <i class="fa fa-picture-o"></i> 
+                            {{ labels.home_customer_sessions }}
+                        </a>
+                    </li>
+                    <li {% if page.uri equals "/customers/account/orders" %}  class="active" {% endif %}>
+                        <a href="/app/customers/account/orders">
+                            <i class="fa fa-file-text-o"></i> 
+                            {{ labels.home_customer_orders }}
                         </a>
                     </li>
                     <li {% if page.uri equals "/customers/shops" %}  class="active" {% endif %}>

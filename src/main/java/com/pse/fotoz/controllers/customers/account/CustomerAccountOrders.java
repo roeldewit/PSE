@@ -44,7 +44,7 @@ public class CustomerAccountOrders {
         mav.addObject("page", new Object() {
             public String lang = request.getSession().
                     getAttribute("lang").toString();
-            public String uri = "/customers/account/sessions";
+            public String uri = "/customers/account/orders";
             public String redirect = request.getRequestURL().toString();
         });
 
@@ -86,7 +86,7 @@ public class CustomerAccountOrders {
         mav.addObject("page", new Object() {
             public String lang = request.getSession().
                     getAttribute("lang").toString();
-            public String uri = "/customers/account/sessions";
+            public String uri = "/customers/account/orders";
             public String redirect = request.getRequestURL().toString();
         });
 

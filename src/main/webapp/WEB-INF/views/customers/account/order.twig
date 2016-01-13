@@ -12,6 +12,16 @@
                     </tr>
                     <tr>
                         <th>{{ labels.customer_account_orders_status }}</th>
+                        <td>
+                            {% if order.status equals "SHIPPED" %}
+                                {{labels.customer_account_orders_verzonden}}
+                            {% else %}
+                                {{labels.customer_account_orders_nietverzonden}}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ labels.customer_account_orders_paystatus }}</th>
                         <td>{{ order.molliePaymentStatus }}</td>
                     </tr>
                     <tr>
@@ -68,7 +78,7 @@
                                                  "/>
                                         </div>
                                     </td>
-                                    <td style="vertical-align:middle;">
+                                    <td class="cart-productprev-text" style="vertical-align:middle;">
                                         {{ entryPreview.entry.amount }}
                                     </td>
                                     <td class="cart-productprev-text" style="vertical-align:middle;">
