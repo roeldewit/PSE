@@ -4,7 +4,7 @@ img.cart-picture {max-width: 600px;}
 
 .cart-button {cursor: pointer; background-color: #222; color: white; padding: 10px; float:right; text-align: center; width:200px; margin-right: 10px;}
 .cart-button:hover {text-decoration: none; color: white; background-color:#333;}
-.cart-total{text-align: right; font-size:150%;padding-right:10px;}
+.cart-total{text-align: right; font-size:150%;padding:50px 10px 0px 0px;}
 
 .product-option {padding: 10px; cursor: pointer;}
 .product-option.selected, .product-option:hover {background-image: url('/assets/customers/img/checkmark.jpg'); background-size: 70px; background-repeat: no-repeat; background-position: 65% 10%;}
