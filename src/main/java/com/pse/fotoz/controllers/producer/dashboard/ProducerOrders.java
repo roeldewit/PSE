@@ -37,6 +37,7 @@ public class ProducerOrders {
         List<Order> orders = HibernateEntityHelper.all(Order.class);
          
         mav.addObject("orders", orders);
+        mav.addObject("allorders", request);
         
         mav.setViewName("producer/dashboard/orders.twig");
 
@@ -49,6 +50,7 @@ public class ProducerOrders {
                     withProperties(request).
                     build();
         
+        mav.addObject("paid", request);
         mav.addObject("page", new Object() {
             public String lang = request.getSession().
                     getAttribute("lang").toString();
@@ -72,6 +74,7 @@ public class ProducerOrders {
                     withProperties(request).
                     build();
         
+        mav.addObject("unpaid", request);
         mav.addObject("page", new Object() {
             public String lang = request.getSession().
                     getAttribute("lang").toString();

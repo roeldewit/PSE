@@ -51,15 +51,35 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <a href="/app/producer/dashboard/submissions" class="btn btn-default">
-                {{ labels.producer_dashboard_index_item_submissions }}
-            </a>
-            <a href="/app/producer/dashboard/submissions/approved" class="btn btn-default">
-                {{ labels.producer_dashboard_index_item_submissions_approved }}
-            </a>
-            <a href="/app/producer/dashboard/submissions/rejected" class="btn btn-default">
-               {{ labels.producer_dashboard_index_item_submissions_rejected }}
-            </a>
+            {% if submitted is not empty %}
+                <a href="/app/producer/dashboard/submissions" class="btn btn-default active">
+                    {{ labels.producer_dashboard_index_item_submissions }}
+                </a>
+            {% else %}
+                <a href="/app/producer/dashboard/submissions" class="btn btn-default">
+                    {{ labels.producer_dashboard_index_item_submissions }}
+                </a>
+            {% endif %}
+
+            {% if approved is not empty %}
+                <a href="/app/producer/dashboard/submissions/approved" class="btn btn-default active">
+                    {{ labels.producer_dashboard_index_item_submissions_approved }}
+                </a>
+            {% else %}
+                <a href="/app/producer/dashboard/submissions/approved" class="btn btn-default">
+                    {{ labels.producer_dashboard_index_item_submissions_approved }}
+                </a>
+            {% endif %}
+
+            {% if rejected is not empty %}
+                <a href="/app/producer/dashboard/submissions/rejected" class="btn btn-default active">
+                    {{ labels.producer_dashboard_index_item_submissions_rejected }}
+                </a>
+            {% else %}
+                <a href="/app/producer/dashboard/submissions/rejected" class="btn btn-default">
+                    {{ labels.producer_dashboard_index_item_submissions_rejected }}
+                </a>
+            {% endif %}
         </div>
     </div>
 

@@ -45,6 +45,7 @@ public class ProducerPictureSubmission {
                 collect(Collectors.toList());
 
         mav.addObject("pictures", pictures);
+        mav.addObject("submitted", request);
         
         mav.addObject("page", new Object() {
             public String lang = request.getSession().
