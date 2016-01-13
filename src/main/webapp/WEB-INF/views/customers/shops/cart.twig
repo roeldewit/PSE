@@ -17,7 +17,7 @@
                     </p>
                 {% else %}
                     <div class="table-responsive">            
-                        <table class="table table-hover table-striped">
+                        <table class="table cart-productprev-table">
                             <thead>
                                 <tr>
                                     <th class="text-center">
@@ -72,14 +72,9 @@
                                     </tr>
                                 {% endfor %}
                                 <tr>
-                                    <td>
-                                    </td>
-                                    <td>                                    
-                                        <b>
-                                            Totaal:
-                                        </b>
-                                    </td>
-                                    <td colspan="2">
+                                    <td colspan="4">
+                                        <div class="cart-total">
+                                            <strong>Totaal:</strong>
                                         <span class="currency-sign-convertable">
                                             {% if cookie.currency equals "GBP" %}
                                                 &pound;
@@ -90,16 +85,16 @@
                                         <span class="currency-convertable">
                                             {{ cart.priceSum | numberformat("#.00") }}
                                         </span>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">                                    
-                                    </td>
-                                    <td colspan="2">
+                                    <td colspan="4"> 
                                         <div class="cart-button commit-order">
                                             {{ labels.customer_cart_commit_order }}
                                         </div>
                                     </td>
+                                    
                                 </tr>
                             </tbody>
                         </table>
