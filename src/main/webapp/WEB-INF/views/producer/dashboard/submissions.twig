@@ -3,9 +3,26 @@
 {% block heading %}
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">
-                {{ labels.producer_dashboard_index_item_submissions }}
-            </h1>
+
+            {% if approved is not empty %}
+
+                <h1 class="page-header">
+                    {{ labels.producer_dashboard_index_item_submissions_approved }}
+                </h1>
+            {% elseif rejected is not empty  %}
+
+                <h1 class="page-header">
+                    {{ labels.producer_dashboard_index_item_submissions_rejected }}
+                </h1>
+
+            {% else  %}
+                <p>
+                <h1 class="page-header">
+                    {{ labels.producer_dashboard_index_item_submissions }}
+                </h1>
+                </p>
+            {% endif %}
+
         </div>
     </div>
 {% endblock %}
@@ -13,11 +30,39 @@
 {% block content %}
     <div class="row">
         <div class="col-lg-12">
-            <p>
-                {{ labels.producer_dashboard_submissions_body_message }}
-            </p>
+
+            {% if approved is not empty %}
+
+                <p>
+                    {{ labels.producer_dashboard_submissions_approved_body_message }}
+                </p>
+            {% elseif rejected is not empty  %}
+
+                <p>
+                    {{ labels.producer_dashboard_submissions_rejected_body_message }}
+                </p>
+
+            {% else  %}
+                <p>
+                    {{ labels.producer_dashboard_submissions_body_message }}
+                </p>
+            {% endif %}
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="/app/producer/dashboard/submissions" class="btn btn-default">
+                {{ labels.producer_dashboard_index_item_submissions }}
+            </a>
+            <a href="/app/producer/dashboard/submissions/approved" class="btn btn-default">
+                {{ labels.producer_dashboard_index_item_submissions_approved }}
+            </a>
+            <a href="/app/producer/dashboard/submissions/rejected" class="btn btn-default">
+               {{ labels.producer_dashboard_index_item_submissions_rejected }}
+            </a>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-lg-12">
             {% if pictures is empty %}
