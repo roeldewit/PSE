@@ -52,12 +52,10 @@ public class ProductType implements HibernateEntity {
 
     @Basic
     @Column(name = "width")
-    @Min(value = 1, message = "{error_min_size}")
     private int width;
 
     @Basic
     @Column(name = "height")
-    @Min(value = 1, message = "{error_min_size}")
     private int height;
 
     @Basic
