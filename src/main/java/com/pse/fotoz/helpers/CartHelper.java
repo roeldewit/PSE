@@ -10,6 +10,7 @@ import com.pse.fotoz.persistence.HibernateEntityHelper;
 import com.pse.fotoz.persistence.HibernateException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -120,12 +121,12 @@ public class CartHelper {
         cart.getOrder().setShippingStatus(Order.ShippingStatus.NOT_SHIPPED);
         cart.getOrder().getEntries().forEach(e -> e.setId(0));
         cart.getOrder().getEntries().forEach(e -> e.setTotalPrice(
-                e.getAmount() * ( e.getType().getPrice().doubleValue() + 
-                e.getPicture().getPrice().doubleValue() )));
-        
-        cart.getOrder().getEntries().forEach(e -> 
-                e.getType().setStock(e.getType().getStock() - e.getAmount()));
-        
+                e.getAmount() * (e.getType().getPrice().doubleValue()
+                + e.getPicture().getPrice().doubleValue())));
+
+        cart.getOrder().getEntries().forEach(e
+                -> e.getType().setStock(e.getType().getStock() - e.getAmount()));
+
         cart.getOrder().persist();
     }
 
@@ -166,19 +167,45 @@ public class CartHelper {
         return cart;
     }
 
+    /**
+     * Creates a list of order entries with css properties to show entry as
+     * picture preview
+     * 
+     * @param cart cart of which to create list of order entries with css 
+     * properties.
+     * 
+     * @return 
+     */
     public static List<OrderEntryPreview> getOrderEntriesWithPreview(Cart cart) {
         List<OrderEntryPreview> entries = new ArrayList<>();
-        
+
         cart.getOrder().getEntries().stream().
+                forEach(e -> entries.add(new OrderEntryPreview(e)));
+
+        return entries;
+    }
+    
+    /**
+     * Creates a list of order entries with css properties to show entry as
+     * picture preview
+     * 
+     * @param orderEntries list of entries of which to create a list of 
+     * order entries with css properties.
+     * 
+     * @return 
+     */
+    public static List<OrderEntryPreview> getOrderEntriesWithPreview(
+            Set<OrderEntry> orderEntries) {
+        
+        List<OrderEntryPreview> entries = new ArrayList<>();
+
+        orderEntries.stream().
                 forEach(e -> entries.add(new OrderEntryPreview(e)));
 
         return entries;
     }
 
     private static final class OrderEntryPreview {
-        
-        private final int divWidth = 400;
-        private final int divHeight = 300;
 
         private final OrderEntry entry;
         private double productResize;
@@ -198,28 +225,96 @@ public class CartHelper {
 
         OrderEntryPreview(OrderEntry entry) {
             this.entry = entry;
-            calculateProductProperties();
-            calculatePictureProperties();
+            calculateAll();
+        }
+
+        /**
+         * Runs all methods to set all properties. Calculates necessary
+         * parameters for these methods.
+         */
+        public void calculateAll() {
+
+            //calculate properties of product type.
+            calculateProductProperties(400, 300,
+                    entry.getType().getWidth(),
+                    entry.getType().getHeight());
+
+            //get size of picture after being cropped.
+            double cropWidth = entry.getOptions().getOffsetXStop() == 0
+                    ? entry.getPicture().getWidth()
+                    : entry.getOptions().getOffsetXStop()
+                    - entry.getOptions().getOffsetXStart();
+
+            double cropHeight = entry.getOptions().getOffsetYStop() == 0
+                    ? entry.getPicture().getHeight()
+                    : entry.getOptions().getOffsetYStop()
+                    - entry.getOptions().getOffsetYStart();
+
+            //get size of overlay on product type picture
+            int overlayXStart = entry.getType().getOverlayXStart();
+            int overlayXStop = entry.getType().getOverlayXStop();
+            int overlayYStart = entry.getType().getOverlayYStart();
+            int overlayYStop = entry.getType().getOverlayYStop();
+
+            //get coordinates of necessary picture cropping. 
+            //If not cropped: coordinates are that of actual size of picture.
+            double offsetXStart = entry.getOptions().getOffsetXStart();
+            double offsetXStop = entry.getOptions().getOffsetXStop() == 0
+                    ? cropWidth
+                    : entry.getOptions().getOffsetXStop();
+            double offsetYStart = entry.getOptions().getOffsetYStart();
+            double offsetYStop = entry.getOptions().getOffsetYStop() == 0
+                    ? cropHeight
+                    : entry.getOptions().getOffsetYStop();
+
+            //calculate necessary resizing of cropped picture to fit perfectly in
+            //overlay of product type picture.
+            double resize = this.calculatePictureResize(cropWidth, cropHeight,
+                    overlayXStart, overlayXStop,
+                    overlayYStart, overlayYStop,
+                    productResize);
+
+            //calculate picture properties
+            this.calculatePictureProperties(cropWidth, cropHeight,
+                    resize,
+                    offsetXStart, offsetXStop,
+                    offsetYStart, offsetYStop,
+                    overlayXStart, overlayXStop,
+                    overlayYStart, overlayYStop,
+                    productResize);
+
+            //set chosen color;
             setColor();
         }
 
-        public void calculateProductProperties() {
+        /**
+         * Calculates width, height, left outline and top outline of product
+         * picture in pixels. Picture of product type will be shown centered in
+         * div with maximal size.
+         *
+         * @param divWidth width of div picture will be shown in
+         * @param divHeight height of div picture will be shown in
+         * @param actualWidth actual width of picture of product type
+         * @param actualHeight actual height of picture of product type
+         */
+        public void calculateProductProperties(int divWidth, int divHeight,
+                int actualWidth, int actualHeight) {
 
-            int actualWidth = entry.getType().getWidth();
-            int actualHeight = entry.getType().getHeight();
+            //calculate necessary resizing for picture to fit in div
             productResize = 1;
-
             if (actualWidth > divWidth || actualHeight > divHeight) {
                 if (actualWidth / actualHeight > divWidth / divHeight) {
                     productResize = (double) divWidth / (double) actualWidth;
                 } else {
-                    productResize = (double)divHeight / (double)actualHeight;
+                    productResize = (double) divHeight / (double) actualHeight;
                 }
             }
-            
-            productWidth = (int)Math.round(actualWidth * productResize);
-            productHeight = (int)Math.round(actualHeight * productResize);
 
+            //calculate new product picture sizes
+            productWidth = (int) Math.round(actualWidth * productResize);
+            productHeight = (int) Math.round(actualHeight * productResize);
+
+            //calculate left and top outline. picture must be centered in div.
             productTop = divHeight == productHeight
                     ? 0
                     : (divHeight - productHeight) / 2;
@@ -229,87 +324,99 @@ public class CartHelper {
                     : (divWidth - productWidth) / 2;
         }
 
-        public void calculatePictureProperties() {
-            double cropWidth = entry.getOptions().getOffsetXStop()
-                    - entry.getOptions().getOffsetXStart();
-            double cropHeight = entry.getOptions().getOffsetYStop()
-                    - entry.getOptions().getOffsetYStart();
+        /**
+         * Calculates the necessary resizing of the picture in order to fit
+         * inside the overlay of the product type picture.
+         *
+         * @param cropWidth width of image after cropping
+         * @param cropHeight height of image after cropping
+         * @param overlayXStart x coordinate of start of picture overlay
+         * @param overlayXStop x coordinate of stop of picture overlay
+         * @param overlayYStart y coordinate of start of picture overlay
+         * @param overlayYStop y coordinate of stop of picture overlay
+         * @param productResize resizing of the product type picture in
+         * percentage
+         * @return necessary resizing in percentage
+         */
+        public double calculatePictureResize(double cropWidth,
+                double cropHeight, int overlayXStart, int overlayXStop,
+                int overlayYStart, int overlayYStop, double productResize) {
 
-            if(cropWidth==0){
-                cropWidth = entry.getPicture().getWidth();
-            }
-            
-            if(cropHeight==0){
-                cropHeight = entry.getPicture().getHeight();
-            }
-            
             double resize = 1;
-            double overlayWidth = Math.round(entry.getType().getOverlayXStop() * productResize
-                    - entry.getType().getOverlayXStart() * productResize);
-            double overlayHeight = Math.round(entry.getType().getOverlayYStop() * productResize
-                    - entry.getType().getOverlayYStart() * productResize);
-            
+            double overlayWidth = overlayXStop * productResize
+                    - overlayXStart * productResize;
+            double overlayHeight = overlayYStop * productResize
+                    - overlayYStart * productResize;
+
             if (cropWidth > overlayWidth || cropHeight > overlayHeight) {
-                if (cropWidth / cropHeight > overlayWidth / overlayHeight) {
-                    resize = overlayWidth / cropWidth;
-                } else {
-                    resize = overlayHeight / cropHeight;
-                }
+                resize = cropWidth / cropHeight > overlayWidth / overlayHeight
+                        ? overlayWidth / cropWidth
+                        : overlayHeight / cropHeight;
             }
 
+            return resize;
+        }
+
+        /**
+         * Calculates width, height, left outline, top outline and cropping of
+         * picture in pixels. Picture will be shown centered in product type
+         * overlay with maximal size.
+         *
+         * @param cropWidth width of cropped picture
+         * @param cropHeight height of cropped picture
+         * @param resize necessary resize of picture
+         * @param offsetXStart actual x coordinate of start of cropping
+         * @param offsetXStop actual x coordinate of stop of cropping
+         * @param offsetYStart actual y coordinate of start of cropping
+         * @param offsetYStop actual y coordinate of stop of cropping
+         * @param overlayXStart actual x coordinate of start of picture overlay
+         * @param overlayXStop actual x coordinate of stop of picture overlay
+         * @param overlayYStart actual y coordinate of start of picture overlay
+         * @param overlayYStop actual y coordinate of stop of picture overlay
+         * @param productResize resizing of product type picture in which the
+         * picture will be shown
+         */
+        public void calculatePictureProperties(double cropWidth,
+                double cropHeight, double resize, double offsetXStart,
+                double offsetXStop, double offsetYStart, double offsetYStop,
+                int overlayXStart, int overlayXStop, int overlayYStart,
+                int overlayYStop, double productResize) {
+
+            //calculate new picture size
             pictureWidth = entry.getPicture().getWidth() * resize;
             pictureHeight = entry.getPicture().getHeight() * resize;
-            
-            //TEMPORARY
-            double offsetXStart = entry.getOptions().getOffsetXStart();
-            double offsetXStop = entry.getOptions().getOffsetXStop();
-            double offsetYStart = entry.getOptions().getOffsetYStart();
-            double offsetYStop = entry.getOptions().getOffsetYStop();
-            
-            if(offsetXStop == 0){
-                offsetXStop = cropWidth;
-            }
-            if(offsetYStop==0){
-                offsetYStop = cropHeight;
-            } 
-            
+
+            //calculate necessary cropping of each side
             clipTop = offsetYStart * resize;
             clipRight = offsetXStop * resize;
             clipBottom = offsetYStop * resize;
             clipLeft = offsetXStart * resize;
-             
-            double overlayXStart = Math.round(entry.getType().getOverlayXStart() * productResize);
-            double overlayXStop = Math.round(entry.getType().getOverlayXStop() * productResize);
-            double overlayYStart = Math.round(entry.getType().getOverlayYStart() * productResize);
-            double overlayYStop = Math.round(entry.getType().getOverlayYStop() * productResize);
-            
-            pictureTop = productTop + overlayYStart 
-                    + (overlayYStop-overlayYStart-pictureHeight)
+
+            //calculate left and top outline. Picture must be centered in overlay.
+            double overlayXStartN = overlayXStart * productResize;
+            double overlayXStopN = overlayXStop * productResize;
+            double overlayYStartN = overlayYStart * productResize;
+            double overlayYStopN = overlayYStop * productResize;
+
+            pictureTop = productTop + overlayYStartN
+                    + (overlayYStopN - overlayYStartN - pictureHeight)
                     / 2
                     + (pictureHeight - clipTop - clipBottom)
                     / 2;
-            
-            pictureLeft = productLeft + overlayXStart
-                    + (overlayXStop - overlayXStart - pictureWidth)
+
+            pictureLeft = productLeft + overlayXStartN
+                    + (overlayXStopN - overlayXStartN - pictureWidth)
                     / 2
                     + (pictureWidth - clipRight - clipLeft)
                     / 2;
         }
-        
-        public void setColor(){
+
+        public void setColor() {
             color = entry.getOptions().getColor().name();
         }
 
         public OrderEntry getEntry() {
             return entry;
-        }
-        
-        public int getDivWidth() {
-            return divWidth;
-        }
-
-        public int getDivHeight() {
-            return divHeight;
         }
 
         public double getProductResize() {
