@@ -6,7 +6,7 @@
     <script src="/assets/customers/js/jquery.imgareaselect.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.picture-detail').imgAreaSelect({
+            $('.picture-detail').imgAreaSelect({ aspectRatio: '{{ picture.width }}:{{ picture.height }}',
                 handles: true, onSelectEnd: function (img, selection) {
                     $('input[name="x1"]').val(selection.x1);
                     $('input[name="y1"]').val(selection.y1);

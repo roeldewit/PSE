@@ -9,6 +9,7 @@ import com.pse.fotoz.persistence.HibernateEntityHelper;
 import com.pse.fotoz.persistence.HibernateException;
 import com.pse.fotoz.properties.LocaleUtil;
 import com.pse.fotoz.validators.MultipartFileValidator;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -82,7 +84,7 @@ public class ProducerProducts {
         ModelAndView mav = ModelAndViewBuilder.empty().
                 withProperties(request).
                 build();
-        
+
         mav.addObject("page", new Object() {
             public String lang = request.getSession().
                     getAttribute("lang").toString();
@@ -96,6 +98,7 @@ public class ProducerProducts {
 
     /**
      * Handles a request to add a new Product Type to the system
+     *
      * @param newProdType validated Product Type
      * @param resultProdType result of validation
      * @param request http request
@@ -114,7 +117,7 @@ public class ProducerProducts {
                 withProperties(request).
                 build();
         mav.setViewName("producer/dashboard/products_new.twig");
-        
+
         List<String> errors = new ArrayList<>();
 
         //check validation errors
@@ -131,29 +134,32 @@ public class ProducerProducts {
             String filename = file.getOriginalFilename();
 
             try {
+                //get image properties
+                BufferedImage img = ImageIO.read(file.getInputStream());
+                int width = img.getWidth();
+                int height = img.getHeight();
+
                 //move file
                 ServletContext context = request.getServletContext();
                 String appPath = context.getRealPath(
                         ConfigurationHelper.getProductTypeAssetLocation());
                 String totalname = appPath + "\\" + filename;
                 file.transferTo(new File(totalname));
-                
+
                 //persist new Product Type
                 String name = request.getParameter("name");
                 String description = request.getParameter("description");
                 BigDecimal price = new BigDecimal(
                         request.getParameter("price"));
                 int stock = Integer.parseInt(request.getParameter("stock"));
-                int width = Integer.parseInt(request.getParameter("width"));
-                int height = Integer.parseInt(request.getParameter("height"));
                 int xStart = Integer.parseInt(request.getParameter("overlayXStart"));
                 int xStop = Integer.parseInt(request.getParameter("overlayXStop"));
                 int yStart = Integer.parseInt(request.getParameter("overlayYStart"));
                 int yStop = Integer.parseInt(request.getParameter("overlayYStop"));
                 PersistenceFacade.addProductType(
-                        name, description, price, stock, filename, width, 
+                        name, description, price, stock, filename, width,
                         height, xStart, xStop, yStart, yStop);
-                
+
                 //no errors found. change viewname for succesfull add
                 mav.setViewName("producer/dashboard/products_new_success.twig");
             } catch (IOException ex) {
@@ -183,13 +189,14 @@ public class ProducerProducts {
     /**
      * Ajax endpoint handling the request for editing the value of a product
      * type's stock.
+     *
      * @param request The associated request.
      * @return 200 on OK, 503 on any error.
      */
     @RequestMapping(method = RequestMethod.POST, value = "/ajax/edit-stock")
     public ResponseEntity<String> editStock(HttpServletRequest request) {
         JSONObject json;
-            
+
         try {
             String data = request.getReader().lines().
                     reduce("", (s1, s2) -> s1 + s2);
@@ -197,17 +204,17 @@ public class ProducerProducts {
             json = new JSONObject(data);
             int id = json.getInt("product_type_id");
             int stock = json.getInt("amount");
-            
+
             Optional<ProductType> type = HibernateEntityHelper.
                     byId(ProductType.class, id);
-            
+
             if (type.isPresent()) {
                 PersistenceFacade.setStock(type.get(), stock);
-                
-                return ResponseEntity.ok().body("ok"); 
+
+                return ResponseEntity.ok().body("ok");
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).
-                    body("corrupt form data");                
+                        body("corrupt form data");
             }
         } catch (IOException | JSONException | HibernateException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).
