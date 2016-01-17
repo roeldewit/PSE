@@ -6,11 +6,13 @@
 
 {% block more_css %}
     <link href="/assets/common/css/default.css" rel="stylesheet"/>
+    <link href="/assets/producer/css/default.css" rel="stylesheet"/>
     <link href="/assets/common/css/bootstrap/sb-admin/sb-admin.css" rel="stylesheet"/>
     <link href="/assets/common/css/bootstrap/sb-admin/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/assets/producer/css/dashboard.css" rel="stylesheet"/>
-
     <link rel="stylesheet" href="/assets/common/fancybox/jquery.fancybox.css" type="text/css" media="screen" />  
+    {% block more_more_css %}        
+    {% endblock %}    
 {% endblock %}
 
 {% block more_js %}
@@ -21,6 +23,8 @@
             $(".fancybox").fancybox();
         });
     </script>
+    {% block more_more_js %}        
+    {% endblock %}  
 {% endblock %}
 
 {% block body %}
@@ -50,6 +54,9 @@
                     </li>
                     <li {% if page.uri equals "/producer/dashboard/orders" %}  class="active" {% endif %} >
                         <a href="/app/producer/dashboard/orders"><i class="fa fa-file-text-o"></i> {{ labels.producer_dashboard_index_item_orders }}</a>
+                    </li>
+                    <li {% if page.uri equals "/producer/dashboard/payments" %}  class="active" {% endif %} >
+                        <a href="/app/producer/dashboard/payments"><i class="fa fa-eur"></i> {{ labels.producer_dashboard_index_item_payments }}</a>
                     </li>
                     <li>    
                         <a href="/logout"><i class="fa fa-sign-out"></i> {{ labels.producer_dashboard_index_item_logout }}</a>
