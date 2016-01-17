@@ -93,7 +93,7 @@ public class EmailHelper {
      */
     public void sendEmailHTML(String html, String subject, List<String> to, 
             String from) throws MessagingException {
-        Session session = Session.getDefaultInstance(properties, authenticator);      
+        Session session = Session.getInstance(properties, authenticator);      
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(from));
         for (String s : to) {

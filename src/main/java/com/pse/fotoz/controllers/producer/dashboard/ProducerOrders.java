@@ -1,5 +1,6 @@
 package com.pse.fotoz.controllers.producer.dashboard;
 
+import com.pse.fotoz.config.ConfigurationManager;
 import com.pse.fotoz.domain.entities.Order;
 import static com.pse.fotoz.domain.entities.Order.ShippingStatus.NOT_SHIPPED;
 import static com.pse.fotoz.domain.entities.Order.ShippingStatus.SHIPPED;
@@ -7,10 +8,13 @@ import com.pse.fotoz.helpers.EmailHelper;
 import com.pse.fotoz.helpers.ModelAndViewBuilder;
 import static com.pse.fotoz.payments.domain.PaymentResponse.PaymentStatus.PAID;
 import com.pse.fotoz.persistence.HibernateEntityHelper;
+import com.pse.fotoz.persistence.HibernateException;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static java.util.stream.Collectors.toList;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -155,6 +159,8 @@ public class ProducerOrders {
         
         if (order.isPresent()) {
             mav.addObject("order", order.get());
+            mav.addObject("isShipped", 
+                    order.get().getShippingStatus() == SHIPPED);
             mav.setViewName("producer/dashboard/order_detail.twig");
             
             return mav;
@@ -182,8 +188,9 @@ public class ProducerOrders {
         return mav;
     }
     
-    @RequestMapping(method = RequestMethod.GET, value = "/ajax/ship")
-    public ResponseEntity<String> setShippingStatus(HttpServletRequest request) {
+    @RequestMapping(method = RequestMethod.POST, value = "/ajax/ship")
+    public ResponseEntity<String> setShippingStatus(
+            HttpServletRequest request) {
         try {
             String data = request.getReader().lines().
                     reduce("", (s1, s2) -> s1 + s2);
@@ -194,13 +201,20 @@ public class ProducerOrders {
             
             Optional<Order> order = HibernateEntityHelper.
                     byId(Order.class, orderId);
-            
-            if (order.isPresent()) {
+            if (order.isPresent() 
+                    && order.get().getShippingStatus() != SHIPPED) {
                 order.get().setShippingStatus(SHIPPED);
                 
-                String email = FileUtils.readFileToString(
-                    new File("src/main/webapp/WEB-INF/views/customers/"
-                            + "emails/order-placed.html"));
+                order.get().persist();
+
+                String email = "<h1>Uw bestelling wordt verzonden</h1>\n" +
+                        "\n" +
+                        "<p>\n" +
+                        "Uw bestelling is verwerkt en wordt zo snel " +
+                        "mogelijk verzonden. Wij verwachten een " +
+                        "leveringsduur van ten meeste 2 dagen.\n" +
+                                "</p>\n";
+
                 String emailAddress = order.get().getAccount().getCustomer().
                         getEmail();
 
@@ -208,13 +222,16 @@ public class ProducerOrders {
                         new XMLConfiguration("application.cfg.xml")).
                         sendEmailHTML(email, 
                                 "Uw bestelling bij Fotoz is verwerkt.", 
-                                emailAddress, "Fotoz klantenservice");
+                                emailAddress, "info@fotoz.nl");
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body("corrupt form data");
             }
         } catch (IOException | JSONException | ConfigurationException | 
-                MessagingException | IllegalArgumentException ex) {
+                MessagingException | HibernateException |
+                IllegalArgumentException ex) {
+            Logger.getLogger(ConfigurationManager.class.getName()).
+                    log(Level.SEVERE, null, ex);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body("corrupt form data");
         }

@@ -140,16 +140,21 @@ public class CartHelper {
         cart.getOrder().persist();
         
         try {
-            String email = FileUtils.readFileToString(
-                    new File("src/main/webapp/WEB-INF/views/customers/"
-                            + "emails/order-placed.html"));
+            String email = "<h1>Bedankt voor uw bestelling!</h1>\n" +                    
+                    "\n" +
+                    "<p>\n" +
+                    "    Uw bestelling is bij ons binnengekomen. Ga naar uw "
+                    + "<a href=\"http://localhost:8080/app/"
+                    + "customers/account/orders\">persoonlijke overzicht</a> "
+                    + "om deze te bekijken.\n" +
+                    "</p>\n";
             String emailAddress = cart.getOrder().getAccount().getCustomer().
                     getEmail();
             
             EmailHelper.fromConfig(new XMLConfiguration("application.cfg.xml")).
                     sendEmailHTML(email, "Uw bestelling bij Fotoz.", 
-                            emailAddress, "Fotoz klantenservice");
-        } catch (IOException | ConfigurationException | MessagingException ex) {
+                            emailAddress, "info@fotoz.nl");
+        } catch (ConfigurationException | MessagingException ex) {
             Logger.getLogger(CartHelper.class.getName()).
                     log(Level.SEVERE, null, ex);
         }
