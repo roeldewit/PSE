@@ -33,6 +33,12 @@
                         </td>
                         <td>
                             {{ order.shippingStatus }}
+                            {% if not isShipped %}
+                                <input type="hidden" id="order_id" name="order_id" value="{{ order.id }}"/>
+                                <a id="ship-order" class="btn btn-default">
+                                    Zet status op verzonden
+                                </a>
+                            {% endif %}
                         </td>
                     </tr>
                     <tr>
