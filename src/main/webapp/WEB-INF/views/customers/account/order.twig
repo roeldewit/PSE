@@ -1,0 +1,105 @@
+{% extends "customers/shops/index.twig" %}
+
+{% block content %}
+    <div class="container">
+        <div class="row orders-div">
+
+            <div class="col-sm-6">         
+                <table class="table">
+                    <tr>
+                        <th>{{ labels.customer_account_orders_order_id }}</th>                                   
+                        <td>{{ order.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ labels.customer_account_orders_status }}</th>
+                        <td>
+                            {% if order.status equals "SHIPPED" %}
+                                {{labels.customer_account_orders_verzonden}}
+                            {% else %}
+                                {{labels.customer_account_orders_nietverzonden}}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ labels.customer_account_orders_paystatus }}</th>
+                        <td>{{ order.molliePaymentStatus }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ labels.customer_account_orders_method }}</th>
+                        <td>{{order.molliePaymentMethod}}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ labels.customer_account_orders_total_amount }}</th>
+                        <td>
+                            <span class="currency-convertable">
+                                {{ order.priceSum | numberformat("#.00") }}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ labels.customer_account_orders_create_date }} </th>
+                        <td>{{ order.molliePaymentCreatedDate }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-md-12">
+                <h2>
+                    {{ labels.customer_account_order_preview_header }}
+                </h2>
+                <div class="table-responsive">            
+                    <table class="table cart-productprev-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                </th>
+                                <th>
+                                    {{ labels.customers_cart_amount }}
+                                </th>
+                                <th>
+                                    {{ labels.customers_cart_price }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entryPreview in entryPreviews %}
+                                <tr>                                    
+                                    <td>
+                                        <div class="cart-image-wrapper">
+                                            <img class="cart-picture" src="/assets/products/img/{{entryPreview.entry.type.filename}}" 
+                                                 style="position: absolute; top:{{entryPreview.productTop}}px;left:{{entryPreview.productLeft}}px; width:{{entryPreview.productWidth}}px;height:{{entryPreview.productHeight}}px;"/>
+                                            <img class="cart-picture" src="/assets/shops/{{ entryPreview.entry.picture.session.shop.login }}/sessions/{{ entryPreview.entry.picture.session.id }}/{{ entryPreview.entry.picture.fileName }}" 
+                                                 style="position: absolute; top:{{entryPreview.pictureTop}}px;left:{{entryPreview.pictureLeft}}px;width:{{entryPreview.pictureWidth}}px;height:{{entryPreview.pictureHeight}}px;clip: rect({{entryPreview.clipTop}}px,{{entryPreview.clipRight}}px,{{entryPreview.clipBottom}}px,{{entryPreview.clipLeft}}px);
+                                                 {% if entryPreview.color equals "SEPIA" %}
+                                                     -webkit-filter: sepia(1);
+                                                 {% elseif entryPreview.color equals "GRAYSCALE" %}
+                                                     -webkit-filter: grayscale(1);
+                                                 {% endif %}
+                                                 "/>
+                                        </div>
+                                    </td>
+                                    <td class="cart-productprev-text" style="vertical-align:middle;">
+                                        {{ entryPreview.entry.amount }}
+                                    </td>
+                                    <td class="cart-productprev-text" style="vertical-align:middle;">
+                                        <span class="currency-sign-convertable">
+                                            {% if cookie.currency equals "GBP" %}
+                                                &pound;
+                                            {% else %}
+                                                &euro; 
+                                            {% endif %}
+                                        </span>
+                                        <span class="currency-convertable"> 
+                                            {{ entryPreview.entry.totalPrice | numberformat("#.00") }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

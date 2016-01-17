@@ -28,11 +28,17 @@ public class ProductOption implements HibernateEntity {
     @Column(name = "color")
     private ColorOption color;
     
-    @Column(name = "offset_x")
-    private int offsetX;
+    @Column(name = "offset_x_start")
+    private int offsetXStart;
     
-    @Column(name = "offset_y")
-    private int offsetY;
+    @Column(name = "offset_x_stop")
+    private int offsetXStop;
+    
+    @Column(name = "offset_y_start")
+    private int offsetYStart;
+    
+    @Column(name = "offset_y_stop")
+    private int offsetYStop;
     
     @Column(name = "width")
     private int width;
@@ -94,20 +100,36 @@ public class ProductOption implements HibernateEntity {
         this.color = color;
     }
 
-    public int getOffsetX() {
-        return offsetX;
+    public int getOffsetXStart() {
+        return offsetXStart;
     }
 
-    public void setOffsetX(int offsetX) {
-        this.offsetX = offsetX;
+    public void setOffsetXStart(int offsetXStart) {
+        this.offsetXStart = offsetXStart;
     }
 
-    public int getOffsetY() {
-        return offsetY;
+    public int getOffsetXStop() {
+        return offsetXStop;
     }
 
-    public void setOffsetY(int offsetY) {
-        this.offsetY = offsetY;
+    public void setOffsetXStop(int offsetXStop) {
+        this.offsetXStop = offsetXStop;
+    }
+
+    public int getOffsetYStart() {
+        return offsetYStart;
+    }
+
+    public void setOffsetYStart(int offsetYStart) {
+        this.offsetYStart = offsetYStart;
+    }
+
+    public int getOffsetYStop() {
+        return offsetYStop;
+    }
+
+    public void setOffsetYStop(int offsetYStop) {
+        this.offsetYStop = offsetYStop;
     }
 
     public int getWidth() {
