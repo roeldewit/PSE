@@ -3,9 +3,29 @@
 {% block heading %}
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">
-                {{ labels.producer_dashboard_index_item_orders }}
-            </h1>
+            {% if paid is not empty %}
+
+                <h1 class="page-header">
+                    {{ labels.producer_dashboard_index_item_orders_paid }}
+                </h1>
+
+            {% elseif unpaid is not empty %}
+
+                <h1 class="page-header">
+                    {{ labels.producer_dashboard_index_item_orders_unpaid }}
+                </h1>
+
+            {% elseif notshippedpaid is not empty %}
+
+                <h1 class="page-header">
+                    {{ labels.producer_dashboard_index_item_orders_paid_notshipped }}
+                </h1>
+
+            {% else %}
+                <h1 class="page-header">
+                    {{ labels.producer_dashboard_index_item_orders }}
+                </h1>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
@@ -13,23 +33,71 @@
 {% block content %}
     <div class="row">
         <div class="col-lg-12">
-            <p>
-                {{ labels.producer_dashboard_orders_body_message }} 
-            </p>
+            {% if paid is not empty %}
+                <p>
+                    {{ labels.producer_dashboard_orders_body_message_paid }} 
+                </p>
+            {% elseif unpaid is not empty %}  
+                <p>
+                    {{ labels.producer_dashboard_orders_body_message_unpaid }} 
+                </p> 
+
+            {% elseif notshippedpaid is not empty %}  
+                <p>
+                    {{ labels.producer_dashboard_orders_body_message_paid_notshipped }} 
+                </p> 
+            {% else %}
+                <p>
+                    {{ labels.producer_dashboard_orders_body_message }} 
+                </p>
+            {% endif %}
+
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-12">
-            <a href="/app/producer/dashboard/orders/paid" class="btn btn-default">
-                {{ labels.producer_dashboard_orders_paid_button }} 
-            </a>
-            <a href="/app/producer/dashboard/orders/unpaid" class="btn btn-default">
-                {{ labels.producer_dashboard_orders_unpaid_button }} 
-            </a>
-            <a href="/app/producer/dashboard/orders/not-shipped-but-paid" class="btn btn-default">
-                {{ labels.producer_dashboard_orders_not_shipped_but_paid_button }} 
-            </a>
+            {% if allorders is not empty %}
+                <a href="/app/producer/dashboard/orders" class="btn btn-default active">
+                    {{ labels.producer_dashboard_index_item_orders }} 
+                </a>
+
+            {% else %}
+                <a href="/app/producer/dashboard/orders" class="btn btn-default">
+                    {{ labels.producer_dashboard_index_item_orders }} 
+                </a>
+            {% endif %}
+
+            {% if paid is not empty %}
+                <a href="/app/producer/dashboard/orders/paid" class="btn btn-default active">
+                    {{ labels.producer_dashboard_orders_paid_button }} 
+                </a>
+            {% else %}
+                <a href="/app/producer/dashboard/orders/paid" class="btn btn-default">
+                    {{ labels.producer_dashboard_orders_paid_button }} 
+                </a>
+            {% endif %}
+
+            {% if unpaid is not empty %}
+                <a href="/app/producer/dashboard/orders/unpaid" class="btn btn-default active">
+                    {{ labels.producer_dashboard_orders_unpaid_button }} 
+                </a>
+            {% else %}
+                <a href="/app/producer/dashboard/orders/unpaid" class="btn btn-default">
+                    {{ labels.producer_dashboard_orders_unpaid_button }} 
+                </a>
+            {% endif %}
+            {% if notshippedpaid is not empty %}
+                <a href="/app/producer/dashboard/orders/not-shipped-but-paid" class="btn btn-default active">
+                    {{ labels.producer_dashboard_orders_not_shipped_but_paid_button }} 
+                </a>
+            {% else %}
+                <a href="/app/producer/dashboard/orders/not-shipped-but-paid" class="btn btn-default">
+                    {{ labels.producer_dashboard_orders_not_shipped_but_paid_button }} 
+                </a>
+
+            {% endif %}
+
         </div>
     </div>
 
@@ -37,7 +105,7 @@
         <div class="col-lg-12">
             {% if orders is empty %}
                 <p>
-                    {{ labels.producer_dashboard_shops_table_nocontent }}
+                    {{ labels.producer_dashboard_orders_nocontent }}
                 </p>
             {% else %}
                 <div class="table-responsive">            

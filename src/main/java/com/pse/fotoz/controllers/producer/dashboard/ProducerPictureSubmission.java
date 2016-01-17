@@ -45,6 +45,75 @@ public class ProducerPictureSubmission {
                 collect(Collectors.toList());
 
         mav.addObject("pictures", pictures);
+        mav.addObject("submitted", request);
+        
+        mav.addObject("page", new Object() {
+            public String lang = request.getSession().
+                    getAttribute("lang").toString();
+            public String uri = "/producer/dashboard/submissions";
+            public String redirect = request.getRequestURL().toString();
+        });
+
+        mav.setViewName("producer/dashboard/submissions.twig"); 
+
+        return mav;
+    }
+    
+        /**
+     * Displays an overview of approved pictures to the producer.
+     * @param request
+     * @return 
+     */
+    @RequestMapping(method = RequestMethod.GET, value="/approved")
+    public ModelAndView displayApproved(HttpServletRequest request) {
+        ModelAndView mav = ModelAndViewBuilder.empty().
+                withProperties(request).
+                build();
+
+        List<Picture> pictures = HibernateEntityHelper.all(Picture.class).
+                stream().
+                filter(p -> p.getApproved() == Picture.Approved.YES).
+                sorted((p1, p2) -> p2.getSubmissionDate().
+                        compareTo(p1.getSubmissionDate())).
+                collect(Collectors.toList());
+
+        mav.addObject("pictures", pictures);
+        mav.addObject("approved", request);
+       
+        
+        mav.addObject("page", new Object() {
+            public String lang = request.getSession().
+                    getAttribute("lang").toString();
+            public String uri = "/producer/dashboard/submissions";
+            public String redirect = request.getRequestURL().toString();
+        });
+
+        mav.setViewName("producer/dashboard/submissions.twig"); 
+
+        return mav;
+    }
+    
+       /**
+     * Displays an overview of approved pictures to the producer.
+     * @param request
+     * @return 
+     */
+    @RequestMapping(method = RequestMethod.GET, value="/rejected")
+    public ModelAndView displayRejected(HttpServletRequest request) {
+        ModelAndView mav = ModelAndViewBuilder.empty().
+                withProperties(request).
+                build();
+
+        List<Picture> pictures = HibernateEntityHelper.all(Picture.class).
+                stream().
+                filter(p -> p.getApproved() == Picture.Approved.NO).
+                sorted((p1, p2) -> p2.getSubmissionDate().
+                        compareTo(p1.getSubmissionDate())).
+                collect(Collectors.toList());
+
+        mav.addObject("pictures", pictures);
+        mav.addObject("rejected", request);
+        
         
         mav.addObject("page", new Object() {
             public String lang = request.getSession().
