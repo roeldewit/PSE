@@ -153,7 +153,6 @@ public class CartHelper {
             Logger.getLogger(CartHelper.class.getName()).
                     log(Level.SEVERE, null, ex);
         }
-        
     }
 
     /**
