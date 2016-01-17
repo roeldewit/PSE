@@ -1,5 +1,22 @@
 {% extends "customers/shops/index.twig" %}
-
+{% block even_more_css %}
+    <link href="/assets/customers/css/imgareaselect/imgareaselect-default.css" rel="stylesheet"/>
+{% endblock %}
+{% block even_more_js %}
+    <script src="/assets/customers/js/jquery.imgareaselect.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.picture-detail').imgAreaSelect({ aspectRatio: '{{ picture.width }}:{{ picture.height }}',
+                handles: true, onSelectEnd: function (img, selection) {
+                    $('input[name="x1"]').val(selection.x1);
+                    $('input[name="y1"]').val(selection.y1);
+                    $('input[name="x2"]').val(selection.x2);
+                    $('input[name="y2"]').val(selection.y2);
+                }
+            });
+        });
+    </script>
+{% endblock %}   
 {% block content %}
     <div class="container">
         <div class="row">
@@ -7,9 +24,10 @@
                 <h2>
                     {{ picture.title }}
                 </h2>
-
+                <br/>
+                <h2>{{ labels.customer_shop_crop_title}}</h2>
+                <p>{{ labels.customer_shop_crop_expl}}</p>
                 <img class="picture-detail" src="/assets/shops/{{ picture.session.shop.login }}/sessions/{{ picture.session.id }}/{{ picture.fileName }}">
-
                 <p>
                     <span class="currency-sign-convertable">
                         {% if cookie.currency equals "GBP" %}
@@ -27,10 +45,10 @@
                 </p>
             </div>
         </div>
-                
+
         <form id="add_to_cart">
             <input type="hidden" name="picture_id" value="{{ picture.id }}"/>
-            
+
             <div class="row">
                 <div class="col-md-12">
                     <h2>
@@ -95,6 +113,10 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="x1" value="-1" />
+            <input type="hidden" name="y1" value="-1" />
+            <input type="hidden" name="x2" value="-1" />
+            <input type="hidden" name="y2" value="-1" />
         </form>
     </div>
 {% endblock %}

@@ -29,7 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @author Robert
  */
 @Controller
-@RequestMapping("/customers/account/")
+@RequestMapping("/customers/account/sessions")
 public class CustomerAccountPictureSessions {
 
     /**
@@ -39,7 +39,7 @@ public class CustomerAccountPictureSessions {
      * @param response
      * @return 
      */
-    @RequestMapping(value = "/sessions", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ModelAndView displayPictureSessions(HttpServletRequest request, 
             HttpServletResponse response) {
         ModelAndView mav = ModelAndViewBuilder.empty().                
@@ -81,7 +81,7 @@ public class CustomerAccountPictureSessions {
      * @param response
      * @return 
      */
-    @RequestMapping(value = "/sessions", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public ModelAndView addPictureSession(HttpServletRequest request, 
             HttpServletResponse response) {
         ModelAndView mav = ModelAndViewBuilder.empty().
@@ -132,7 +132,7 @@ public class CustomerAccountPictureSessions {
      * @param redirectAttributes attributes to be added to redirect view
      * @return 
      */
-    @RequestMapping(value = "/sessions/add/{code}", method = RequestMethod.GET)
+    @RequestMapping(value = "/add/{code}", method = RequestMethod.GET)
     public ModelAndView addPictureSessionViaURL(HttpServletRequest request,
             HttpServletResponse response,
             @PathVariable String code,

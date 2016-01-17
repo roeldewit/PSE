@@ -12,12 +12,14 @@
 
     <link href="/assets/customers/css/default.css" rel="stylesheet"/>
     <link href="/assets/common/css/default.css" rel="stylesheet"/>
+   {% block even_more_css %}{% endblock %}
 {% endblock %}
 
 {% block more_js %}
     <script src="/assets/common/js/js.cookie.js"></script>
     <script src="/assets/common/js/jquery.format-1.3.min.js"></script>
     <script src="/assets/customers/js/default.js"></script>
+    {% block even_more_js %}{% endblock %}
 {% endblock %}
 
 {% block body %}
@@ -46,7 +48,15 @@
                     </li>
 
                     <li {% if page.uri equals "/customers/account/sessions" %}  class="active" {% endif %}>
-                        <a href="/app/customers/account/sessions"><i class="fa fa-picture-o"></i> {{ labels.home_customer_sessions }}
+                        <a href="/app/customers/account/sessions">
+                            <i class="fa fa-picture-o"></i> 
+                            {{ labels.home_customer_sessions }}
+                        </a>
+                    </li>
+                    <li {% if page.uri equals "/customers/account/orders" %}  class="active" {% endif %}>
+                        <a href="/app/customers/account/orders">
+                            <i class="fa fa-file-text-o"></i> 
+                            {{ labels.home_customer_orders }}
                         </a>
                     </li>
                     <li {% if page.uri equals "/customers/shops" %}  class="active" {% endif %}>
