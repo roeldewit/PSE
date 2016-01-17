@@ -8,10 +8,20 @@ import com.pse.fotoz.domain.entities.ProductOption;
 import com.pse.fotoz.domain.entities.ProductType;
 import com.pse.fotoz.persistence.HibernateEntityHelper;
 import com.pse.fotoz.persistence.HibernateException;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  * Helper class to handle Cart manipulations. Note that Carts are not a
@@ -124,10 +134,26 @@ public class CartHelper {
                 e.getAmount() * (e.getType().getPrice().doubleValue()
                 + e.getPicture().getPrice().doubleValue())));
 
-        cart.getOrder().getEntries().forEach(e
-                -> e.getType().setStock(e.getType().getStock() - e.getAmount()));
+        cart.getOrder().getEntries().forEach(e -> 
+                e.getType().setStock(e.getType().getStock() - e.getAmount()));
 
         cart.getOrder().persist();
+        
+        try {
+            String email = FileUtils.readFileToString(
+                    new File("src/main/webapp/WEB-INF/views/customers/"
+                            + "emails/order-placed.html"));
+            String emailAddress = cart.getOrder().getAccount().getCustomer().
+                    getEmail();
+            
+            EmailHelper.fromConfig(new XMLConfiguration("application.cfg.xml")).
+                    sendEmailHTML(email, "Uw bestelling bij Fotoz.", 
+                            emailAddress, "Fotoz klantenservice");
+        } catch (IOException | ConfigurationException | MessagingException ex) {
+            Logger.getLogger(CartHelper.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**
