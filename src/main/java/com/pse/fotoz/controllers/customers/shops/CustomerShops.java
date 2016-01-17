@@ -3,7 +3,6 @@ package com.pse.fotoz.controllers.customers.shops;
 import com.pse.fotoz.domain.entities.Shop;
 import com.pse.fotoz.domain.filters.ShopFilters;
 import com.pse.fotoz.helpers.ModelAndViewBuilder;
-import com.pse.fotoz.helpers.UserHelper;
 import com.pse.fotoz.persistence.HibernateEntityHelper;
 import java.util.List;
 import java.util.Optional;

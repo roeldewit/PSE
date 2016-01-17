@@ -27,6 +27,9 @@
             <a href="/app/producer/dashboard/orders/unpaid" class="btn btn-default">
                 {{ labels.producer_dashboard_orders_unpaid_button }} 
             </a>
+            <a href="/app/producer/dashboard/orders/not-shipped-but-paid" class="btn btn-default">
+                {{ labels.producer_dashboard_orders_not_shipped_but_paid_button }} 
+            </a>
         </div>
     </div>
 
@@ -34,7 +37,7 @@
         <div class="col-lg-12">
             {% if orders is empty %}
                 <p>
-                    {{ labels.producer_dashboard_orders_nocontent }}
+                    {{ labels.producer_dashboard_shops_table_nocontent }}
                 </p>
             {% else %}
                 <div class="table-responsive">            
@@ -49,6 +52,9 @@
                                 </th>
                                 <th>
                                     {{ labels.producer_dashboard_orders_status }}     
+                                </th>
+                                <th>
+                                    {{ labels.producer_dashboard_orders_shipping_status }}     
                                 </th>
                                 <th>
                                     {{ labels.producer_dashboard_orders_method }}                    
@@ -68,31 +74,49 @@
                             {% for order in orders %}
                                 <tr>                                    
                                     <td>
-                                        {{ order.id }}
+                                        <a href="/app/producer/dashboard/orders/{{ order.id }}">
+                                            {{ order.id }}
+                                        </a>
                                     </td>
                                     <td>
-                                        {{ order.account.login }}
+                                        <a href="/app/producer/dashboard/orders/{{ order.id }}">
+                                            {{ order.account.login }}
+                                        </a>
                                     </td>
                                     <td>
-                                        {{ order.molliePaymentStatus }}
+                                        <a href="/app/producer/dashboard/orders/{{ order.id }}">
+                                            {{ order.molliePaymentStatus }}
+                                        </a>
                                     </td>
                                     <td>
-
-                                        {{  order.molliePaymentMethod }}
+                                        <a href="/app/producer/dashboard/orders/{{ order.id }}">
+                                            {{ order.shippingStatus }}
+                                        </a>
                                     </td>
                                     <td>
-                                        {{ order.priceSum | numberformat("#.00") }}
-
+                                        <a href="/app/producer/dashboard/orders/{{ order.id }}">
+                                            {{ order.molliePaymentMethod }}
+                                        </a>
                                     </td>
                                     <td>
-                                        {{ order.molliePaymentCreatedDate }}
-
+                                        <a href="/app/producer/dashboard/orders/{{ order.id }}">
+                                            {{ order.priceSum | numberformat("#.00") }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/app/producer/dashboard/orders/{{ order.id }}">
+                                            {{ order.molliePaymentCreatedDate }}
+                                        </a>
                                     </td>
                                 </tr>
                             {% endfor %}
-
                         </tbody>
                     </table>
+                    {% if displayCsvExport %}
+                        <a href="/app/producer/dashboard/orders/not-shipped-but-paid/csv" class="btn btn-default">
+                            Csv export
+                        </a>
+                    {% endif %}
                 </div>
             {% endif %}
         </div>
