@@ -1,0 +1,5 @@
+"{{ labels.producer_dashboard_payments_photographer }}", "{{ labels.producer_dashboard_payments_amount }}"
+
+{% for payment in payments %}
+    "{{ payment.key.photographer.name }}", "{{ payment.value | numberformat("#.00") }}"
+{% endfor %}

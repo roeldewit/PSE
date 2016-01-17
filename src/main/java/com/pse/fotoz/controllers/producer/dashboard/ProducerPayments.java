@@ -2,7 +2,6 @@ package com.pse.fotoz.controllers.producer.dashboard;
 
 import com.pse.fotoz.domain.entities.Order;
 import com.pse.fotoz.domain.entities.Shop;
-import com.pse.fotoz.helpers.MapHelper;
 import static com.pse.fotoz.helpers.MapHelper.merge;
 import com.pse.fotoz.helpers.ModelAndViewBuilder;
 import com.pse.fotoz.persistence.HibernateEntityHelper;
@@ -12,16 +11,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
-import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
-import org.hibernate.Criteria;
+import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,12 +25,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Controller handling the display of the payments for the producer.
- * @author Tarkan
+ * @author Robert
  */
 @Controller
 @RequestMapping("/producer/dashboard/payments")
 public class ProducerPayments {
 
+    /**
+     * Controller handling the display of the payments for the producer.
+     * @author Robert
+     * @param request The associated request.
+     * @return Display of all payments.
+     */
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView displayAllPayments(HttpServletRequest request) {
         ModelAndView mav = ModelAndViewBuilder.empty().
@@ -63,6 +63,36 @@ public class ProducerPayments {
         return mav;
     }
     
+    /**
+     * Controller handling the export of the payments for the producer in csv
+     * form.
+     * @author Robert
+     * @param request The associated request.
+     * @param response The associated response.
+     * @return Csv export of all payments.
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/csv")
+    public ModelAndView exportAllPaymentsCsv(HttpServletRequest request, 
+            HttpServletResponse response) {
+        ModelAndView mav = displayAllPayments(request);
+        
+        mav.setViewName("producer/dashboard/payments_csv.twig");
+        
+        response.setHeader("Content-disposition", 
+                "attachment; filename=export.csv");
+        
+        return mav;
+    }
+    
+    /**
+     * Controller handling the display of the payments for the producer 
+     * filtered by date.
+     * @author Robert
+     * @param request The associated request.
+     * @param dateStart The start date in format 01/01/2001.
+     * @param dateEnd The end date in format 01/01/2001.
+     * @return Display of all payments within the given timeframe.
+     */
     @RequestMapping(method = RequestMethod.GET, 
             value = "/{date-start}/{date-end}")
     public ModelAndView displayPaymentsBetween(HttpServletRequest request, 
@@ -97,9 +127,34 @@ public class ProducerPayments {
             mav.setViewName("producer/dashboard/payments.twig");
         } catch (HibernateException | ParseException ex) {
             return displayAllPayments(request);
-        }
-     
+        }     
 
+        return mav;
+    }
+    
+    /**
+     * Controller handling the display of the payments for the producer 
+     * filtered by date in csv form.
+     * @author Robert
+     * @param request The associated request.
+     * @param dateStart The start date in format 01/01/2001.
+     * @param dateEnd The end date in format 01/01/2001.
+     * @param response The associated response.
+     * @return Csv export of all payments within the given timeframe.
+     */
+    @RequestMapping(method = RequestMethod.GET, 
+            value = "/{date-start}/{date-end}/csv")
+    public ModelAndView exportPaymentsBetweenCsv(HttpServletRequest request,  
+            @PathVariable("date-start") String dateStart, 
+            @PathVariable("date-end") String dateEnd,
+            HttpServletResponse response) {
+        ModelAndView mav = displayPaymentsBetween(request, dateStart, dateEnd);
+        
+        mav.setViewName("producer/dashboard/payments_csv.twig");
+        
+        response.setHeader("Content-disposition", 
+                "attachment; filename=export.csv");
+        
         return mav;
     }
 }
