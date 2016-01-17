@@ -6,11 +6,13 @@
 
 {% block more_css %}
     <link href="/assets/common/css/default.css" rel="stylesheet"/>
+    <link href="/assets/producer/css/default.css" rel="stylesheet"/>
     <link href="/assets/common/css/bootstrap/sb-admin/sb-admin.css" rel="stylesheet"/>
     <link href="/assets/common/css/bootstrap/sb-admin/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/assets/producer/css/dashboard.css" rel="stylesheet"/>
-
     <link rel="stylesheet" href="/assets/common/fancybox/jquery.fancybox.css" type="text/css" media="screen" />  
+    {% block more_more_css %}        
+    {% endblock %}    
 {% endblock %}
 
 {% block more_js %}
@@ -21,6 +23,8 @@
             $(".fancybox").fancybox();
         });
     </script>
+    {% block more_more_js %}        
+    {% endblock %}  
 {% endblock %}
 
 {% block body %}

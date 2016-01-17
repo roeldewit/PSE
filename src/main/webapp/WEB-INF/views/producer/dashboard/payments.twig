@@ -1,5 +1,27 @@
 {% extends "producer/dashboard/index.twig" %}
 
+{% block more_more_css %}
+    <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="/assets/producer/css/MonthPicker.css" media="all" rel="stylesheet" type="text/css" />    
+{% endblock %}
+
+{% block more_more_js %}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" type="text/javascript"></script>
+    <script src="/assets/producer/js/MonthPicker.min.js" type="text/javascript"></script>    
+    <script type="text/javascript">
+        $(function(){
+            $('#month-picker').MonthPicker({
+                i18n: {
+                   year: "jaar",
+                   prevYear: "vorig jaar",
+                   nextYear: "volgend jaar"
+                }
+            });          
+        });
+    </script>
+{% endblock %}  
+
 {% block heading %}
     <div class="row">
         <div class="col-lg-12">
@@ -15,6 +37,10 @@
         <div class="col-lg-12">
             <p>
                 {{ labels.producer_dashboard_payments_body_message }} 
+            </p>
+            <p>
+                {{ labels.producer_dashboard_payments_filter }}
+                <input id="month-picker" readonly="readonly" type="text" />
             </p>
         </div>
     </div>
