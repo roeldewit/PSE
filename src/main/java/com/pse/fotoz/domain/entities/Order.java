@@ -165,6 +165,7 @@ public class Order implements HibernateEntity {
     public Map<Shop, Double> getPaymentDuePerShop() {
         return entries.stream().
                 collect(groupingBy(e -> e.getPicture().getSession().getShop(), 
-                        summingDouble(e -> e.getTotalPrice())));        
+                        summingDouble(e -> e.getPicture().getPrice().
+                                doubleValue() * e.getAmount())));        
     }
 }
