@@ -112,7 +112,7 @@ public class ProducerPayments {
         try {
             Date dateMin = new SimpleDateFormat("dd-MM-YYYY").parse(dateStart);
             Date dateMax = new SimpleDateFormat("dd-MM-YYYY").parse(dateEnd);
-            
+                        
             Session session = HibernateSession.getInstance().getSession();
             
             session.beginTransaction();
