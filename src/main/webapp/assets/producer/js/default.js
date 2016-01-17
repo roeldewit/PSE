@@ -14,8 +14,7 @@ $(function() {
                 $(this).parent().parent().remove();    
                 if ($('table.submitted-photos-table tr td').size() < 1) {
                     $('table.submitted-photos-table').hide();
-                }
-            
+                }            
             });
         });
     });
@@ -34,8 +33,7 @@ $(function() {
                 $(this).parent().parent().remove();    
                 if ($('table.submitted-photos-table tr td').size() < 1) {
                     $('table.submitted-photos-table').hide();
-                }
-            
+                }            
             });
         });
     });
@@ -54,6 +52,23 @@ $(function() {
             }),
             function( data ) {
                 window.location.replace("/app/producer/dashboard/products");
-            });
+            }
+        );
+    });
+    
+    /**
+     * Handles the user request to ship an order.
+     */
+    $('#ship-order').click(function() {
+        var order_id = $('#order_id').val();
+        
+        $.post( "/app/producer/dashboard/orders/ajax/ship", 
+            JSON.stringify({
+                "order_id": order_id
+            }),
+            function( data ) {
+                window.location.reload();
+            }
+        );
     });
 });

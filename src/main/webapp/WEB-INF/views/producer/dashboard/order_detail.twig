@@ -1,0 +1,227 @@
+{% extends "producer/dashboard/index.twig" %}
+
+{% block heading %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                {{ labels.producer_dashboard_orderdetail_header }}
+            </h1>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>
+                Orderinformatie:
+            </h2>
+            
+            <table class="table-condensed">
+                <tbody>
+                    <tr>
+                        <td>
+                            Ordernummer
+                        </td>
+                        <td>
+                            {{ order.id }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Verzendstatus
+                        </td>
+                        <td>
+                            {{ order.shippingStatus }}
+                            {% if not isShipped %}
+                                <input type="hidden" id="order_id" name="order_id" value="{{ order.id }}"/>
+                                <a id="ship-order" class="btn btn-default">
+                                    Zet status op verzonden
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Betaalstatus
+                        </td>
+                        <td>
+                            {{ order.molliePaymentStatus }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>
+                Orderregels:
+            </h3>
+            
+            {% for entry in order.entries %}
+                <hr/>
+                <table class="table-condensed">
+                    <tbody>                
+                    </tbody>
+                </table>
+                            
+                <h4>
+                    Afbeelding:
+                </h4>
+                <table class="table-condensed">
+                    <tbody>
+                        <tr>
+                            <td>
+                                Titel:
+                            </td>
+                            <td>
+                                {{ entry.picture.title }}
+                            </td>
+                        </tr>
+                        <tr>                            
+                            <td>
+                                Behorende tot sessie:
+                            </td>
+                            <td>
+                                {{ entry.picture.session.title }}
+                                <b>
+                                    <i>
+                                        van
+                                    </i>
+                                </b>
+                                {{ entry.picture.session.shop.photographer.name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Filenaam:
+                            </td>
+                            <td>
+                                {{ entry.picture.fileName }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h4>
+                    Opties:
+                </h4>
+                 
+                <table class="table-condensed">
+                    <tbody>
+                        <tr>
+                            <td>
+                                Afstand x-as:
+                            </td>
+                            <td>
+                                {{ entry.options.offsetX }}
+                            </td>
+                        </tr>  
+                        <tr>                            
+                            <td>
+                                Afstand y-as:
+                            </td>
+                            <td>
+                                {{ entry.options.offsetY }}
+                            </td>
+                        </tr>
+                        <tr>                            
+                            <td>
+                                Breedte:
+                            </td>
+                            <td>
+                                {{ entry.options.width }}
+                            </td>
+                        </tr>                        
+                        <tr>                            
+                            <td>
+                                Hoogte:
+                            </td>
+                            <td>
+                                {{ entry.options.height }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Kleur:
+                            </td>
+                            <td>
+                                {{ entry.options.color }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Type:
+                            </td>
+                            <td>
+                                {{ entry.type.name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Aantal:
+                            </td>
+                            <td>
+                                {{ entry.amount }}
+                            </td>
+                        </tr>        
+                        <tr>
+                            <td>
+                                Totale prijs:
+                            </td>
+                            <td>
+                                &euro; {{ entry.totalPrice }}
+                            </td>
+                        </tr> 
+                    </tbody>
+                </table>
+            {% endfor %}
+            
+            <h2>
+                Klantinformatie:
+            </h2>
+            <table class="table-condensed">
+                <tbody>
+                    <tr>
+                        <td>
+                            Naam
+                        </td>
+                        <td>
+                            {{ order.account.customer.name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Adres
+                        </td>
+                        <td>
+                            {{ order.account.customer.address }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Woonplaats
+                        </td>
+                        <td>
+                            {{ order.account.customer.city }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            E-mail
+                        </td>
+                        <td>
+                            {{ order.account.customer.email }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Telefoonnummer
+                        </td>
+                        <td>
+                            {{ order.account.customer.phone }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

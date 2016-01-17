@@ -3,7 +3,14 @@ package com.pse.fotoz.domain.entities;
 import com.pse.fotoz.payments.domain.PaymentResponse.PaymentMethod;
 import com.pse.fotoz.payments.domain.PaymentResponse.PaymentStatus;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.summingDouble;
+import static java.util.stream.Collectors.toMap;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -149,5 +156,16 @@ public class Order implements HibernateEntity {
         return this.getEntries().stream().
                 map(e -> e.getTotalPrice()).
                 reduce(0d, (d1, d2) -> d1 + d2);
+    }
+    
+    /**
+     * Gets the payment due grouped by shop.
+     * @return A mapping of shops to the payment due for this order.
+     */
+    public Map<Shop, Double> getPaymentDuePerShop() {
+        return entries.stream().
+                collect(groupingBy(e -> e.getPicture().getSession().getShop(), 
+                        summingDouble(e -> e.getPicture().getPrice().
+                                doubleValue() * e.getAmount())));        
     }
 }

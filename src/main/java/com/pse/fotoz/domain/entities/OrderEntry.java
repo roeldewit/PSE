@@ -27,11 +27,6 @@ public class OrderEntry implements HibernateEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     
-    /**
-     * Temporary identity value for when not (yet) persisted.
-     */
-    private transient int tempId;
-    
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;

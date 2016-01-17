@@ -9,12 +9,12 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 
 /**
- * Currency conversion endpoint using the fixer.io API (https://api.fixer.io/).
+ * Currency conversion endpoint using the fixer.io API (http://api.fixer.io/).
  * @author Robert
  */
 public class FixerIo {
     
-    private static final String endpoint = "https://api.fixer.io/latest";
+    private static final String endpoint = "http://api.fixer.io/latest";
     
     private static JSONObject latestRates;
     
